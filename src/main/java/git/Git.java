@@ -18,7 +18,7 @@ public class Git {
      */
     public Git() {
         ui = new Ui();
-        parser = new Parser();
+        parser = new Parser(ui);
         isRunning = true;
     }
 
@@ -29,7 +29,7 @@ public class Git {
         ui.printWelcome();
         while (isRunning) {
             try {
-                String[] commandParts = parser.processCommandParts();;
+                String[] commandParts = parser.processCommandParts();
                 parser.executeCommand(commandParts);
                 isRunning = parser.getIsRunning();
             } catch (GitException e) {

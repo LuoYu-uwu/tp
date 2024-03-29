@@ -10,7 +10,7 @@ public class GitTest {
     @Test
     public void executeCommand_invalidCommand_success() {
         try {
-            Parser parser = new Parser();
+            Parser parser = new Parser(new Ui());
             String[] commandParts = {"nonsense", ""};
             parser.executeCommand(commandParts);
         } catch (GitException e) {

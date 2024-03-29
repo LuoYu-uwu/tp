@@ -19,9 +19,9 @@ public class Parser {
     /**
      * Constructs Parser.
      */
-    public Parser() {
+    public Parser(Ui ui) {
         groceryList = new GroceryList();
-        ui = new Ui();
+        this.ui = ui;
         isRunning = true;
     }
 

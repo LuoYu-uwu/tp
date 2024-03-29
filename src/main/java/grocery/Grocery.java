@@ -106,11 +106,7 @@ public class Grocery {
     public String printGrocery() {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
-        // TODO: update amount output according to Grocery subclass
-        // TODO: consider stating amount == 0 now that we track amount ?
-
         String locationString = ", location: " + location;
-
         String amountString = (amount == 0) ? "" : ", amount: " + amount;
         String exp = (expiration == null) 
             ? " expiration date not set" 

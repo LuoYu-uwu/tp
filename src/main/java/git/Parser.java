@@ -26,9 +26,22 @@ public class Parser {
     }
 
     /**
+     * Processes a command and its details into a valid format for executing relevant code.
+     *
+     * @return Array of the fragments of the commands.
+     */
+    public String[] processCommandParts() {
+        String[] commandParts = ui.processInput();
+        if (commandParts.length == 1) {
+            return new String[]{commandParts[0], ""};
+        } else {
+            return commandParts;
+        }
+    }
+
+    /**
      * Handles commands.
      *
-     * @param commandParts Command and its details.
      * @throws GitException Exception thrown depending on specific error.
      */
     public void executeCommand(String[] commandParts) throws GitException {

@@ -29,7 +29,7 @@ public class Git {
         ui.printWelcome();
         while (isRunning) {
             try {
-                String[] commandParts = ui.processInput();
+                String[] commandParts = parser.processCommandParts();;
                 parser.executeCommand(commandParts);
                 isRunning = parser.getIsRunning();
             } catch (GitException e) {

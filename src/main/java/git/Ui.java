@@ -15,8 +15,8 @@ import grocery.Grocery;
  */
 public class Ui {
     // ATTRIBUTES
-    private static Ui singleUi = null;
     public static final String DIVIDER = "- - - - -";
+    private static Ui singleUi = null;
     private Scanner in;
 
     // METHODS

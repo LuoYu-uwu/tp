@@ -17,7 +17,7 @@ public class Git {
      * Constructs Git.
      */
     public Git() {
-        ui = new Ui();
+        ui = Ui.getInstance();
         parser = new Parser(ui);
         isRunning = true;
     }

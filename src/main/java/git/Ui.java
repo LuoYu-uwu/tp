@@ -15,16 +15,26 @@ import grocery.Grocery;
  */
 public class Ui {
     // ATTRIBUTES
+    private static Ui singleUi = null;
     public static final String DIVIDER = "- - - - -";
     private Scanner in;
 
     // METHODS
-
     /**
      * Constructs Ui and initialises Scanner to read input.
      */
-    public Ui() {
+    private Ui() {
         in = new Scanner(System.in);
+    }
+
+    /**
+     * Returns the single instance of Ui.
+     */
+    public static Ui getInstance() {
+        if (singleUi == null) {
+            singleUi = new Ui();
+        }
+        return singleUi;
     }
 
     /**
@@ -113,13 +123,16 @@ public class Ui {
     }
 
     /**
-     * Prompts user for category
+     * Prompts user for category.
      */
     public String promptForCategory(){
         System.out.println("Please enter the category (e.g. fruit):");
         return in.nextLine().trim();
     }
 
+    /**
+     * Prompts user for amount.
+     */
     public int promptForAmount(){
         System.out.println("Please enter the amount (e.g. 3):");
         try {

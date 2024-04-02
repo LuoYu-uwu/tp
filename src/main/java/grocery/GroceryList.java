@@ -227,6 +227,12 @@ public class GroceryList {
         }
     }
 
+    /**
+     * Updates the threshold of an existing grocery.
+     *
+     * @param details A string containing grocery name and details.
+     * @throws GitException If the input new cost is not numeric.
+     */
     public void editThreshold(String details) throws GitException {
         String [] amtParts = checkDetails(details, "th", "a/");
         Grocery grocery = getGrocery(amtParts[0].strip());
@@ -253,6 +259,9 @@ public class GroceryList {
         }
     }
 
+    /**
+     * Lists all the groceries that are low in stock.
+     */
     public void listLowStocks() {
         int size = groceries.size();
         if (size == 0) {
@@ -269,6 +278,9 @@ public class GroceryList {
         Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
     }
 
+    /**
+     * Sorts the groceries by descending cost.
+     */
     public void sortByCost() {
         int size = groceries.size();
         if (size == 0) {

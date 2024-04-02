@@ -144,7 +144,8 @@ public class Ui {
     }
 
     /**
-     * Prompts the user to enter the cost of the grocery until a valid cost is given.
+     * Prompts the user to enter the cost of the grocery for at most 5 times.
+     * If invalid value is entered for the 6th time, auto set the cost to 0.
      *
      * @return the cost to be set for the grocery.
      */
@@ -303,7 +304,7 @@ public class Ui {
     }
 
     /**
-     * Prints output after setting the selected grocery's amount.
+     * Prints the new amount set for the selected grocery.
      *
      * @param grocery The grocery that should be updated.
      */
@@ -312,6 +313,11 @@ public class Ui {
         System.out.println(grocery.getName() + ": " + grocery.getAmount());
     }
 
+    /**
+     * Prints the new threshold set for the selected grocery.
+     *
+     * @param grocery The grocery that should be updated.
+     */
     public static void printThresholdSet(Grocery grocery) {
         System.out.println(grocery.getName() + "'s threshold is now " +
                 grocery.getThreshold() + " " + grocery.getUnit());
@@ -346,6 +352,11 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints all groceries with amount less than threshold set.
+     *
+     * @param groceries An array list of groceries.
+     */
     public static void printLowStocks(List<Grocery> groceries) {
         assert !groceries.isEmpty() : "grocery list should not be empty";
         System.out.println("Time to top up these groceries!");

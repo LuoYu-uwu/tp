@@ -253,6 +253,14 @@ public class GroceryList {
         }
     }
 
+    public void listLowStocks() {
+        int size = groceries.size();
+        if (size == 0) {
+            Ui.printNoGrocery();
+        } else {
+            Ui.printLowStocks(groceries);
+        }
+    }
 
     /**
      * Sorts the groceries by expiration date.

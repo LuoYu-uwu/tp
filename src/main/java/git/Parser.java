@@ -29,7 +29,7 @@ public class Parser {
      * Enums containing the possible commands for groceries.
      */
     enum Command {
-        ADD, DEL, EXP, AMT, TH, USE, COST, LIST, LISTC, HELP, EXIT
+        ADD, DEL, EXP, AMT, TH, USE, COST, LIST, LISTC, LOW, HELP, EXIT
 
     }
 
@@ -147,6 +147,10 @@ public class Parser {
 
         case LISTC:
             groceryList.sortByCost();
+            break;
+
+        case LOW:
+            groceryList.listLowStocks();
             break;
 
         case HELP:

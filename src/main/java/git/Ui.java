@@ -346,6 +346,17 @@ public class Ui {
         }
     }
 
+    public static void printLowStocks(List<Grocery> groceries) {
+        assert !groceries.isEmpty() : "grocery list should not be empty";
+        System.out.println("Time to top up these groceries!");
+        for (Grocery grocery: groceries) {
+            if (grocery.getAmount() < grocery.getThreshold()) {
+                System.out.println(" - " + grocery.getName()
+                        + " only left: " +grocery.getAmount());
+            }
+        }
+    }
+
     /**
      * Prints output when the selected grocery is removed.
      *

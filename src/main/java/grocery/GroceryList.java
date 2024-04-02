@@ -214,7 +214,6 @@ public class GroceryList {
      * @throws GitException If the input new cost is not numeric.
      */
     public void editCost(String details) throws GitException {
-        System.out.println(details);
         String[] costParts = checkDetails(details, "cost", "\\$");
         Grocery grocery = getGrocery(costParts[0].strip());
         String price = costParts[1].strip();

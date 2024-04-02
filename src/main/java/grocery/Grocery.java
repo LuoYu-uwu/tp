@@ -107,11 +107,28 @@ public class Grocery {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
         String locationString = ", location: " + location;
-        String amountString = (amount == 0) ? "" : ", amount: " + amount;
-        String exp = (expiration == null)
-            ? " expiration date not set"
-            : ", expiration: " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String price = (cost != 0) ? ", cost: $" + String.format("%.2f", cost): ", cost not set";
+
+        String amountString;
+        if (amount != 0) {
+            amountString = ", amount: " + amount + " ";
+        } else {
+            amountString = ", amount not set";
+        }
+
+        String exp;
+        if (expiration != null) {
+            exp = ", expiration: " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } else {
+            exp = ", expiration date not set";
+        }
+
+        String price;
+        if (cost != 0) {
+            price = ", cost: $" + String.format("%.2f", cost);
+        } else {
+            price = ", cost not set";
+        }
+
         String unit = "";
         switch (category.toLowerCase()){
         case "fruit":
@@ -128,7 +145,11 @@ public class Grocery {
             unit = "units";
             break;
         }
-        return this.name + " (" + this.category + ") " + amountString + unit + exp + price + locationString;
+        if (amount == 0) {
+            unit = "";
+        }
+
+        return this.name + " (" + this.category + ")" + amountString + unit + exp + price + locationString;
 
     }
 }

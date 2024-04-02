@@ -25,8 +25,11 @@ public class Parser {
         isRunning = true;
     }
 
+    /**
+     * Enums containing the possible commands.
+     */
     enum Command {
-        ADD, EXP, AMT, USE, COST, DEL, LIST, LISTC, HELP, EXIT
+        ADD, DEL, EXP, AMT, USE, COST, LIST, LISTC, HELP, EXIT
 
     }
 
@@ -45,13 +48,37 @@ public class Parser {
     }
 
     /**
-     * Handles commands.
+     * Handles different types of commands.
      *
+     * @param commandParts Fragments of the command entered by user.
      * @throws GitException Exception thrown depending on specific error.
      */
     public void executeCommand(String[] commandParts) throws GitException {
         assert commandParts.length == 2 : "Command passed in wrong format";
-        Command command = Command.valueOf(commandParts[0].toUpperCase());
+        Command command;
+        try {
+            command = Command.valueOf(commandParts[0].toUpperCase());
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+        int index = command.ordinal();
+        if (index <= Command.DEL.ordinal()) {
+            addOrDelGrocery(command, commandParts);
+        } else if (index <= Command.COST.ordinal()) {
+            editGrocery(command,commandParts);
+        } else {
+            viewListOrHelp(command);
+        }
+    }
+
+    /**
+     * Handles commands related to adding or deleting a grocery.
+     *
+     * @param command Command keyword of data type Enum.
+     * @param commandParts Fragments of the command entered by user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
+    private void addOrDelGrocery(Command command, String[] commandParts) throws GitException {
         switch (command) {
         case ADD:
             String category = ui.promptForCategory();
@@ -64,6 +91,24 @@ public class Parser {
             groceryList.addGrocery(grocery);
             break;
 
+        case DEL:
+            groceryList.removeGrocery(commandParts[1]);
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    /**
+     * Handles commands related to editing a grocery.
+     *
+     * @param command Command keyword of data type Enum.
+     * @param commandParts Fragments of the command entered by user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
+    private void editGrocery(Command command, String[] commandParts) throws GitException {
+        switch (command) {
         case EXP:
             groceryList.editExpiration(commandParts[1]);
             break;
@@ -77,10 +122,19 @@ public class Parser {
             groceryList.editCost(commandParts[1]);
             break;
 
-        case DEL:
-            groceryList.removeGrocery(commandParts[1]);
-            break;
+        default:
+            throw new InvalidCommandException();
+        }
+    }
 
+    /**
+     * Handles commands related to viewing the grocery list.
+     *
+     * @param command Command keyword of data type Enum.
+     * @throws GitException Exception thrown depending on specific error.
+     */
+    private void viewListOrHelp(Command command) throws GitException {
+        switch (command) {
         case LIST:
             groceryList.listGroceries();
             break;

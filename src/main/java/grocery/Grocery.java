@@ -11,8 +11,11 @@ import exceptions.PastExpirationDateException;
 public class Grocery {
     private String name;
     private int amount;
+
+    private int threshold;
     private LocalDate expiration;
     private String category;
+    private String unit;
     private double cost;
     private String location;
 
@@ -27,11 +30,14 @@ public class Grocery {
      * @param location Location of where the grocery is stored.
      */
 
-    public Grocery(String name, int amount, LocalDate expiration, String category, double cost, String location) {
+    public Grocery(String name, int amount, int threshold,
+                   LocalDate expiration, String category, double cost, String location) {
         this.name = name;
         this.amount = amount;
+        this.threshold = threshold;
         this.expiration = expiration;
         this.category = category;
+        setUnit(category);
         this.cost = cost;
         this.location = location;
     }
@@ -57,6 +63,10 @@ public class Grocery {
         return this.location;
     }
 
+    public int getThreshold() {
+        return this.threshold;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -64,6 +74,41 @@ public class Grocery {
     public void setAmount(int amount) {
         assert amount >= 0 : "Amount entered is invalid!";
         this.amount = amount;
+    }
+
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    /**
+     * Set unit of the grocery based on its category.
+     *
+     * @param category Category of the grocery.
+     */
+    public void setUnit(String category) {
+        switch (category.toLowerCase()){
+        case "fruit":
+            this.unit = "pieces";
+            break;
+        case "vegetable":
+        case "meat":
+            this.unit = "grams";
+            break;
+        case "beverage":
+            this.unit = "ml";
+            break;
+        default:
+            this.unit = "units";
+            break;
+        }
+
+        if (this.amount == 0) {
+            this.unit = "";
+        }
     }
 
     /**
@@ -107,30 +152,29 @@ public class Grocery {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
         String locationString = ", location: " + location;
-        String amountString = (amount == 0) ? "" : ", amount: " + amount;
-        String exp = (expiration == null) 
-            ? " expiration date not set" 
-            : ", expiration: " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String price = (cost != 0) ? ", cost: $" + String.format("%.2f", cost): " cost not set";
-        String unit = "";
-        switch (category.toLowerCase()){
-        case "fruit":
-            unit = "pieces";
-            break;
-        case "vegetable":
-            unit = "grams";
-            break;
-        case "meat":
-            unit = "grams";
-            break;
-        case "beverage":
-            unit = "ml";
-            break;
-        default:
-            unit = "units";
-            break;
+
+        String amountString;
+        if (amount != 0) {
+            amountString = ", amount: " + amount + " ";
+        } else {
+            amountString = ", amount not set";
         }
-        return this.name + " (" + this.category + ") " + amountString + unit + exp + price + locationString;
+
+        String exp;
+        if (expiration != null) {
+            exp = ", expiration: " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } else {
+            exp = ", expiration date not set";
+        }
+
+        String price;
+        if (cost != 0) {
+            price = ", cost: $" + String.format("%.2f", cost);
+        } else {
+            price = ", cost not set";
+        }
+
+        return this.name + " (" + this.category + ")" + amountString + this.unit + exp + price + locationString;
 
     }
 }

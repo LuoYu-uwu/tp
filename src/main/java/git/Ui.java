@@ -209,40 +209,69 @@ public class Ui {
     }
 
     /**
-     * Prompts the user to enter the cost of the grocery until a valid cost is given.
+     * Prompts the user to enter the cost of the grocery for at most 5 times.
+     * If invalid value is entered for the 6th time, auto set the cost to 0.
      *
      * @return the cost to be set for the grocery.
      */
-    public String promptForCost() {
-        System.out.println("Please enter the cost (e.g., $1.20):");
-        String price = in.nextLine().trim();
-        try {
-            return convertCost(price);
-        } catch (GitException e) {
-            System.out.println("Cost entered is invalid!");
-            return promptForCost();
+    public double promptForCost() {
+        System.out.println("Please enter the cost (e.g., $1.20) or nil:");
+        double cost = 0;
+        for (int i = 0; i < 5; i++) {
+            String price = in.nextLine().trim();
+            if (price.equals("nil")) {
+                break;
+            }
+            try {
+                cost = convertCost(price);
+                break;
+            } catch (GitException e) {
+                System.out.println(e.getMessage());
+            }
         }
+        return cost;
     }
 
     /**
-     * Removes dollar sign from input cost and store in 2 decimal places.
+     * Removes dollar sign from input cost and convert to double.
      *
      * @param price Input cost entered by user.
      * @return Cost in desired format.
      * @throws GitException If there is no Dollar sign or cost entered is not numeric.
      */
-    private String convertCost(String price) throws GitException{
+    private double convertCost(String price) throws GitException{
         if(price.contains("$")) {
             String formattedPrice = price.replace("$", "");
             try {
-                double cost = Double.parseDouble(formattedPrice);
-                return String.format("%.2f", cost);//format the money value to 2dp
+                return Double.parseDouble(formattedPrice);
             } catch (NumberFormatException nfe) {
                 throw new InvalidCostException();
             }
         } else {
             throw new InvalidCostException();
         }
+    }
+
+    /**
+     * Prompts user for threshold amount.
+     */
+    public int promptForThreshold(){
+        System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+        int threshold = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equals("nil")) {
+                break;
+            }
+            try {
+                threshold = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Amount entered is invalid!");
+                System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+            }
+        }
+        return threshold;
     }
 
     /**
@@ -327,13 +356,23 @@ public class Ui {
     }
 
     /**
-     * Prints output after setting the selected grocery's amount.
+     * Prints the new amount set for the selected grocery.
      *
      * @param grocery The grocery that should be updated.
      */
     public static void printAmtSet(Grocery grocery) {
         assert grocery.getAmount() >= 0 : "grocery amount should not be empty";
         System.out.println(grocery.getName() + ": " + grocery.getAmount());
+    }
+
+    /**
+     * Prints the new threshold set for the selected grocery.
+     *
+     * @param grocery The grocery that should be updated.
+     */
+    public static void printThresholdSet(Grocery grocery) {
+        System.out.println(grocery.getName() + "'s threshold is now " +
+                grocery.getThreshold() + " " + grocery.getUnit());
     }
 
     /**
@@ -362,6 +401,22 @@ public class Ui {
         System.out.println("Here are your groceries!");
         for (Grocery grocery: groceries) {
             System.out.println(" - " + grocery.printGrocery());
+        }
+    }
+
+    /**
+     * Prints all groceries with amount less than threshold set.
+     *
+     * @param groceries An array list of groceries.
+     */
+    public static void printLowStocks(List<Grocery> groceries) {
+        assert !groceries.isEmpty() : "grocery list should not be empty";
+        System.out.println("Time to top up these groceries!");
+        for (Grocery grocery: groceries) {
+            if (grocery.getAmount() < grocery.getThreshold()) {
+                System.out.println(" - " + grocery.getName()
+                        + " only left: " +grocery.getAmount());
+            }
         }
     }
 

@@ -136,7 +136,7 @@ public class GroceryList {
     }
 
     /**
-     * Adds the expiration date of an existing grocery.
+     * Sets the expiration date of an existing grocery.
      *
      * @param details A string containing grocery name and details.
      * @throws GitException Exception thrown depending on error.
@@ -176,11 +176,16 @@ public class GroceryList {
      */
     public void editAmount(String details, boolean use) throws GitException {
         // Assuming the format is "amt GROCERY a/AMOUNT"
-        String[] amtParts = checkDetails(details, use ? "use": "amt", "a/");
+        String [] amtParts;
+        if (use) {
+            amtParts = checkDetails(details, "use", "a/");
+        } else {
+            amtParts = checkDetails(details, "amt", "a/");
+        }
         Grocery grocery = getGrocery(amtParts[0].strip());
         String amountString = amtParts[1].strip();
 
-        int amount = 0;
+        int amount;
         try {
             amount = Integer.parseInt(amountString);
         } catch (NumberFormatException e) {
@@ -190,11 +195,12 @@ public class GroceryList {
         // "use" is not valid if an amount was not previously set
         if (use && grocery.getAmount() == 0) {
             throw new CannotUseException();
+        } else if (use) {
+            amount = Math.max(0, grocery.getAmount() - amount);
         }
 
-        int finalAmount = use ? Math.max(0, grocery.getAmount() - amount) : amount;
-        grocery.setAmount(finalAmount);
-        if (finalAmount == 0) {
+        grocery.setAmount(amount);
+        if (amount == 0) {
             Ui.printAmtDepleted(grocery);
         } else {
             Ui.printAmtSet(grocery);

@@ -16,15 +16,25 @@ import grocery.Grocery;
 public class Ui {
     // ATTRIBUTES
     public static final String DIVIDER = "- - - - -";
+    private static Ui singleUi = null;
     private Scanner in;
 
     // METHODS
-
     /**
      * Constructs Ui and initialises Scanner to read input.
      */
-    public Ui() {
+    private Ui() {
         in = new Scanner(System.in);
+    }
+
+    /**
+     * Returns the single instance of Ui.
+     */
+    public static Ui getInstance() {
+        if (singleUi == null) {
+            singleUi = new Ui();
+        }
+        return singleUi;
     }
 
     /**
@@ -62,9 +72,9 @@ public class Ui {
     }
 
     /**
-     * Processes user input into commands and their details.
+     * Processes user input into a command and its details for Parser.
      *
-     * @return Array of the fragments of the commands.
+     * @return Array of the fragments of the command.
      */
     public String[] processInput() {
         String commandLine = in.nextLine();
@@ -72,12 +82,7 @@ public class Ui {
         String[] commandParts = commandLine.strip().split(" ", 2);
         assert commandParts.length > 0 : "Failed to read user input";
 
-        // Return an array of length 2 for executeCommand
-        if (commandParts.length == 1) {
-            return new String[]{commandParts[0], ""};
-        } else {
-            return commandParts;
-        }
+        return commandParts;
     }
 
     /**
@@ -118,13 +123,16 @@ public class Ui {
     }
 
     /**
-     * Prompts user for category
+     * Prompts user for category.
      */
     public String promptForCategory(){
         System.out.println("Please enter the category (e.g. fruit):");
         return in.nextLine().trim();
     }
 
+    /**
+     * Prompts user for amount.
+     */
     public int promptForAmount(){
         System.out.println("Please enter the amount (e.g. 3):");
         try {
@@ -272,7 +280,6 @@ public class Ui {
      * @param grocery The grocery that should be updated.
      */
     public static void printAmtSet(Grocery grocery) {
-        // TODO: update amount output according to Grocery subclass
         assert grocery.getAmount() >= 0 : "grocery amount should not be empty";
         System.out.println(grocery.getName() + ": " + grocery.getAmount());
     }

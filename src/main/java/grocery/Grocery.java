@@ -30,7 +30,8 @@ public class Grocery {
      * @param location Location of where the grocery is stored.
      */
 
-    public Grocery(String name, int amount, int threshold, LocalDate expiration, String category, double cost, String location) {
+    public Grocery(String name, int amount, int threshold,
+                   LocalDate expiration, String category, double cost, String location) {
         this.name = name;
         this.amount = amount;
         this.threshold = threshold;

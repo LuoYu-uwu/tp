@@ -86,7 +86,8 @@ public class Parser {
             int threshold = ui.promptForThreshold();
             String location = ui.promptForLocation();
             double cost = ui.promptForCost();
-            Grocery grocery = new Grocery(commandParts[1], amount, threshold, LocalDate.now(), category, cost, location);
+            Grocery grocery = new Grocery(commandParts[1], amount, threshold,
+                    LocalDate.now(), category, cost, location);
             String expiration = ui.promptForExpiration();
             grocery.setExpiration(expiration);
             groceryList.addGrocery(grocery);

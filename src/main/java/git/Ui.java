@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import exceptions.GitException;
+import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
+import food.Food;
 import exceptions.PastExpirationDateException;
 import grocery.Grocery;
+
+import enumerations.Mode;
 
 
 /**
@@ -18,7 +22,8 @@ public class Ui {
     // ATTRIBUTES
     public static final String DIVIDER = "- - - - -";
     private static Ui singleUi = null;
-    private Scanner in;
+    private static Scanner in;
+    private String userName;
 
     // METHODS
     /**
@@ -38,10 +43,14 @@ public class Ui {
         return singleUi;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
     /**
      * Prints welcome message.
      */
-    public void printWelcome() {
+    public String printWelcome() throws GitException {
         final String gitlogo =
                 "   ______   _  _________\n" +
                 " .' ___  | (_)|  _   _  |\n" +
@@ -54,8 +63,13 @@ public class Ui {
         System.out.println("Hello from GiT");
         System.out.println("What is your name?");
         printLine();
-        String userName = in.nextLine();
+        userName = in.nextLine();
         printHello(userName);
+        System.out.println("Please select a mode: " +
+                "grocery, profile, calories or recipe:");
+        String selectedMode = in.nextLine().trim();
+        displayCommands(selectedMode);
+        return selectedMode;
     }
 
     /**
@@ -65,11 +79,30 @@ public class Ui {
      */
     public void printHello(String userName) {
         System.out.println("Hello " + userName + "!");
-
-        displayHelp();
-        System.out.println("Enter command:");
-
         printLine();
+    }
+
+    public static void displayCommands(String selectedMode) throws GitException{
+        Mode mode;
+        try {
+            mode = Mode.valueOf(selectedMode.toUpperCase());;
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+        switch (mode) {
+        case GROCERY:
+            displayHelpForGrocery();
+            System.out.println("Enter command:");
+            printLine();
+            break;
+
+        case CALORIES:
+            System.out.println("Enter command:");
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
     }
 
     /**
@@ -286,6 +319,97 @@ public class Ui {
         return threshold;
     }
 
+    public double promptForCalories() {
+        System.out.println("Please enter the calories of the food in kcal:");
+        double calories = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                calories = Double.parseDouble(input);
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Calories entered is invalid!");
+                System.out.println("Please enter the calories of the food in kcal:");
+            }
+        }
+        return calories;
+    }
+
+    public double promptForWeight() {
+        System.out.println("Please enter your weight in KG:");
+        double weight = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                weight = Double.parseDouble(input);
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Weight entered is invalid!");
+                System.out.println("Please enter your weight in KG:");
+            }
+        }
+        return weight;
+    }
+
+    public double promptForHeight() {
+        System.out.println("Please enter your height in cm:");
+        double height = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                height = Double.parseDouble(input);
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Height entered is invalid!");
+                System.out.println("Please enter your height in cm:");
+            }
+        }
+        return height;
+    }
+
+    public int promptForAge() {
+        System.out.println("Please enter your age in years:");
+        int age = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                age = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Age entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return age;
+    }
+
+    public String promptForGender() {
+        System.out.println("Please enter your gender (e.g. F):");
+        String gender = "";
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.length() == 1) {
+                gender = input;
+                break;
+            } else {
+                System.out.println("Gender entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return gender;
+    }
+
+    public String promptForAim() {
+        System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
+        return in.nextLine().trim();
+    }
+
+    public String promptForActiveness() {
+        System.out.println("Please enter your activeness " +
+                "(e.g. inactive/light/moderate/active/very):):");
+        return in.nextLine().trim();
+    }
+
     /**
      * Prompts the user to enter the location of the grocery.
      * @return Location of grocery in String
@@ -317,11 +441,32 @@ public class Ui {
     }
 
     /**
+     * Reads expiration date from user input.
+     *
+     * @param year Year of expiration.
+     * @param month Month of expiration.
+     * @param day Day of expiration.
+     * @return Formatted expiration date.
+     */
+    private String formatExpirationDate(String year, String month, String day) {
+        // This method can be enhanced to validate the date components
+        return year + "-" + month + "-" + day;
+    }
+
+    public static String switchMode() {
+        System.out.println("What mode would you like to switch to?");
+        System.out.println("Please select a mode: " +
+                "grocery, profile, calories or recipe:");
+        String newMode = in.nextLine().trim();
+        return newMode;
+    }
+
+    /**
      * Displays help message containing all possible commands.
      */
-    public void displayHelp() {
+    public static void displayHelpForGrocery() {
         System.out.println(
-                "Here are some ways you can use this app!\n" +
+                "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
@@ -471,10 +616,16 @@ public class Ui {
         System.out.println("You now have " + groceries.size() + " groceries left");
     }
 
+    public static void printFoodAdded(Food food) {
+        assert !(food.getName().isEmpty()): "food name should not be empty";
+        System.out.println(food.print() + " was consumed!");
+    }
+
+
     /**
      * Prints divider for user readability.
      */
-    public void printLine() {
+    public static void printLine() {
         System.out.println(DIVIDER);
     }
 }

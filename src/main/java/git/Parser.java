@@ -3,33 +3,42 @@ package git;
 
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
+import food.Food;
+import food.FoodList;
 import grocery.Grocery;
 import grocery.GroceryList;
+import enumerations.Mode;
+import enumerations.GroceryCommand;
+import user.UserInfo;
 
 /**
  * Deals with commands entered by user.
  */
 public class Parser {
     private GroceryList groceryList;
+    private FoodList foodList;
+    private UserInfo userInfo;
     private Ui ui;
 
     private boolean isRunning;
+    private String currentMode;
+
 
     /**
      * Constructs Parser.
      */
     public Parser(Ui ui) {
         groceryList = new GroceryList();
+        foodList = new FoodList();
+        String userName = ui.getUserName();
+        userInfo = new UserInfo(userName);
         this.ui = ui;
         isRunning = true;
     }
 
-    /**
-     * Enums containing the possible commands for groceries.
-     */
-    enum Command {
-        ADD, DEL, EXP, AMT, TH, USE, COST, LIST, LISTC, LISTE, EXPIRING, LOW, HELP, EXIT
 
+    public String getCurrentMode() {
+        return currentMode;
     }
 
     /**
@@ -52,18 +61,100 @@ public class Parser {
      * @param commandParts Fragments of the command entered by user.
      * @throws GitException Exception thrown depending on specific error.
      */
-    public void executeCommand(String[] commandParts) throws GitException {
-        assert commandParts.length == 2 : "Command passed in wrong format";
-        Command command;
+    public void executeCommand(String[] commandParts, String selectedMode) throws GitException {
+        this.currentMode = selectedMode;
+        Mode mode;
         try {
-            command = Command.valueOf(commandParts[0].toUpperCase());
+            mode = Mode.valueOf(currentMode.toUpperCase());;
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+        switch (mode) {
+        case GROCERY:
+            groceryManagement(commandParts);
+            break;
+
+        case CALORIES:
+            caloriesManagement(commandParts);
+            break;
+
+        case PROFILE:
+            profileManagement(commandParts);
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    public void caloriesManagement(String[] commandParts) throws GitException {
+        String command = commandParts[0];
+        switch (command) {
+        case "eat":
+            double calories = ui.promptForCalories();
+            Food food = new Food(commandParts[1], calories);
+            foodList.addFood(food);
+            userInfo.consumptionOfCalories(food);
+            break;
+
+        case "view":
+            foodList.printFoods();
+            System.out.println("You have consumed " + userInfo.getCurrentCalories() + " calories for today");
+            break;
+
+        case "switch":
+            currentMode = Ui.switchMode();
+            break;
+
+        case "exit":
+            System.out.println("bye bye!");
+            isRunning = false;
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    public void profileManagement(String[] commandParts) throws GitException {
+        String command = commandParts[0];
+        switch (command) {
+        case "update":
+            double weight = ui.promptForWeight();
+            double height = ui.promptForHeight();
+            int age = ui.promptForAge();
+            String gender = ui.promptForGender();
+            String activeness = ui.promptForActiveness();
+            String aim = ui.promptForAim();
+            userInfo.updateInfo(weight,height,age,gender,activeness,aim);
+            break;
+
+        case "switch":
+            currentMode = Ui.switchMode();
+            break;
+
+        case "exit":
+            System.out.println("bye bye!");
+            isRunning = false;
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    public void groceryManagement(String[] commandParts) throws GitException {
+        assert commandParts.length == 2 : "Command passed in wrong format";
+        GroceryCommand command;
+        try {
+            command = GroceryCommand.valueOf(commandParts[0].toUpperCase());
         } catch (Exception e) {
             throw new InvalidCommandException();
         }
         int index = command.ordinal();
-        if (index <= Command.DEL.ordinal()) {
+        if (index <= GroceryCommand.DEL.ordinal()) {
             addOrDelGrocery(command, commandParts);
-        } else if (index <= Command.COST.ordinal()) {
+        } else if (index <= GroceryCommand.COST.ordinal()) {
             editGrocery(command,commandParts);
         } else {
             viewListOrHelp(command);
@@ -77,7 +168,7 @@ public class Parser {
      * @param commandParts Fragments of the command entered by user.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void addOrDelGrocery(Command command, String[] commandParts) throws GitException {
+    private void addOrDelGrocery(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
         case ADD:
             Grocery grocery = new Grocery(commandParts[1]);
@@ -101,7 +192,7 @@ public class Parser {
      * @param commandParts Fragments of the command entered by user.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void editGrocery(Command command, String[] commandParts) throws GitException {
+    private void editGrocery(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
         case EXP:
             groceryList.editExpiration(commandParts[1]);
@@ -131,7 +222,7 @@ public class Parser {
      * @param command Command keyword of data type Enum.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void viewListOrHelp(Command command) throws GitException {
+    private void viewListOrHelp(GroceryCommand command) throws GitException {
         switch (command) {
         case LIST:
             groceryList.listGroceries();
@@ -154,7 +245,11 @@ public class Parser {
             break;
 
         case HELP:
-            ui.displayHelp();
+            Ui.displayHelpForGrocery();
+            break;
+
+        case SWITCH:
+            currentMode = Ui.switchMode();
             break;
 
         case EXIT:

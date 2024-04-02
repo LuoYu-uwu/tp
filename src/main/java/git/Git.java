@@ -26,12 +26,18 @@ public class Git {
      * Runs Git.
      */
     private void run() {
-        ui.printWelcome();
+        String mode = null;
+        try {
+            mode = ui.printWelcome();
+        } catch (GitException e) {
+            System.out.println(e.getMessage());
+        }
         while (isRunning) {
             try {
                 String[] commandParts = parser.processCommandParts();
-                parser.executeCommand(commandParts);
+                parser.executeCommand(commandParts, mode);
                 isRunning = parser.getIsRunning();
+                mode = parser.getCurrentMode();
             } catch (GitException e) {
                 System.out.println(e.getMessage());
             } finally {

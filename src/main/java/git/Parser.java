@@ -28,7 +28,7 @@ public class Parser {
      * Enums containing the possible commands for groceries.
      */
     enum Command {
-        ADD, DEL, EXP, AMT, TH, USE, COST, LIST, LISTC, LOW, HELP, EXIT
+        ADD, DEL, EXP, AMT, TH, USE, COST, LIST, LISTC, LISTE, EXPIRING, LOW, HELP, EXIT
 
     }
 
@@ -54,10 +54,34 @@ public class Parser {
      */
     public void executeCommand(String[] commandParts) throws GitException {
         assert commandParts.length == 2 : "Command passed in wrong format";
+        Command command;
+        try {
+            command = Command.valueOf(commandParts[0].toUpperCase());
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+        int index = command.ordinal();
+        if (index <= Command.DEL.ordinal()) {
+            addOrDelGrocery(command, commandParts);
+        } else if (index <= Command.COST.ordinal()) {
+            editGrocery(command,commandParts);
+        } else {
+            viewListOrHelp(command);
+        }
+    }
 
-        switch (commandParts[0]) {
+    /**
+     * Handles commands related to adding or deleting a grocery.
+     *
+     * @param command Command keyword of data type Enum.
+     * @param commandParts Fragments of the command entered by user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
+    private void addOrDelGrocery(Command command, String[] commandParts) throws GitException {
+        switch (command) {
         case ADD:
             Grocery grocery = new Grocery(commandParts[1]);
+            ui.printAddMenu(grocery);
             groceryList.addGrocery(grocery);
             break;
 
@@ -115,6 +139,14 @@ public class Parser {
 
         case LISTC:
             groceryList.sortByCost();
+            break;
+
+        case LISTE:
+            groceryList.sortByExpiration();
+            break;
+
+        case EXPIRING:
+            groceryList.displayGroceriesExpiringInNext3Days();
             break;
 
         case LOW:

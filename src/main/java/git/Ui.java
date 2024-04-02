@@ -100,7 +100,9 @@ public class Ui {
         System.out.println("3. Location");
         System.out.println("4. Expiration Date");
         System.out.println("5. Cost");
-        System.out.println("6. Skip");
+        System.out.println("6. Threshhold Amount");
+        System.out.println("7. Help");
+        System.out.println("8. Skip");
         System.out.println("Please enter the number of the details you want to include:");
         System.out.println("You may enter multiple numbers. (e.g. 1234)");
         
@@ -135,17 +137,25 @@ public class Ui {
                     break;
                 case '5':
                     System.out.println("Including Cost");
-                    String cost = ui.promptForCost();
+                    Double cost = ui.promptForCost();
                     grocery.setCost(cost);
                     break;
                 case '6':
+                    System.out.println("Including Threshold Amount");
+                    int threshold = ui.promptForThreshold();
+                    grocery.setThreshold(threshold);
+                    break;
+                case '7':
+                    System.out.println("Displaying help");
+                    ui.displayAddHelp();
+                    break;
+                case '8':
                     System.out.println("Skipping additional details");
                     break;
                 default:
                     System.out.println("Invalid choice: " + choice);
                     break;
             }
-            // If the choice is to skip, break out of the loop
             if (choice == '6') break;
         }
     }
@@ -319,11 +329,30 @@ public class Ui {
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listC: shows the list sorted by price.\n" +
+                        "listE: shows the list sorted by expiration date.\n" +
+                        "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands."
         );
     }
+
+    /**
+     * Display help message for the user when adding grocery.
+     */
+    public void displayAddHelp() {
+        System.out.println(
+            "Here are some details you can include when adding a grocery:\n" +
+            "Category - Enter the category of the grocery.\n" +
+            "Amount - Enter the amount of the grocery.\n" +
+            "Location - Enter the location of the grocery.\n" +
+            "Expiration Date - Enter the expiration date of the grocery.\n" +
+            "Cost - Enter the cost of the grocery.\n" +
+            "Minimum Amount - Enter the minimum amount of the grocery to set reminder.\n" +
+            "Skip - Skip adding additional details."
+        );
+    }
+
 
     /**
      * Prints output after setting the selected grocery's expiration date.

@@ -1,16 +1,18 @@
 package grocery;
 
+import exceptions.emptyinput.EmptyInputException;
 import git.Ui;
 import exceptions.GitException;
+import exceptions.nosuch.NoSuchObjectException;
 import exceptions.LocalDateWrongFormatException;
 import exceptions.PastExpirationDateException;
 import exceptions.InvalidAmountException;
 import exceptions.InvalidCostException;
 import exceptions.CannotUseException;
-import exceptions.commands.EmptyGroceryException;
 import exceptions.commands.IncompleteParameterException;
-import exceptions.commands.NoSuchGroceryException;
 import exceptions.commands.CommandWrongFormatException;
+import grocery.location.Location;
+import grocery.location.LocationList;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * Stores all the user's groceries.
+ * Stores all the user's groceries in a main list.
  */
 public class GroceryList {
     private List<Grocery> groceries;
@@ -43,19 +45,14 @@ public class GroceryList {
      * Adds a grocery.
      *
      * @param grocery Grocery to be added.
-     * @throws EmptyGroceryException If grocery name == null.
      */
-    public void addGrocery(Grocery grocery) throws EmptyGroceryException {
-        if (grocery.getName() == null) {
-            throw new EmptyGroceryException();
-        }
-
+    public void addGrocery(Grocery grocery) {
         try {
             groceries.add(grocery);
             Ui.printGroceryAdded(grocery);
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
-            System.out.println("Failed to add grocery: he groceries collection is null.");
+            System.out.println("Failed to add grocery: the grocery is null.");
         } catch (Exception e) {
             System.out.println("An unexpected error occurred while adding the grocery: " + e.getMessage());
         }
@@ -83,12 +80,12 @@ public class GroceryList {
      *
      * @param name Name of the grocery.
      * @return The needed grocery.
-     * @throws NoSuchGroceryException If the selected grocery does not exist.
+     * @throws NoSuchObjectException If the selected grocery does not exist.
      */
-    private Grocery getGrocery(String name) throws NoSuchGroceryException {
+    private Grocery getGrocery(String name) throws NoSuchObjectException {
         int index = -1;
         for (Grocery grocery : groceries) {
-            if(grocery.getName().equals(name)) {
+            if(grocery.getName().equalsIgnoreCase(name)) {
                 index = groceries.indexOf(grocery);
                 break;
             }
@@ -98,7 +95,7 @@ public class GroceryList {
             assert groceries != null : "Found grocery should not be null";
             return groceries.get(index);
         } else {
-            throw new NoSuchGroceryException();
+            throw new NoSuchObjectException("grocery");
         }
     }
 
@@ -113,7 +110,7 @@ public class GroceryList {
      */
     private String[] checkDetails(String details, String command, String parameter) throws GitException {
         if (details.isEmpty()) {
-            throw new EmptyGroceryException();
+            throw new EmptyInputException("grocery");
         }
 
         // Split the input into the grocery name and the detail part.
@@ -121,11 +118,11 @@ public class GroceryList {
 
         // Check if the grocery exists
         if (!isGroceryExists(detailParts[0].strip())) {
-            throw new NoSuchGroceryException();
+            throw new NoSuchObjectException("grocery");
         }   
 
         if (detailParts.length < 2) {
-            throw new CommandWrongFormatException(command);
+            throw new CommandWrongFormatException(command, parameter);
         }
 
         String attribute = detailParts[1].strip();
@@ -252,6 +249,48 @@ public class GroceryList {
     }
 
     /**
+     * Updates the location of an existing grocery.
+     *
+     * @param details A string containing grocery name and details.
+     * @throws GitException Thrown if given location name is empty.
+     */
+    public void editLocation(String details) throws GitException {
+        String[] locationParts = checkDetails(details, "store", "l/");
+        Grocery grocery = getGrocery(locationParts[0].strip());
+        String name = locationParts[1].strip();
+
+        Location location;
+        try {
+            location = LocationList.findLocation(name);
+        } catch (NoSuchObjectException e) {
+            LocationList.addLocation(name);
+            location = LocationList.findLocation(name);
+        }
+
+        grocery.setLocation(location);
+        location.addGrocery(grocery);
+        Ui.printLocationSet(grocery);
+    }
+
+    /**
+     * Searches for groceries containing the given keyword.
+     */
+    public void findGroceries(String key) throws EmptyInputException {
+        if (key.isEmpty()) {
+            throw new EmptyInputException("keyword");
+        }
+
+        List<Grocery> relevantGroceries = new ArrayList<>();
+        for (Grocery grocery : groceries) {
+            if(grocery.getName().toLowerCase().contains(key.toLowerCase())) {
+                relevantGroceries.add(grocery);
+            }
+        }
+
+        Ui.printGroceriesFound(relevantGroceries, key);
+    }
+
+    /**
      * Lists all the user's groceries.
      */
     public void listGroceries() {
@@ -331,18 +370,20 @@ public class GroceryList {
     /**
      * Removes a grocery.
      *
-     * @param details User input.
+     * @param name Grocery name from user input.
      * @throws GitException If grocery is empty.
      */
-    public void removeGrocery(String details) throws GitException {
-        assert (!groceries.isEmpty()) : "There is nothing to remove.";
-        if (details.isEmpty()) {
-            throw new EmptyGroceryException();
+    public void removeGrocery(String name) throws GitException {
+        if (name.isEmpty()) {
+            throw new EmptyInputException("grocery");
         }
 
         // Assuming the format is "del GROCERY"
-        Grocery grocery = getGrocery(details);
+        Grocery grocery = getGrocery(name);
         groceries.remove(grocery);
+        Location location = grocery.getLocation();
+        location.removeGrocery(grocery);
+
         Ui.printGroceryRemoved(grocery, groceries);
     }
 }

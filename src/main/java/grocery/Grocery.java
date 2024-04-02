@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import exceptions.PastExpirationDateException;
+import grocery.location.Location;
 
 
 /**
@@ -17,7 +18,7 @@ public class Grocery {
     private String category;
     private String unit;
     private double cost;
-    private String location;
+    private Location location;
 
 
     /**
@@ -29,9 +30,8 @@ public class Grocery {
      * @param category Category of grocery.
      * @param location Location of where the grocery is stored.
      */
-
     public Grocery(String name, int amount, int threshold,
-                   LocalDate expiration, String category, double cost, String location) {
+                   LocalDate expiration, String category, double cost, Location location) {
         this.name = name;
         this.amount = amount;
         this.threshold = threshold;
@@ -73,7 +73,7 @@ public class Grocery {
         return this.cost;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return this.location;
     }
 
@@ -167,7 +167,7 @@ public class Grocery {
         this.cost = cost;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -180,8 +180,8 @@ public class Grocery {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
         String locationString;
-        if(this.location != null) {
-            locationString = ", location: " + this.location;
+        if (this.location != null) {
+            locationString = ", location: " + this.location.getName();
         } else {
             locationString = ", location not set";
         }
@@ -191,6 +191,11 @@ public class Grocery {
             amountString = ", amount: " + amount + " ";
         } else {
             amountString = ", amount not set";
+        }
+
+        String unitString = "";
+        if (unit != null) {
+            unitString = unit;
         }
 
         String exp;
@@ -207,7 +212,7 @@ public class Grocery {
             price = ", cost not set";
         }
 
-        return this.name + " (" + this.category + ")" + amountString + this.unit + exp + price + locationString;
+        return this.name + " (" + this.category + ")" + amountString + unitString + exp + price + locationString;
 
     }
 }

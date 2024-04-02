@@ -27,6 +27,7 @@ public class Git {
      */
     private void run() {
         ui.printWelcome();
+
         String mode = null;
         boolean isInitialised = false;
         while (!isInitialised) {
@@ -37,6 +38,7 @@ public class Git {
                 Ui.printLine();
             }
         }
+
         while (isRunning) {
             try {
                 String[] commandParts = parser.processCommandParts();

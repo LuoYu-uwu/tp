@@ -5,12 +5,15 @@ import enumerations.CalCommand;
 import enumerations.ProfileCommand;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
+import exceptions.emptyinput.EmptyInputException;
 import food.Food;
 import food.FoodList;
 import grocery.Grocery;
 import grocery.GroceryList;
 import enumerations.Mode;
 import enumerations.GroceryCommand;
+import grocery.location.Location;
+import grocery.location.LocationList;
 import user.UserInfo;
 
 /**
@@ -38,11 +41,6 @@ public class Parser {
         isRunning = true;
     }
 
-
-    public String getCurrentMode() {
-        return currentMode;
-    }
-
     /**
      * Processes a command and its details into a valid format for executing relevant code.
      *
@@ -58,9 +56,10 @@ public class Parser {
     }
 
     /**
-     * Handles different types of commands.
+     * Handles all the user's commands depending on the selected mode.
      *
-     * @param commandParts Fragments of the command entered by user.
+     * @param commandParts Fragments of the command entered by the user.
+     * @param selectedMode Mode of GiT as selected by the user.
      * @throws GitException Exception thrown depending on specific error.
      */
     public void executeCommand(String[] commandParts, String selectedMode) throws GitException {
@@ -71,6 +70,7 @@ public class Parser {
         } catch (Exception e) {
             throw new InvalidCommandException();
         }
+
         switch (mode) {
         case GROCERY:
             groceryManagement(commandParts);
@@ -102,6 +102,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Handles commands related to calorie tracking.
+     *
+     * @param commandParts Fragments of the command entered by the user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
     public void caloriesManagement(String[] commandParts) throws GitException {
         CalCommand command;
         try {
@@ -109,7 +115,7 @@ public class Parser {
         } catch (Exception e) {
             throw new InvalidCommandException();
         }
-        //String command = commandParts[0];
+
         switch (command) {
         case EAT:
             double calories = ui.promptForCalories();
@@ -141,6 +147,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Handles commands related to the user's profile.
+     *
+     * @param commandParts Fragments of the command entered by the user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
     public void profileManagement(String[] commandParts) throws GitException {
         ProfileCommand command;
         try {
@@ -148,6 +160,7 @@ public class Parser {
         } catch (Exception e) {
             throw new InvalidCommandException();
         }
+
         switch (command) {
         case UPDATE:
             String name = ui.promptForName();
@@ -182,19 +195,31 @@ public class Parser {
         }
     }
 
+    /**
+     * Handles commands related to grocery management.
+     *
+     * @param commandParts Fragments of the command entered by the user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
     public void groceryManagement(String[] commandParts) throws GitException {
         assert commandParts.length == 2 : "Command passed in wrong format";
+
         GroceryCommand command;
         try {
             command = GroceryCommand.valueOf(commandParts[0].toUpperCase());
         } catch (Exception e) {
             throw new InvalidCommandException();
         }
+
         int index = command.ordinal();
         if (index <= GroceryCommand.DEL.ordinal()) {
             addOrDelGrocery(command, commandParts);
-        } else if (index <= GroceryCommand.COST.ordinal()) {
-            editGrocery(command,commandParts);
+        } else if (index <= GroceryCommand.STORE.ordinal()) {
+            editGrocery(command, commandParts);
+        } else if (index <= GroceryCommand.LISTL.ordinal()) {
+            handleLocationCommands(command, commandParts[1]);
+        } else if (index == GroceryCommand.FIND.ordinal()) {
+            groceryList.findGroceries(commandParts[1]);
         } else {
             viewListOrHelp(command);
         }
@@ -210,6 +235,10 @@ public class Parser {
     private void addOrDelGrocery(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
         case ADD:
+            String name = commandParts[1];
+            if (name == null || name.isBlank()) {
+                throw new EmptyInputException("grocery");
+            }
             Grocery grocery = new Grocery(commandParts[1]);
             ui.printAddMenu(grocery);
             groceryList.addGrocery(grocery);
@@ -250,13 +279,44 @@ public class Parser {
             groceryList.editCost(commandParts[1]);
             break;
 
+        case STORE:
+            groceryList.editLocation(commandParts[1]);
+            break;
+
         default:
             throw new InvalidCommandException();
         }
     }
 
     /**
-     * Handles commands related to viewing the grocery list.
+     * Handles commands related to locations.
+     *
+     * @param command Command keyword of data type Enum.
+     * @param name Location name.
+     * @throws GitException Exception thrown depending on specific error.
+     */
+    private void handleLocationCommands(GroceryCommand command, String name) throws GitException {
+        switch (command) {
+        case LOC:
+            LocationList.addLocation(name);
+            break;
+
+        case LISTL:
+            if (name.isBlank()) {
+                LocationList.listLocations();
+            } else {
+                Location location = LocationList.findLocation(name);
+                location.listGroceries();
+            }
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    /**
+     * Handles commands related to viewing the grocery list, getting help, or switching modes.
      *
      * @param command Command keyword of data type Enum.
      * @throws GitException Exception thrown depending on specific error.
@@ -301,7 +361,12 @@ public class Parser {
         }
     }
 
+    // Getters
     public boolean getIsRunning() {
         return isRunning;
+    }
+
+    public String getCurrentMode() {
+        return currentMode;
     }
 }

@@ -8,11 +8,14 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
+import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import exceptions.PastExpirationDateException;
 import grocery.Grocery;
+import grocery.location.Location;
 
 import enumerations.Mode;
+import grocery.location.LocationList;
 
 
 /**
@@ -78,7 +81,7 @@ public class Ui {
         printLine();
     }
 
-    public static void displayCommands(String selectedMode) throws GitException{
+    public static void displayCommands(String selectedMode) throws GitException {
         Mode mode;
         try {
             mode = Mode.valueOf(selectedMode.toUpperCase());;
@@ -89,19 +92,16 @@ public class Ui {
         case GROCERY:
             displayHelpForGrocery();
             System.out.println("Enter command:");
-            printLine();
             break;
 
         case CALORIES:
             displayHelpForCal();
             System.out.println("Enter command:");
-            printLine();
             break;
 
         case PROFILE:
             displayHelpForProf();
             System.out.println("Enter command:");
-            printLine();
             break;
 
         case RECIPE:
@@ -124,7 +124,6 @@ public class Ui {
      */
     public String[] processInput() {
         String commandLine = in.nextLine();
-        assert !(commandLine.isEmpty()): "User input should be read";
         String[] commandParts = commandLine.strip().split(" ", 2);
         assert commandParts.length > 0 : "Failed to read user input";
 
@@ -132,75 +131,85 @@ public class Ui {
     }
 
     /**
-     * Prints the add grocery menu
+     * Prints the add grocery menu.
      * 
-     * @param grocery The grocery to be added
+     * @param grocery The grocery to be added.
      */
     public void printAddMenu(Grocery grocery) {
-        Ui ui = Ui.getInstance();
-
         System.out.println("Do you want to include the following details?");
         System.out.println("1. Category");
         System.out.println("2. Amount");
         System.out.println("3. Location");
         System.out.println("4. Expiration Date");
         System.out.println("5. Cost");
-        System.out.println("6. Threshhold Amount");
+        System.out.println("6. Threshold Amount");
         System.out.println("7. Help");
         System.out.println("8. Skip");
         System.out.println("Please enter the number of the details you want to include:");
         System.out.println("You may enter multiple numbers. (e.g. 1234)");
         
         // Reading the user input as a string
-        String input = ui.processInput()[0];
+        String input = singleUi.processInput()[0];
         // Iterating over each character in the string
         for (char choice : input.toCharArray()) {
             switch (choice) {
             case '1':
                 System.out.println("Including Category");
-                String category = ui.promptForCategory();
+                String category = singleUi.promptForCategory();
                 grocery.setCategory(category);
                 break;
+
             case '2':
                 System.out.println("Including Amount");
-                int amount = ui.promptForAmount();
+                int amount = singleUi.promptForAmount();
                 grocery.setAmount(amount);
                 break;
+
             case '3':
                 System.out.println("Including Location");
-                String location = ui.promptForLocation();
+                Location location = singleUi.promptForLocation();
                 grocery.setLocation(location);
+                if (location != null) {
+                    location.addGrocery(grocery);
+                }
                 break;
+
             case '4':
                 System.out.println("Including Expiration Date");
-                String expiration = ui.promptForExpiration();
+                String expiration = singleUi.promptForExpiration();
                 try {
                     grocery.setExpiration(expiration);
                 } catch (PastExpirationDateException e) {
                     e.printStackTrace();
                 }
                 break;
+
             case '5':
                 System.out.println("Including Cost");
-                Double cost = ui.promptForCost();
+                Double cost = singleUi.promptForCost();
                 grocery.setCost(cost);
                 break;
+
             case '6':
                 System.out.println("Including Threshold Amount");
-                int threshold = ui.promptForThreshold();
+                int threshold = singleUi.promptForThreshold();
                 grocery.setThreshold(threshold);
                 break;
+
             case '7':
                 System.out.println("Displaying help");
-                ui.displayAddHelp();
+                singleUi.displayAddHelp();
                 break;
+
             case '8':
                 System.out.println("Skipping additional details");
                 break;
+
             default:
                 System.out.println("Invalid choice: " + choice);
                 break;
             }
+
             if (choice == '6') {
                 break;
             }
@@ -377,7 +386,7 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 weight = Double.parseDouble(input);
-                if (weight > 0 ){
+                if (weight > 0) {
                     break;
                 } else {
                     weight = 0;
@@ -495,11 +504,28 @@ public class Ui {
 
     /**
      * Prompts the user to enter the location of the grocery.
-     * @return Location of grocery in String
+     * If the location is new, it is automatically created
+     * If left blank, location is set to null.
+     *
+     * @return Location of selected grocery.
      */
-    public String promptForLocation() {
+    public Location promptForLocation() {
         System.out.println("Please enter the location (e.g. freezer first compartment)");
-        return in.nextLine().trim();
+        String name = in.nextLine().strip();
+
+        Location location;
+        try {
+            location = LocationList.findLocation(name);
+        } catch (NoSuchObjectException e1) {
+            try {
+                LocationList.addLocation(name);
+                location = LocationList.findLocation(name);
+            } catch (GitException e2) {
+                location = null;
+            }
+        }
+
+        return location;
     }
 
     /**
@@ -552,15 +578,18 @@ public class Ui {
         System.out.println(
                 "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
+                        "loc LOCATION: adds a LOCATION to track.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
                         "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
                         "th GROCERY a/AMOUNT: updates the threshold amount of GROCERY.\n" +
                         "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
+                        "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listc: shows the list sorted by price.\n" +
                         "liste: shows the list sorted by expiration date.\n" +
+                        "listl [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
                         "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
@@ -736,6 +765,52 @@ public class Ui {
     public static void printFoodAdded(Food food) {
         assert !(food.getName().isEmpty()): "food name should not be empty";
         System.out.println(food.print() + " was consumed!");
+    }
+
+    /**
+     * Prints output when a location is added to LocationList.
+     *
+     * @param name Location name.
+     */
+    public static void printLocationAdded(String name) {
+        System.out.println("New location added: " + name);
+    }
+
+    /**
+     * Prints all locations.
+     *
+     * @param locations List of locations.
+     */
+    public static void printLocationList(List<Location> locations) {
+        if (locations.isEmpty()) {
+            System.out.println("No locations are currently being tracked!");
+        } else {
+            System.out.println("Here's all the locations you are tracking:");
+            for (Location loc : locations) {
+                System.out.println(" - " + loc.getName());
+            }
+        }
+    }
+
+    /**
+     * Prints the new location set for the selected grocery.
+     *
+     * @param grocery The grocery that should be updated.
+     */
+    public static void printLocationSet(Grocery grocery) {
+        assert !grocery.getLocation().getName().isEmpty() : "Grocery location should not be empty";
+        System.out.println(grocery.getName() + " stored in " + grocery.getLocation().getName());
+    }
+
+    public static void printGroceriesFound(List<Grocery> groceries, String key) {
+        if (groceries.isEmpty()) {
+            System.out.println("No groceries contain: " + key);
+        } else {
+            System.out.println("Here are the groceries containing: " + key);
+            for (Grocery grocery: groceries) {
+                System.out.println(" - " + grocery.printGrocery());
+            }
+        }
     }
 
 

@@ -9,31 +9,16 @@ public class CommandWrongFormatException extends GitException {
     /**
      * Constructs CommandWrongFormatException.
      */
-    public CommandWrongFormatException(String command) {
-        message = printWrongFormatFix(command);
+    public CommandWrongFormatException(String command, String parameter) {
+        message = printWrongFormatFix(command, parameter);
     }
 
     /**
      * Creates a message that reminds the user of the proper command format.
      */
-    public String printWrongFormatFix(String command) {
-        StringBuilder message = new StringBuilder();
-        message.append("Command is in the wrong format, type \"help\" for more information.");
-        message.append(System.lineSeparator());
-        switch(command) {
-        case ("exp"):
-            message.append("exp needs 'd/'");
-            break;
-        case ("amt"):
-            message.append("amt needs 'a/'");
-            break;
-        case ("use"):
-            message.append("use needs 'a/'");
-            break;
-        default:
-            // Do nothing
-        }
-
-        return message.toString();
+    public String printWrongFormatFix(String command, String parameter) {
+        return "Command is in the wrong format, type \"help\" for more information." +
+                System.lineSeparator() +
+                command + " needs '" + parameter + "'";
     }
 }

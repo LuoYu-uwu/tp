@@ -148,30 +148,37 @@ public class Ui {
      *
      * @return the cost to be set for the grocery.
      */
-    public String promptForCost() {
-        System.out.println("Please enter the cost (e.g., $1.20):");
-        String price = in.nextLine().trim();
-        try {
-            return convertCost(price);
-        } catch (GitException e) {
-            System.out.println("Cost entered is invalid!");
-            return promptForCost();
+    public double promptForCost() {
+        System.out.println("Please enter the cost (e.g., $1.20) or nil:");
+        double cost = 0;
+        for (int i = 0; i < 5; i++) {
+            String price = in.nextLine().trim();
+            if (price.equals("nil")) {
+                break;
+            }
+            try {
+                cost = convertCost(price);
+                break;
+            } catch (GitException e) {
+                System.out.println("Cost entered is invalid!");
+                System.out.println("Please enter the cost (e.g., $1.20):");
+            }
         }
+        return cost;
     }
 
     /**
-     * Removes dollar sign from input cost and store in 2 decimal places.
+     * Removes dollar sign from input cost and convert to double.
      *
      * @param price Input cost entered by user.
      * @return Cost in desired format.
      * @throws GitException If there is no Dollar sign or cost entered is not numeric.
      */
-    private String convertCost(String price) throws GitException{
+    private double convertCost(String price) throws GitException{
         if(price.contains("$")) {
             String formattedPrice = price.replace("$", "");
             try {
-                double cost = Double.parseDouble(formattedPrice);
-                return String.format("%.2f", cost);//format the money value to 2dp
+                return Double.parseDouble(formattedPrice);
             } catch (NumberFormatException nfe) {
                 throw new InvalidCostException();
             }

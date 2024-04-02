@@ -10,4 +10,12 @@ What is your name?
 - - - - -
 Hello James Gosling!
 - - - - -
+Here are some ways you can use our app!
+grocery: manages your calories.
+calories: manages your calories intake.
+profile: manages your profile
+exit: exits the program.
+
+What mode would you like to switch to?
 Please select a mode: grocery, profile, calories or recipe:
+

@@ -6,8 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import exceptions.GitException;
+import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
+import food.Food;
+import exceptions.PastExpirationDateException;
 import grocery.Grocery;
+
+import enumerations.Mode;
 
 
 /**
@@ -17,7 +22,8 @@ public class Ui {
     // ATTRIBUTES
     public static final String DIVIDER = "- - - - -";
     private static Ui singleUi = null;
-    private Scanner in;
+    private static Scanner in;
+    private static String userName;
 
     // METHODS
     /**
@@ -37,6 +43,10 @@ public class Ui {
         return singleUi;
     }
 
+    public static String getUserName() {
+        return userName;
+    }
+
     /**
      * Prints welcome message.
      */
@@ -53,8 +63,9 @@ public class Ui {
         System.out.println("Hello from GiT");
         System.out.println("What is your name?");
         printLine();
-        String userName = in.nextLine();
+        userName = in.nextLine();
         printHello(userName);
+        displayHelp();
     }
 
     /**
@@ -64,11 +75,46 @@ public class Ui {
      */
     public void printHello(String userName) {
         System.out.println("Hello " + userName + "!");
-
-        displayHelp();
-        System.out.println("Enter command:");
-
         printLine();
+    }
+
+    public static void displayCommands(String selectedMode) throws GitException{
+        Mode mode;
+        try {
+            mode = Mode.valueOf(selectedMode.toUpperCase());;
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+        switch (mode) {
+        case GROCERY:
+            displayHelpForGrocery();
+            System.out.println("Enter command:");
+            printLine();
+            break;
+
+        case CALORIES:
+            displayHelpForCal();
+            System.out.println("Enter command:");
+            printLine();
+            break;
+
+        case PROFILE:
+            displayHelpForProf();
+            System.out.println("Enter command:");
+            printLine();
+            break;
+
+        case RECIPE:
+            System.out.println("Enter command:");
+            break;
+
+        case EXIT:
+            System.out.println("Enter anything again to confirm exit");
+            break;
+
+        default:
+            throw new InvalidCommandException();
+        }
     }
 
     /**
@@ -83,6 +129,82 @@ public class Ui {
         assert commandParts.length > 0 : "Failed to read user input";
 
         return commandParts;
+    }
+
+    /**
+     * Prints the add grocery menu
+     * 
+     * @param grocery The grocery to be added
+     */
+    public void printAddMenu(Grocery grocery) {
+        Ui ui = Ui.getInstance();
+
+        System.out.println("Do you want to include the following details?");
+        System.out.println("1. Category");
+        System.out.println("2. Amount");
+        System.out.println("3. Location");
+        System.out.println("4. Expiration Date");
+        System.out.println("5. Cost");
+        System.out.println("6. Threshhold Amount");
+        System.out.println("7. Help");
+        System.out.println("8. Skip");
+        System.out.println("Please enter the number of the details you want to include:");
+        System.out.println("You may enter multiple numbers. (e.g. 1234)");
+        
+        // Reading the user input as a string
+        String input = ui.processInput()[0];
+        // Iterating over each character in the string
+        for (char choice : input.toCharArray()) {
+            switch (choice) {
+            case '1':
+                System.out.println("Including Category");
+                String category = ui.promptForCategory();
+                grocery.setCategory(category);
+                break;
+            case '2':
+                System.out.println("Including Amount");
+                int amount = ui.promptForAmount();
+                grocery.setAmount(amount);
+                break;
+            case '3':
+                System.out.println("Including Location");
+                String location = ui.promptForLocation();
+                grocery.setLocation(location);
+                break;
+            case '4':
+                System.out.println("Including Expiration Date");
+                String expiration = ui.promptForExpiration();
+                try {
+                    grocery.setExpiration(expiration);
+                } catch (PastExpirationDateException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case '5':
+                System.out.println("Including Cost");
+                Double cost = ui.promptForCost();
+                grocery.setCost(cost);
+                break;
+            case '6':
+                System.out.println("Including Threshold Amount");
+                int threshold = ui.promptForThreshold();
+                grocery.setThreshold(threshold);
+                break;
+            case '7':
+                System.out.println("Displaying help");
+                ui.displayAddHelp();
+                break;
+            case '8':
+                System.out.println("Skipping additional details");
+                break;
+            default:
+                System.out.println("Invalid choice: " + choice);
+                break;
+            }
+            if (choice == '6') {
+                break;
+            }
+        }
     }
 
     /**
@@ -144,40 +266,231 @@ public class Ui {
     }
 
     /**
-     * Prompts the user to enter the cost of the grocery until a valid cost is given.
+     * Prompts the user to enter the cost of the grocery for at most 5 times.
+     * If invalid value is entered for the 6th time, auto set the cost to 0.
      *
      * @return the cost to be set for the grocery.
      */
-    public String promptForCost() {
-        System.out.println("Please enter the cost (e.g., $1.20):");
-        String price = in.nextLine().trim();
-        try {
-            return convertCost(price);
-        } catch (GitException e) {
-            System.out.println("Cost entered is invalid!");
-            return promptForCost();
+    public double promptForCost() {
+        System.out.println("Please enter the cost (e.g., $1.20) or nil:");
+        double cost = 0;
+        for (int i = 0; i < 5; i++) {
+            String price = in.nextLine().trim();
+            if (price.equals("nil")) {
+                break;
+            }
+            try {
+                cost = convertCost(price);
+                if (cost >= 0 ){
+                    break;
+                } else {
+                    cost = 0;
+                    System.out.println("Cost entered is invalid!");
+                    System.out.println("Please enter the cost (e.g., $1.20) or nil:");
+                }
+            } catch (GitException e) {
+                System.out.println(e.getMessage());
+            }
         }
+        return cost;
     }
 
     /**
-     * Removes dollar sign from input cost and store in 2 decimal places.
+     * Removes dollar sign from input cost and convert to double.
      *
      * @param price Input cost entered by user.
      * @return Cost in desired format.
      * @throws GitException If there is no Dollar sign or cost entered is not numeric.
      */
-    private String convertCost(String price) throws GitException{
+    private double convertCost(String price) throws GitException{
         if(price.contains("$")) {
             String formattedPrice = price.replace("$", "");
             try {
-                double cost = Double.parseDouble(formattedPrice);
-                return String.format("%.2f", cost);//format the money value to 2dp
+                return Double.parseDouble(formattedPrice);
             } catch (NumberFormatException nfe) {
                 throw new InvalidCostException();
             }
         } else {
             throw new InvalidCostException();
         }
+    }
+
+    /**
+     * Prompts user for threshold amount.
+     */
+    public int promptForThreshold(){
+        System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+        int threshold = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equals("nil")) {
+                break;
+            }
+            try {
+                threshold = Integer.parseInt(input);
+                if (threshold >= 0 ){
+                    break;
+                } else {
+                    threshold = 0;
+                    System.out.println("Amount entered is invalid!");
+                    System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Amount entered is invalid!");
+                System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+            }
+        }
+        return threshold;
+    }
+
+    public double promptForCalories() {
+        System.out.println("Please enter the calories of the food in kcal:");
+        double calories = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                calories = Double.parseDouble(input);
+                if (calories > 0 ){
+                    break;
+                } else {
+                    calories = 0;
+                    System.out.println("Calories entered is invalid!");
+                    System.out.println("Please enter the calories of the food in kcal:");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Calories entered is invalid!");
+                System.out.println("Please enter the calories of the food in kcal:");
+            }
+        }
+        return calories;
+    }
+
+    public String promptForName() {
+        System.out.println("Please enter your name");
+        return in.nextLine().trim();
+    }
+
+    public double promptForWeight() {
+        System.out.println("Please enter your weight in KG:");
+        double weight = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                weight = Double.parseDouble(input);
+                if (weight > 0 ){
+                    break;
+                } else {
+                    weight = 0;
+                    System.out.println("Weight entered is invalid!");
+                    System.out.println("Please enter your weight in KG:");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Weight entered is invalid!");
+                System.out.println("Please enter your weight in KG:");
+            }
+        }
+        return weight;
+    }
+
+    public double promptForHeight() {
+        System.out.println("Please enter your height in cm:");
+        double height = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                height = Double.parseDouble(input);
+                if (height > 0 ){
+                    break;
+                } else {
+                    height = 0;
+                    System.out.println("Height entered is invalid!");
+                    System.out.println("Please enter your height in cm:");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Height entered is invalid!");
+                System.out.println("Please enter your height in cm:");
+            }
+        }
+        return height;
+    }
+
+    public int promptForAge() {
+        System.out.println("Please enter your age in years:");
+        int age = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                age = Integer.parseInt(input);
+                if (age > 0 ){
+                    break;
+                } else {
+                    age = 0;
+                    System.out.println("Age entered is invalid!");
+                    System.out.println("Please enter your age in years:");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Age entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return age;
+    }
+
+    public String promptForGender() {
+        System.out.println("Please enter your gender (e.g. F):");
+        String gender = "";
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.length() == 1 &&
+                    (input.equalsIgnoreCase("F")
+                            || input.equalsIgnoreCase("M"))) {
+                gender = input;
+                break;
+            } else {
+                System.out.println("Gender entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return gender;
+    }
+
+    public String promptForAim() {
+        System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
+        String aim = "";
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equalsIgnoreCase("lose")
+                    || input.equalsIgnoreCase("maintain")
+                    || input.equalsIgnoreCase("gain")) {
+                aim = input;
+                break;
+            } else {
+                System.out.println("Gender entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return aim;
+    }
+
+    public String promptForActiveness() {
+        System.out.println("Please enter your activeness " +
+                "(e.g. inactive/light/moderate/active/very):");
+        String activeness = "";
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equalsIgnoreCase("inactive")
+                    || input.equalsIgnoreCase("light")
+                    || input.equalsIgnoreCase("moderate")
+                    || input.equalsIgnoreCase("active")
+                    || input.equalsIgnoreCase("very")) {
+                activeness = input;
+                break;
+            } else {
+                System.out.println("Gender entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return activeness;
     }
 
     /**
@@ -223,24 +536,87 @@ public class Ui {
         return year + "-" + month + "-" + day;
     }
 
+    public static String switchMode() throws GitException {
+        System.out.println("What mode would you like to switch to?");
+        System.out.println("Please select a mode: " +
+                "grocery, profile, calories or recipe:");
+        String newMode = in.nextLine().trim();
+        displayCommands(newMode);
+        return newMode;
+    }
+
     /**
      * Displays help message containing all possible commands.
      */
-    public void displayHelp() {
+    public static void displayHelpForGrocery() {
         System.out.println(
-                "Here are some ways you can use this app!\n" +
+                "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
-                        "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY\n" +
+                        "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
+                        "th GROCERY a/AMOUNT: updates the threshold amount of GROCERY.\n" +
                         "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
-                        "listC: shows the list sorted by price.\n" +
+                        "listc: shows the list sorted by price.\n" +
+                        "liste: shows the list sorted by expiration date.\n" +
+                        "expiring: shows a list of groceries that are expiring soon.\n" +
+                        "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
+                        "switch: switches the mode.\n" +
                         "help: view all the possible commands."
         );
     }
+
+    public static void displayHelpForCal() {
+        System.out.println(
+                "Here are some ways you can manage your calories intake!\n" +
+                        "eat FOOD: adds the food that you have eaten.\n" +
+                        "view: adds the food you have eaten and total calories intake.\n" +
+                        "switch: switches the mode.\n" +
+                        "exit: exits the program.\n" +
+                        "help: view all the possible commands for calories management."
+        );
+    }
+
+    public static void displayHelpForProf() {
+        System.out.println(
+                "Here are some ways you can manage your profile!\n" +
+                        "update: stores information needed to manage your calories intake.\n" +
+                        "view: view your profile details.\n" +
+                        "switch: switches the mode.\n" +
+                        "exit: exits the program.\n" +
+                        "help: view all the possible commands for profile management."
+        );
+    }
+
+    public static void displayHelp() {
+        System.out.println(
+                "Here are some ways you can use our app!\n" +
+                        "grocery: manages your calories.\n" +
+                        "calories: manages your calories intake.\n" +
+                        "profile: manages your profile.\n" +
+                        "exit: exits the program.\n"
+        );
+    }
+
+    /**
+     * Display help message for the user when adding grocery.
+     */
+    public void displayAddHelp() {
+        System.out.println(
+            "Here are some details you can include when adding a grocery:\n" +
+            "Category - Enter the category of the grocery.\n" +
+            "Amount - Enter the amount of the grocery.\n" +
+            "Location - Enter the location of the grocery.\n" +
+            "Expiration Date - Enter the expiration date of the grocery.\n" +
+            "Cost - Enter the cost of the grocery.\n" +
+            "Minimum Amount - Enter the minimum amount of the grocery to set reminder.\n" +
+            "Skip - Skip adding additional details."
+        );
+    }
+
 
     /**
      * Prints output after setting the selected grocery's expiration date.
@@ -275,13 +651,23 @@ public class Ui {
     }
 
     /**
-     * Prints output after setting the selected grocery's amount.
+     * Prints the new amount set for the selected grocery.
      *
      * @param grocery The grocery that should be updated.
      */
     public static void printAmtSet(Grocery grocery) {
         assert grocery.getAmount() >= 0 : "grocery amount should not be empty";
         System.out.println(grocery.getName() + ": " + grocery.getAmount());
+    }
+
+    /**
+     * Prints the new threshold set for the selected grocery.
+     *
+     * @param grocery The grocery that should be updated.
+     */
+    public static void printThresholdSet(Grocery grocery) {
+        System.out.println(grocery.getName() + "'s threshold is now " +
+                grocery.getThreshold() + " " + grocery.getUnit());
     }
 
     /**
@@ -314,6 +700,27 @@ public class Ui {
     }
 
     /**
+     * Prints all groceries with amount less than threshold set.
+     *
+     * @param groceries An array list of groceries.
+     */
+    public static void printLowStocks(List<Grocery> groceries) {
+        assert !groceries.isEmpty() : "grocery list should not be empty";
+        System.out.println("Time to top up these groceries!");
+        for (Grocery grocery: groceries) {
+            if (grocery.isLow()) {
+                System.out.println(" - " + grocery.getName()
+                        + " only left: " +grocery.getAmount());
+            }
+        }
+    }
+
+    public static void lowStockAlert(Grocery grocery) {
+        System.out.println(grocery.getName() + " is low in stock!");
+        System.out.println("There's only " +grocery.getAmount() + " left");
+    }
+
+    /**
      * Prints output when the selected grocery is removed.
      *
      * @param grocery The grocery that is removed.
@@ -326,10 +733,16 @@ public class Ui {
         System.out.println("You now have " + groceries.size() + " groceries left");
     }
 
+    public static void printFoodAdded(Food food) {
+        assert !(food.getName().isEmpty()): "food name should not be empty";
+        System.out.println(food.print() + " was consumed!");
+    }
+
+
     /**
      * Prints divider for user readability.
      */
-    public void printLine() {
+    public static void printLine() {
         System.out.println(DIVIDER);
     }
 }

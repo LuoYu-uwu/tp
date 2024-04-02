@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 
 /**
@@ -202,9 +203,12 @@ public class GroceryList {
         grocery.setAmount(amount);
         if (amount == 0) {
             Ui.printAmtDepleted(grocery);
+        } else if (grocery.isLow()){
+            Ui.lowStockAlert(grocery);
         } else {
             Ui.printAmtSet(grocery);
         }
+
     }
 
     /**
@@ -214,18 +218,36 @@ public class GroceryList {
      * @throws GitException If the input new cost is not numeric.
      */
     public void editCost(String details) throws GitException {
-        // Assuming the format is "cost GROCERY $PRICE"
-        System.out.println(details);
         String[] costParts = checkDetails(details, "cost", "\\$");
         Grocery grocery = getGrocery(costParts[0].strip());
         String price = costParts[1].strip();
 
         try {
             double cost = Double.parseDouble(price);
-            grocery.setCost(String.format("%.2f", cost));
+            grocery.setCost(cost);
             Ui.printCostSet(grocery);
         } catch (NumberFormatException e) {
             throw new InvalidCostException();
+        }
+    }
+
+    /**
+     * Updates the threshold of an existing grocery.
+     *
+     * @param details A string containing grocery name and details.
+     * @throws GitException If the input new cost is not numeric.
+     */
+    public void editThreshold(String details) throws GitException {
+        String [] amtParts = checkDetails(details, "th", "a/");
+        Grocery grocery = getGrocery(amtParts[0].strip());
+        String thresholdString = amtParts[1].strip();
+
+        try {
+            int threshold = Integer.parseInt(thresholdString);
+            grocery.setThreshold(threshold);
+            Ui.printThresholdSet(grocery);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
         }
     }
 
@@ -242,12 +264,58 @@ public class GroceryList {
     }
 
     /**
+     * Lists all the groceries that are low in stock.
+     */
+    public void listLowStocks() {
+        int size = groceries.size();
+        if (size == 0) {
+            Ui.printNoGrocery();
+        } else {
+            Ui.printLowStocks(groceries);
+        }
+    }
+
+    /**
      * Sorts the groceries by expiration date.
      */
     public void sortByExpiration() {
         Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
+        Ui.printGroceryList(groceries);
     }
 
+    /**
+     * Gets a list of groceries expiring in the next 3 days.
+     *
+     * @return A list of groceries expiring within the next 3 days.
+     */
+    public List<Grocery> getGroceriesExpiringInNext3Days() {
+        LocalDate today = LocalDate.now();
+        LocalDate threeDaysFromNow = today.plusDays(3);
+
+        return groceries.stream()
+                .filter(grocery -> {
+                    LocalDate expirationDate = grocery.getExpiration();
+                    return !expirationDate.isBefore(today) && !expirationDate.isAfter(threeDaysFromNow);
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * display the groceries that are expiring in the next 3 days.
+     */
+    public void displayGroceriesExpiringInNext3Days() {
+        List<Grocery> groceriesExpiringInNext3Days = getGroceriesExpiringInNext3Days();
+        if (groceriesExpiringInNext3Days.isEmpty()) {
+            Ui.printNoGrocery();
+        } else {
+            System.out.println("Here are the groceries expiring in the next 3 days:");
+            Ui.printGroceryList(groceriesExpiringInNext3Days);
+        }
+    }
+
+    /**
+     * Sorts the groceries by descending cost.
+     */
     public void sortByCost() {
         int size = groceries.size();
         if (size == 0) {

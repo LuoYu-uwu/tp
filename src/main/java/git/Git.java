@@ -27,15 +27,26 @@ public class Git {
      */
     private void run() {
         ui.printWelcome();
+        String mode = null;
+        boolean isInitialised = false;
+        while (!isInitialised) {
+            try {
+                mode = Ui.switchMode();
+                isInitialised = true;
+            } catch (GitException e) {
+                Ui.printLine();
+            }
+        }
         while (isRunning) {
             try {
                 String[] commandParts = parser.processCommandParts();
-                parser.executeCommand(commandParts);
+                parser.executeCommand(commandParts, mode);
                 isRunning = parser.getIsRunning();
+                mode = parser.getCurrentMode();
             } catch (GitException e) {
                 System.out.println(e.getMessage());
             } finally {
-                ui.printLine();
+                Ui.printLine();
             }
         }
     }

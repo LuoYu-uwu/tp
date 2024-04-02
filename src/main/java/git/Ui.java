@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import exceptions.GitException;
+import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
 import food.Food;
 import grocery.Grocery;
@@ -48,7 +49,7 @@ public class Ui {
     /**
      * Prints welcome message.
      */
-    public String printWelcome() {
+    public String printWelcome() throws GitException {
         final String gitlogo =
                 "   ______   _  _________\n" +
                 " .' ___  | (_)|  _   _  |\n" +
@@ -80,17 +81,26 @@ public class Ui {
         printLine();
     }
 
-    public static void displayCommands(String selectedMode) {
-        Mode mode = Mode.valueOf(selectedMode.toUpperCase());
+    public static void displayCommands(String selectedMode) throws GitException{
+        Mode mode;
+        try {
+            mode = Mode.valueOf(selectedMode.toUpperCase());;
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
         switch (mode) {
         case GROCERY:
             displayHelpForGrocery();
             System.out.println("Enter command:");
             printLine();
             break;
+
         case CALORIES:
             System.out.println("Enter command:");
             break;
+
+        default:
+            throw new InvalidCommandException();
         }
     }
 

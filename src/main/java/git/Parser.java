@@ -63,17 +63,27 @@ public class Parser {
      */
     public void executeCommand(String[] commandParts, String selectedMode) throws GitException {
         this.currentMode = selectedMode;
-        Mode mode = Mode.valueOf(currentMode.toUpperCase());
+        Mode mode;
+        try {
+            mode = Mode.valueOf(currentMode.toUpperCase());;
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
         switch (mode) {
         case GROCERY:
             groceryManagement(commandParts);
             break;
+
         case CALORIES:
             caloriesManagement(commandParts);
             break;
+
         case PROFILE:
             profileManagement(commandParts);
             break;
+
+        default:
+            throw new InvalidCommandException();
         }
     }
 

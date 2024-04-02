@@ -267,6 +267,7 @@ public class Ui {
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listC: shows the list sorted by price.\n" +
+                        "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands."
         );

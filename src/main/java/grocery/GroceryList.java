@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 
 /**
@@ -223,7 +224,7 @@ public class GroceryList {
 
         try {
             double cost = Double.parseDouble(price);
-            grocery.setCost(String.format("%.2f", cost));
+            grocery.setCost(cost);
             Ui.printCostSet(grocery);
         } catch (NumberFormatException e) {
             throw new InvalidCostException();
@@ -279,6 +280,37 @@ public class GroceryList {
      */
     public void sortByExpiration() {
         Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
+        Ui.printGroceryList(groceries);
+    }
+
+    /**
+     * Gets a list of groceries expiring in the next 3 days.
+     *
+     * @return A list of groceries expiring within the next 3 days.
+     */
+    public List<Grocery> getGroceriesExpiringInNext3Days() {
+        LocalDate today = LocalDate.now();
+        LocalDate threeDaysFromNow = today.plusDays(3);
+
+        return groceries.stream()
+                .filter(grocery -> {
+                    LocalDate expirationDate = grocery.getExpiration();
+                    return !expirationDate.isBefore(today) && !expirationDate.isAfter(threeDaysFromNow);
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * display the groceries that are expiring in the next 3 days.
+     */
+    public void displayGroceriesExpiringInNext3Days() {
+        List<Grocery> groceriesExpiringInNext3Days = getGroceriesExpiringInNext3Days();
+        if (groceriesExpiringInNext3Days.isEmpty()) {
+            Ui.printNoGrocery();
+        } else {
+            System.out.println("Here are the groceries expiring in the next 3 days:");
+            Ui.printGroceryList(groceriesExpiringInNext3Days);
+        }
     }
 
     /**

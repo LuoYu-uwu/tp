@@ -42,6 +42,20 @@ public class Grocery {
         this.location = location;
     }
 
+    /**
+     * Basic constructor for Grocery.
+     * 
+     * @param name Name.
+     */
+    public Grocery(String name) {
+        this.name = name;
+        this.amount = 0;
+        this.expiration = null;
+        this.category = "";
+        this.cost = 0;
+        this.location = null;
+    }
+
     // Getters and setters
     public String getName() {
         return name;
@@ -69,6 +83,11 @@ public class Grocery {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+        setUnit(category);
     }
 
     public void setAmount(int amount) {
@@ -139,13 +158,13 @@ public class Grocery {
     }
 
     /**
-     * Converts the cost from type String to double and store it.
+     * Sets the cost of the grocery.
      *
-     * @param cost The cost of grocery in String type.
+     * @param cost The cost of the grocery as a double.
      */
-    public void setCost(String cost) {
-        assert !(cost.isEmpty()) : "Cost entered is invalid!";
-        this.cost = Double.parseDouble(cost);
+    public void setCost(double cost) {
+        assert cost >= 0 : "Cost entered is invalid!"; // Ensure that the cost is non-negative.
+        this.cost = cost;
     }
 
     public void setLocation(String location) {
@@ -160,7 +179,12 @@ public class Grocery {
     public String printGrocery() {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
-        String locationString = ", location: " + location;
+        String locationString;
+        if(this.location != null) {
+            locationString = ", location: " + this.location;
+        } else {
+            locationString = ", location not set";
+        }
 
         String amountString;
         if (amount != 0) {

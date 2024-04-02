@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import exceptions.GitException;
 import exceptions.InvalidCostException;
+import exceptions.PastExpirationDateException;
 import grocery.Grocery;
 
 
@@ -83,6 +84,82 @@ public class Ui {
         assert commandParts.length > 0 : "Failed to read user input";
 
         return commandParts;
+    }
+
+    /**
+     * Prints the add grocery menu
+     * 
+     * @param grocery The grocery to be added
+     */
+    public void printAddMenu(Grocery grocery) {
+        Ui ui = Ui.getInstance();
+
+        System.out.println("Do you want to include the following details?");
+        System.out.println("1. Category");
+        System.out.println("2. Amount");
+        System.out.println("3. Location");
+        System.out.println("4. Expiration Date");
+        System.out.println("5. Cost");
+        System.out.println("6. Threshhold Amount");
+        System.out.println("7. Help");
+        System.out.println("8. Skip");
+        System.out.println("Please enter the number of the details you want to include:");
+        System.out.println("You may enter multiple numbers. (e.g. 1234)");
+        
+        // Reading the user input as a string
+        String input = ui.processInput()[0];
+        // Iterating over each character in the string
+        for (char choice : input.toCharArray()) {
+            switch (choice) {
+            case '1':
+                System.out.println("Including Category");
+                String category = ui.promptForCategory();
+                grocery.setCategory(category);
+                break;
+            case '2':
+                System.out.println("Including Amount");
+                int amount = ui.promptForAmount();
+                grocery.setAmount(amount);
+                break;
+            case '3':
+                System.out.println("Including Location");
+                String location = ui.promptForLocation();
+                grocery.setLocation(location);
+                break;
+            case '4':
+                System.out.println("Including Expiration Date");
+                String expiration = ui.promptForExpiration();
+                try {
+                    grocery.setExpiration(expiration);
+                } catch (PastExpirationDateException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case '5':
+                System.out.println("Including Cost");
+                Double cost = ui.promptForCost();
+                grocery.setCost(cost);
+                break;
+            case '6':
+                System.out.println("Including Threshold Amount");
+                int threshold = ui.promptForThreshold();
+                grocery.setThreshold(threshold);
+                break;
+            case '7':
+                System.out.println("Displaying help");
+                ui.displayAddHelp();
+                break;
+            case '8':
+                System.out.println("Skipping additional details");
+                break;
+            default:
+                System.out.println("Invalid choice: " + choice);
+                break;
+            }
+            if (choice == '6') {
+                break;
+            }
+        }
     }
 
     /**
@@ -240,19 +317,6 @@ public class Ui {
     }
 
     /**
-     * Reads expiration date from user input.
-     *
-     * @param year Year of expiration.
-     * @param month Month of expiration.
-     * @param day Day of expiration.
-     * @return Formatted expiration date.
-     */
-    private String formatExpirationDate(String year, String month, String day) {
-        // This method can be enhanced to validate the date components
-        return year + "-" + month + "-" + day;
-    }
-
-    /**
      * Displays help message containing all possible commands.
      */
     public void displayHelp() {
@@ -267,11 +331,30 @@ public class Ui {
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listC: shows the list sorted by price.\n" +
+                        "listE: shows the list sorted by expiration date.\n" +
+                        "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands."
         );
     }
+
+    /**
+     * Display help message for the user when adding grocery.
+     */
+    public void displayAddHelp() {
+        System.out.println(
+            "Here are some details you can include when adding a grocery:\n" +
+            "Category - Enter the category of the grocery.\n" +
+            "Amount - Enter the amount of the grocery.\n" +
+            "Location - Enter the location of the grocery.\n" +
+            "Expiration Date - Enter the expiration date of the grocery.\n" +
+            "Cost - Enter the cost of the grocery.\n" +
+            "Minimum Amount - Enter the minimum amount of the grocery to set reminder.\n" +
+            "Skip - Skip adding additional details."
+        );
+    }
+
 
     /**
      * Prints output after setting the selected grocery's expiration date.

@@ -1,6 +1,8 @@
 package git;
 
 
+import enumerations.CalCommand;
+import enumerations.ProfileCommand;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import food.Food;
@@ -30,7 +32,7 @@ public class Parser {
     public Parser(Ui ui) {
         groceryList = new GroceryList();
         foodList = new FoodList();
-        String userName = ui.getUserName();
+        String userName = Ui.getUserName();
         userInfo = new UserInfo(userName);
         this.ui = ui;
         isRunning = true;
@@ -82,31 +84,54 @@ public class Parser {
             profileManagement(commandParts);
             break;
 
+        case MODE:
+            currentMode = Ui.switchMode();
+            break;
+
+        case HELP:
+            Ui.displayHelp();
+            break;
+
+        case EXIT:
+            System.out.println("bye bye!");
+            isRunning = false;
+            break;
+
         default:
             throw new InvalidCommandException();
         }
     }
 
     public void caloriesManagement(String[] commandParts) throws GitException {
-        String command = commandParts[0];
+        CalCommand command;
+        try {
+            command = CalCommand.valueOf(commandParts[0].toUpperCase());
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+        //String command = commandParts[0];
         switch (command) {
-        case "eat":
+        case EAT:
             double calories = ui.promptForCalories();
             Food food = new Food(commandParts[1], calories);
             foodList.addFood(food);
             userInfo.consumptionOfCalories(food);
             break;
 
-        case "view":
+        case VIEW:
             foodList.printFoods();
             System.out.println("You have consumed " + userInfo.getCurrentCalories() + " calories for today");
             break;
 
-        case "switch":
+        case SWITCH:
             currentMode = Ui.switchMode();
             break;
 
-        case "exit":
+        case HELP:
+            Ui.displayHelpForCal();
+            break;
+
+        case EXIT:
             System.out.println("bye bye!");
             isRunning = false;
             break;
@@ -117,23 +142,37 @@ public class Parser {
     }
 
     public void profileManagement(String[] commandParts) throws GitException {
-        String command = commandParts[0];
+        ProfileCommand command;
+        try {
+            command = ProfileCommand.valueOf(commandParts[0].toUpperCase());
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
         switch (command) {
-        case "update":
+        case UPDATE:
+            String name = ui.promptForName();
             double weight = ui.promptForWeight();
             double height = ui.promptForHeight();
             int age = ui.promptForAge();
             String gender = ui.promptForGender();
             String activeness = ui.promptForActiveness();
             String aim = ui.promptForAim();
-            userInfo.updateInfo(weight,height,age,gender,activeness,aim);
+            userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
             break;
 
-        case "switch":
+        case VIEW:
+            System.out.println(userInfo.viewProfile());
+            break;
+
+        case SWITCH:
             currentMode = Ui.switchMode();
             break;
 
-        case "exit":
+        case HELP:
+            Ui.displayHelpForProf();
+            break;
+
+        case EXIT:
             System.out.println("bye bye!");
             isRunning = false;
             break;

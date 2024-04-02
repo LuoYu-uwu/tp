@@ -1,5 +1,5 @@
 package enumerations;
 
 public enum Mode {
-    GROCERY, PROFILE, CALORIES, RECIPE
+    GROCERY, PROFILE, CALORIES, RECIPE, MODE, EXIT, HELP
 }

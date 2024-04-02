@@ -26,11 +26,16 @@ public class Git {
      * Runs Git.
      */
     private void run() {
+        ui.printWelcome();
         String mode = null;
-        try {
-            mode = ui.printWelcome();
-        } catch (GitException e) {
-            System.out.println(e.getMessage());
+        boolean isInitialised = false;
+        while (!isInitialised) {
+            try {
+                mode = Ui.switchMode();
+                isInitialised = true;
+            } catch (GitException e) {
+                Ui.printLine();
+            }
         }
         while (isRunning) {
             try {
@@ -41,7 +46,7 @@ public class Git {
             } catch (GitException e) {
                 System.out.println(e.getMessage());
             } finally {
-                ui.printLine();
+                Ui.printLine();
             }
         }
     }

@@ -74,8 +74,9 @@ public class UserInfo {
         return currentCalories;
     }
 
-    public void updateInfo(double weight, double height, int age,
+    public void updateInfo(String name, double weight, double height, int age,
                            String gender, String activeness, String aim) {
+        setName(name);
         setWeight(weight);
         setHeight(height);
         setAge(age);
@@ -144,13 +145,26 @@ public class UserInfo {
         }
     }
 
-    public void consumptionOfCalories(Food food) {
+    public void consumptionOfCalories(Food food) throws GitException{
+        if (this.weight == 0 || this.height == 0 || this.age == 0) {
+            throw new InsufficientInfoException();
+        }
         this.currentCalories = food.getCalories() + this.currentCalories;
         if (this.currentCalories > this.caloriesCap) {
             System.out.println("You have exceeded your calories intake!");
             System.out.println("You have consumed " + currentCalories + "kcal");
             System.out.println("when your target is " + caloriesCap + "kcal");
         }
+    }
+
+    public String viewProfile(){
+        String userName = "Name: " + this.name + "\n";
+        String height = "Height: " + this.height + "\n";
+        String weight = "Weight: " + this.weight + "\n";
+        String age = "Age: " + this.age + "\n";
+        String gender = "Gender: " + this.gender + "\n";
+        String target = "Target calories intake: " + this.caloriesCap;
+        return userName + height + weight + age + gender + target;
     }
 
 }

@@ -23,7 +23,7 @@ public class Ui {
     public static final String DIVIDER = "- - - - -";
     private static Ui singleUi = null;
     private static Scanner in;
-    private String userName;
+    private static String userName;
 
     // METHODS
     /**
@@ -43,14 +43,14 @@ public class Ui {
         return singleUi;
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         return userName;
     }
 
     /**
      * Prints welcome message.
      */
-    public String printWelcome() throws GitException {
+    public void printWelcome() {
         final String gitlogo =
                 "   ______   _  _________\n" +
                 " .' ___  | (_)|  _   _  |\n" +
@@ -65,11 +65,7 @@ public class Ui {
         printLine();
         userName = in.nextLine();
         printHello(userName);
-        System.out.println("Please select a mode: " +
-                "grocery, profile, calories or recipe:");
-        String selectedMode = in.nextLine().trim();
-        displayCommands(selectedMode);
-        return selectedMode;
+        displayHelp();
     }
 
     /**
@@ -97,7 +93,23 @@ public class Ui {
             break;
 
         case CALORIES:
+            displayHelpForCal();
             System.out.println("Enter command:");
+            printLine();
+            break;
+
+        case PROFILE:
+            displayHelpForProf();
+            System.out.println("Enter command:");
+            printLine();
+            break;
+
+        case RECIPE:
+            System.out.println("Enter command:");
+            break;
+
+        case EXIT:
+            System.out.println("Enter anything again to confirm exit");
             break;
 
         default:
@@ -269,7 +281,13 @@ public class Ui {
             }
             try {
                 cost = convertCost(price);
-                break;
+                if (cost >= 0 ){
+                    break;
+                } else {
+                    cost = 0;
+                    System.out.println("Cost entered is invalid!");
+                    System.out.println("Please enter the cost (e.g., $1.20) or nil:");
+                }
             } catch (GitException e) {
                 System.out.println(e.getMessage());
             }
@@ -310,7 +328,13 @@ public class Ui {
             }
             try {
                 threshold = Integer.parseInt(input);
-                break;
+                if (threshold >= 0 ){
+                    break;
+                } else {
+                    threshold = 0;
+                    System.out.println("Amount entered is invalid!");
+                    System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+                }
             } catch (NumberFormatException nfe) {
                 System.out.println("Amount entered is invalid!");
                 System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
@@ -326,13 +350,24 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 calories = Double.parseDouble(input);
-                break;
+                if (calories > 0 ){
+                    break;
+                } else {
+                    calories = 0;
+                    System.out.println("Calories entered is invalid!");
+                    System.out.println("Please enter the calories of the food in kcal:");
+                }
             } catch (NumberFormatException nfe) {
                 System.out.println("Calories entered is invalid!");
                 System.out.println("Please enter the calories of the food in kcal:");
             }
         }
         return calories;
+    }
+
+    public String promptForName() {
+        System.out.println("Please enter your name");
+        return in.nextLine().trim();
     }
 
     public double promptForWeight() {
@@ -342,7 +377,13 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 weight = Double.parseDouble(input);
-                break;
+                if (weight > 0 ){
+                    break;
+                } else {
+                    weight = 0;
+                    System.out.println("Weight entered is invalid!");
+                    System.out.println("Please enter your weight in KG:");
+                }
             } catch (NumberFormatException nfe) {
                 System.out.println("Weight entered is invalid!");
                 System.out.println("Please enter your weight in KG:");
@@ -358,7 +399,13 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 height = Double.parseDouble(input);
-                break;
+                if (height > 0 ){
+                    break;
+                } else {
+                    height = 0;
+                    System.out.println("Height entered is invalid!");
+                    System.out.println("Please enter your height in cm:");
+                }
             } catch (NumberFormatException nfe) {
                 System.out.println("Height entered is invalid!");
                 System.out.println("Please enter your height in cm:");
@@ -374,7 +421,13 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 age = Integer.parseInt(input);
-                break;
+                if (age > 0 ){
+                    break;
+                } else {
+                    age = 0;
+                    System.out.println("Age entered is invalid!");
+                    System.out.println("Please enter your age in years:");
+                }
             } catch (NumberFormatException nfe) {
                 System.out.println("Age entered is invalid!");
                 System.out.println("Please enter your age in years:");
@@ -388,7 +441,9 @@ public class Ui {
         String gender = "";
         for (int i = 0; i < 5; i++) {
             String input = in.nextLine().trim();
-            if (input.length() == 1) {
+            if (input.length() == 1 &&
+                    (input.equalsIgnoreCase("F")
+                            || input.equalsIgnoreCase("M"))) {
                 gender = input;
                 break;
             } else {
@@ -401,13 +456,41 @@ public class Ui {
 
     public String promptForAim() {
         System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
-        return in.nextLine().trim();
+        String aim = "";
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equalsIgnoreCase("lose")
+                    || input.equalsIgnoreCase("maintain")
+                    || input.equalsIgnoreCase("gain")) {
+                aim = input;
+                break;
+            } else {
+                System.out.println("Gender entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return aim;
     }
 
     public String promptForActiveness() {
         System.out.println("Please enter your activeness " +
-                "(e.g. inactive/light/moderate/active/very):):");
-        return in.nextLine().trim();
+                "(e.g. inactive/light/moderate/active/very):");
+        String activeness = "";
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equalsIgnoreCase("inactive")
+                    || input.equalsIgnoreCase("light")
+                    || input.equalsIgnoreCase("moderate")
+                    || input.equalsIgnoreCase("active")
+                    || input.equalsIgnoreCase("very")) {
+                activeness = input;
+                break;
+            } else {
+                System.out.println("Gender entered is invalid!");
+                System.out.println("Please enter your age in years:");
+            }
+        }
+        return activeness;
     }
 
     /**
@@ -453,11 +536,12 @@ public class Ui {
         return year + "-" + month + "-" + day;
     }
 
-    public static String switchMode() {
+    public static String switchMode() throws GitException {
         System.out.println("What mode would you like to switch to?");
         System.out.println("Please select a mode: " +
                 "grocery, profile, calories or recipe:");
         String newMode = in.nextLine().trim();
+        displayCommands(newMode);
         return newMode;
     }
 
@@ -475,12 +559,45 @@ public class Ui {
                         "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
-                        "listC: shows the list sorted by price.\n" +
-                        "listE: shows the list sorted by expiration date.\n" +
+                        "listc: shows the list sorted by price.\n" +
+                        "liste: shows the list sorted by expiration date.\n" +
                         "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
+                        "switch: switches the mode.\n" +
                         "help: view all the possible commands."
+        );
+    }
+
+    public static void displayHelpForCal() {
+        System.out.println(
+                "Here are some ways you can manage your calories intake!\n" +
+                        "eat FOOD: adds the food that you have eaten.\n" +
+                        "view: adds the food you have eaten and total calories intake.\n" +
+                        "switch: switches the mode.\n" +
+                        "exit: exits the program.\n" +
+                        "help: view all the possible commands for calories management."
+        );
+    }
+
+    public static void displayHelpForProf() {
+        System.out.println(
+                "Here are some ways you can manage your profile!\n" +
+                        "update: stores information needed to manage your calories intake.\n" +
+                        "view: view your profile details.\n" +
+                        "switch: switches the mode.\n" +
+                        "exit: exits the program.\n" +
+                        "help: view all the possible commands for profile management."
+        );
+    }
+
+    public static void displayHelp() {
+        System.out.println(
+                "Here are some ways you can use our app!\n" +
+                        "grocery: manages your calories.\n" +
+                        "calories: manages your calories intake.\n" +
+                        "profile: manages your profile.\n" +
+                        "exit: exits the program.\n"
         );
     }
 

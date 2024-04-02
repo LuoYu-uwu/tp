@@ -596,7 +596,7 @@ public class Ui {
                 "Here are some ways you can use our app!\n" +
                         "grocery: manages your calories.\n" +
                         "calories: manages your calories intake.\n" +
-                        "profile: manages your profile\n" +
+                        "profile: manages your profile.\n" +
                         "exit: exits the program.\n"
         );
     }

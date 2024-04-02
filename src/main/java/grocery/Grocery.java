@@ -84,6 +84,10 @@ public class Grocery {
         return unit;
     }
 
+    public boolean isLow() {
+        return this.amount < this.threshold;
+    }
+
     /**
      * Set unit of the grocery based on its category.
      *

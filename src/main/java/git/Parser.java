@@ -1,6 +1,5 @@
 package git;
 
-import java.time.LocalDate;
 
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
@@ -49,14 +48,8 @@ public class Parser {
 
         switch (commandParts[0]) {
         case "add":
-            String category = ui.promptForCategory();
-            int amount = ui.promptForAmount();
-            String location = ui.promptForLocation();
-            Grocery grocery = new Grocery(commandParts[1], amount, LocalDate.now(), category, 0, location);
-            String expiration = ui.promptForExpiration();
-            String cost = ui.promptForCost();
-            grocery.setExpiration(expiration);
-            grocery.setCost(cost);
+            Grocery grocery = new Grocery(commandParts[1]);
+            ui.printAddMenu(grocery);
             groceryList.addGrocery(grocery);
             break;
 

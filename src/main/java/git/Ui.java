@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import exceptions.GitException;
 import exceptions.InvalidCostException;
+import exceptions.PastExpirationDateException;
 import grocery.Grocery;
 
 
@@ -83,6 +84,70 @@ public class Ui {
         assert commandParts.length > 0 : "Failed to read user input";
 
         return commandParts;
+    }
+
+    /**
+     * Prints the add grocery menu
+     * 
+     * @param grocery The grocery to be added
+     */
+    public void printAddMenu(Grocery grocery) {
+        Ui ui = Ui.getInstance();
+
+        System.out.println("Do you want to include the following details?");
+        System.out.println("1. Category");
+        System.out.println("2. Amount");
+        System.out.println("3. Location");
+        System.out.println("4. Expiration Date");
+        System.out.println("5. Cost");
+        System.out.println("6. Skip");
+        System.out.println("Please enter the number of the details you want to include:");
+        System.out.println("You may enter multiple numbers. (e.g. 1234)");
+        
+        // Reading the user input as a string
+        String input = ui.processInput()[0];
+        // Iterating over each character in the string
+        for (char choice : input.toCharArray()) {
+            switch (choice) {
+                case '1':
+                    System.out.println("Including Category");
+                    String category = ui.promptForCategory();
+                    grocery.setCategory(category);
+                    break;
+                case '2':
+                    System.out.println("Including Amount");
+                    int amount = ui.promptForAmount();
+                    grocery.setAmount(amount);
+                    break;
+                case '3':
+                    System.out.println("Including Location");
+                    String location = ui.promptForLocation();
+                    grocery.setLocation(location);
+                    break;
+                case '4':
+                    System.out.println("Including Expiration Date");
+                    String expiration = ui.promptForExpiration();
+                    try {
+                        grocery.setExpiration(expiration);
+                    } catch (PastExpirationDateException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case '5':
+                    System.out.println("Including Cost");
+                    String cost = ui.promptForCost();
+                    grocery.setCost(cost);
+                    break;
+                case '6':
+                    System.out.println("Skipping additional details");
+                    break;
+                default:
+                    System.out.println("Invalid choice: " + choice);
+                    break;
+            }
+            // If the choice is to skip, break out of the loop
+            if (choice == '6') break;
+        }
     }
 
     /**
@@ -208,19 +273,6 @@ public class Ui {
         // If no match found or input is already in numeric format, return original input
         // This part can be enhanced to handle invalid months.
         return month;
-    }
-
-    /**
-     * Reads expiration date from user input.
-     *
-     * @param year Year of expiration.
-     * @param month Month of expiration.
-     * @param day Day of expiration.
-     * @return Formatted expiration date.
-     */
-    private String formatExpirationDate(String year, String month, String day) {
-        // This method can be enhanced to validate the date components
-        return year + "-" + month + "-" + day;
     }
 
     /**

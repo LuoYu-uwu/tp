@@ -36,6 +36,20 @@ public class Grocery {
         this.location = location;
     }
 
+    /**
+     * Basic constructor for Grocery.
+     * 
+     * @param name Name.
+     */
+    public Grocery(String name) {
+        this.name = name;
+        this.amount = 0;
+        this.expiration = null;
+        this.category = null;
+        this.cost = 0;
+        this.location = null;
+    }
+
     // Getters and setters
     public String getName() {
         return name;
@@ -64,6 +78,10 @@ public class Grocery {
     public void setAmount(int amount) {
         assert amount >= 0 : "Amount entered is invalid!";
         this.amount = amount;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**

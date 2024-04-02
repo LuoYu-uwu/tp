@@ -111,52 +111,54 @@ public class Ui {
         // Iterating over each character in the string
         for (char choice : input.toCharArray()) {
             switch (choice) {
-                case '1':
-                    System.out.println("Including Category");
-                    String category = ui.promptForCategory();
-                    grocery.setCategory(category);
-                    break;
-                case '2':
-                    System.out.println("Including Amount");
-                    int amount = ui.promptForAmount();
-                    grocery.setAmount(amount);
-                    break;
-                case '3':
-                    System.out.println("Including Location");
-                    String location = ui.promptForLocation();
-                    grocery.setLocation(location);
-                    break;
-                case '4':
-                    System.out.println("Including Expiration Date");
-                    String expiration = ui.promptForExpiration();
-                    try {
-                        grocery.setExpiration(expiration);
-                    } catch (PastExpirationDateException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case '5':
-                    System.out.println("Including Cost");
-                    Double cost = ui.promptForCost();
-                    grocery.setCost(cost);
-                    break;
-                case '6':
-                    System.out.println("Including Threshold Amount");
-                    int threshold = ui.promptForThreshold();
-                    grocery.setThreshold(threshold);
-                    break;
-                case '7':
-                    System.out.println("Displaying help");
-                    ui.displayAddHelp();
-                    break;
-                case '8':
-                    System.out.println("Skipping additional details");
-                    break;
-                default:
-                    System.out.println("Invalid choice: " + choice);
-                    break;
+            case '1':
+                System.out.println("Including Category");
+                String category = ui.promptForCategory();
+                grocery.setCategory(category);
+                break;
+            case '2':
+                System.out.println("Including Amount");
+                int amount = ui.promptForAmount();
+                grocery.setAmount(amount);
+                break;
+            case '3':
+                System.out.println("Including Location");
+                String location = ui.promptForLocation();
+                grocery.setLocation(location);
+                break;
+            case '4':
+                System.out.println("Including Expiration Date");
+                String expiration = ui.promptForExpiration();
+                try {
+                    grocery.setExpiration(expiration);
+                } catch (PastExpirationDateException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case '5':
+                System.out.println("Including Cost");
+                Double cost = ui.promptForCost();
+                grocery.setCost(cost);
+                break;
+            case '6':
+                System.out.println("Including Threshold Amount");
+                int threshold = ui.promptForThreshold();
+                grocery.setThreshold(threshold);
+                break;
+            case '7':
+                System.out.println("Displaying help");
+                ui.displayAddHelp();
+                break;
+            case '8':
+                System.out.println("Skipping additional details");
+                break;
+            default:
+                System.out.println("Invalid choice: " + choice);
+                break;
             }
-            if (choice == '6') break;
+            if (choice == '6') {
+                break;
+            }
         }
     }
 

@@ -1,6 +1,9 @@
 package user;
 
-import exceptions.*;
+import exceptions.GitException;
+import exceptions.InsufficientInfoException;
+import exceptions.InvalidActivenessException;
+import exceptions.InvalidAimException;
 import food.Food;
 
 public class UserInfo {

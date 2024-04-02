@@ -2,8 +2,6 @@ package food;
 
 import exceptions.commands.EmptyFoodException;
 import git.Ui;
-import grocery.Grocery;
-
 import java.util.ArrayList;
 import java.util.List;
 

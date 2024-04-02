@@ -343,6 +343,37 @@ public class Ui {
         return threshold;
     }
 
+    /**
+     * Prompts user for rating and review.
+     * 
+     * @param grocery for rate and review.
+    */
+    public static void promptForRatingAndReview(Grocery grocery) {
+        System.out.println("Please enter the rating from 1 to 5:");
+        int rating = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            try {
+                rating = Integer.parseInt(input);
+                if (rating >= 0 && rating <= 5){
+                    break;
+                } else {
+                    rating = 0;
+                    System.out.println("Rating entered is invalid!");
+                    System.out.println("Please enter the rating (e.g. 5):");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Rating entered is invalid!");
+                System.out.println("Please enter the rating in integer(e.g. 5):");
+            }
+        }
+        grocery.setRating(rating);
+
+        System.out.println("Please enter the review:");
+        String review = in.nextLine().trim();
+        grocery.setReview(review);
+    }
+
     public double promptForCalories() {
         System.out.println("Please enter the calories of the food in kcal:");
         double calories = 0;
@@ -523,18 +554,6 @@ public class Ui {
         return month;
     }
 
-    /**
-     * Reads expiration date from user input.
-     *
-     * @param year Year of expiration.
-     * @param month Month of expiration.
-     * @param day Day of expiration.
-     * @return Formatted expiration date.
-     */
-    private String formatExpirationDate(String year, String month, String day) {
-        // This method can be enhanced to validate the date components
-        return year + "-" + month + "-" + day;
-    }
 
     public static String switchMode() throws GitException {
         System.out.println("What mode would you like to switch to?");
@@ -557,6 +576,7 @@ public class Ui {
                         "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
                         "th GROCERY a/AMOUNT: updates the threshold amount of GROCERY.\n" +
                         "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
+                        "rate GROCERY: rates and reviews GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listc: shows the list sorted by price.\n" +

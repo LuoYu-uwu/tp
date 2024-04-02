@@ -18,4 +18,3 @@ exit: exits the program.
 
 What mode would you like to switch to?
 Please select a mode: grocery, profile, calories or recipe:
-

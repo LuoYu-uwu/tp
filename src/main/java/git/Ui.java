@@ -261,11 +261,13 @@ public class Ui {
                         "add GROCERY: adds the item GROCERY.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
-                        "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY\n" +
+                        "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
+                        "th GROCERY a/AMOUNT: updates the threshold amount of GROCERY.\n" +
                         "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listC: shows the list sorted by price.\n" +
+                        "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands."
         );
@@ -361,11 +363,16 @@ public class Ui {
         assert !groceries.isEmpty() : "grocery list should not be empty";
         System.out.println("Time to top up these groceries!");
         for (Grocery grocery: groceries) {
-            if (grocery.getAmount() < grocery.getThreshold()) {
+            if (grocery.isLow()) {
                 System.out.println(" - " + grocery.getName()
                         + " only left: " +grocery.getAmount());
             }
         }
+    }
+
+    public static void lowStockAlert(Grocery grocery) {
+        System.out.println(grocery.getName() + " is low in stock!");
+        System.out.println("There's only " +grocery.getAmount() + " left");
     }
 
     /**

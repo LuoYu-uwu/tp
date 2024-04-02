@@ -227,6 +227,20 @@ public class GroceryList {
         }
     }
 
+    public void editThreshold(String details) throws GitException {
+        String [] amtParts = checkDetails(details, "th", "a/");
+        Grocery grocery = getGrocery(amtParts[0].strip());
+        String thresholdString = amtParts[1].strip();
+
+        try {
+            int threshold = Integer.parseInt(thresholdString);
+            grocery.setThreshold(threshold);
+            Ui.printThresholdSet(grocery);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
+        }
+    }
+
     /**
      * Lists all the user's groceries.
      */

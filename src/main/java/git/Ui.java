@@ -160,8 +160,7 @@ public class Ui {
                 cost = convertCost(price);
                 break;
             } catch (GitException e) {
-                System.out.println("Cost entered is invalid!");
-                System.out.println("Please enter the cost (e.g., $1.20):");
+                System.out.println(e.getMessage());
             }
         }
         return cost;
@@ -185,6 +184,28 @@ public class Ui {
         } else {
             throw new InvalidCostException();
         }
+    }
+
+    /**
+     * Prompts user for threshold amount.
+     */
+    public int promptForThreshold(){
+        System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+        int threshold = 0;
+        for (int i = 0; i < 5; i++) {
+            String input = in.nextLine().trim();
+            if (input.equals("nil")) {
+                break;
+            }
+            try {
+                threshold = Integer.parseInt(input);
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Amount entered is invalid!");
+                System.out.println("Please enter the threshold amount (e.g. 3) or nil:");
+            }
+        }
+        return threshold;
     }
 
     /**
@@ -289,6 +310,11 @@ public class Ui {
     public static void printAmtSet(Grocery grocery) {
         assert grocery.getAmount() >= 0 : "grocery amount should not be empty";
         System.out.println(grocery.getName() + ": " + grocery.getAmount());
+    }
+
+    public static void printThresholdSet(Grocery grocery) {
+        System.out.println(grocery.getName() + "'s threshold is now " +
+                grocery.getThreshold() + " " + grocery.getUnit());
     }
 
     /**

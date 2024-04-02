@@ -26,10 +26,10 @@ public class Parser {
     }
 
     /**
-     * Enums containing the possible commands.
+     * Enums containing the possible commands for groceries.
      */
     enum Command {
-        ADD, DEL, EXP, AMT, USE, COST, LIST, LISTC, HELP, EXIT
+        ADD, DEL, EXP, AMT, TH, USE, COST, LIST, LISTC, HELP, EXIT
 
     }
 
@@ -83,9 +83,10 @@ public class Parser {
         case ADD:
             String category = ui.promptForCategory();
             int amount = ui.promptForAmount();
+            int threshold = ui.promptForThreshold();
             String location = ui.promptForLocation();
             double cost = ui.promptForCost();
-            Grocery grocery = new Grocery(commandParts[1], amount, LocalDate.now(), category, cost, location);
+            Grocery grocery = new Grocery(commandParts[1], amount, threshold, LocalDate.now(), category, cost, location);
             String expiration = ui.promptForExpiration();
             grocery.setExpiration(expiration);
             groceryList.addGrocery(grocery);
@@ -116,6 +117,10 @@ public class Parser {
         case AMT:
         case USE:
             groceryList.editAmount(commandParts[1], commandParts[0].equals("use"));
+            break;
+
+        case TH:
+            groceryList.editThreshold(commandParts[1]);
             break;
 
         case COST:

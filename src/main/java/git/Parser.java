@@ -1,6 +1,5 @@
 package git;
 
-import java.time.LocalDate;
 
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
@@ -36,6 +35,7 @@ public class Parser {
         this.ui = ui;
         isRunning = true;
     }
+
 
     public String getCurrentMode() {
         return currentMode;
@@ -171,15 +171,8 @@ public class Parser {
     private void addOrDelGrocery(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
         case ADD:
-            String category = ui.promptForCategory();
-            int amount = ui.promptForAmount();
-            int threshold = ui.promptForThreshold();
-            String location = ui.promptForLocation();
-            double cost = ui.promptForCost();
-            Grocery grocery = new Grocery(commandParts[1], amount, threshold,
-                    LocalDate.now(), category, cost, location);
-            String expiration = ui.promptForExpiration();
-            grocery.setExpiration(expiration);
+            Grocery grocery = new Grocery(commandParts[1]);
+            ui.printAddMenu(grocery);
             groceryList.addGrocery(grocery);
             break;
 
@@ -237,6 +230,14 @@ public class Parser {
 
         case LISTC:
             groceryList.sortByCost();
+            break;
+
+        case LISTE:
+            groceryList.sortByExpiration();
+            break;
+
+        case EXPIRING:
+            groceryList.displayGroceriesExpiringInNext3Days();
             break;
 
         case LOW:

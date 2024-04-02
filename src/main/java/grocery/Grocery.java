@@ -84,6 +84,11 @@ public class Grocery {
         return unit;
     }
 
+    /**
+     * Checks if the grocery is low in stock.
+     *
+     * @return True if current amount is lesser than threshold.
+     */
     public boolean isLow() {
         return this.amount < this.threshold;
     }

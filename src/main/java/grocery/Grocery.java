@@ -108,18 +108,16 @@ public class Grocery {
 
         String locationString = ", location: " + location;
         String amountString = (amount == 0) ? "" : ", amount: " + amount;
-        String exp = (expiration == null) 
-            ? " expiration date not set" 
+        String exp = (expiration == null)
+            ? " expiration date not set"
             : ", expiration: " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String price = (cost != 0) ? ", cost: $" + String.format("%.2f", cost): " cost not set";
+        String price = (cost != 0) ? ", cost: $" + String.format("%.2f", cost): ", cost not set";
         String unit = "";
         switch (category.toLowerCase()){
         case "fruit":
             unit = "pieces";
             break;
         case "vegetable":
-            unit = "grams";
-            break;
         case "meat":
             unit = "grams";
             break;

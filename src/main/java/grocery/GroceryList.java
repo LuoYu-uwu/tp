@@ -202,9 +202,12 @@ public class GroceryList {
         grocery.setAmount(amount);
         if (amount == 0) {
             Ui.printAmtDepleted(grocery);
+        } else if (grocery.isLow()){
+            Ui.lowStockAlert(grocery);
         } else {
             Ui.printAmtSet(grocery);
         }
+
     }
 
     /**

@@ -301,6 +301,10 @@ public class Parser {
             LocationList.addLocation(name);
             break;
 
+        case DELLOC:
+            LocationList.removeLocation(name);
+            break;
+
         case LISTL:
             if (name.isBlank()) {
                 LocationList.listLocations();

@@ -626,7 +626,7 @@ public class Ui {
         System.out.println(
                 "Here are some ways you can manage your calories intake!\n" +
                         "eat FOOD: adds the food that you have eaten.\n" +
-                        "view: adds the food you have eaten and total calories intake.\n" +
+                        "view: shows the food you have eaten and total calories intake.\n" +
                         "switch: switches the mode.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands for calories management."

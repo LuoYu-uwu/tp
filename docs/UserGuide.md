@@ -26,7 +26,23 @@ It allows users to track and manage their groceries around their home easily.
 > * Features requiring the `GROCERY` input are case-insensitive. 
 > <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 
+## Switch between different modes: `switch`
+Switches between profile, calories, grocery or recipe mode.
+GiT comes in different modes and will prompt the user to choose their desired mode.
+
+Format: `switch`
+
+* Enter the desired mode to switch to after inputting `switch`.
+
+Example of usage:
+
+`switch`
+
+![Switch example output](images/featureExampleOutputs/SwitchExOut.png)
+
 &nbsp;
+## Grocery management mode
+
 ### Setting the amount of a grocery: `amt`
 Sets the amount of a grocery.
 
@@ -86,16 +102,6 @@ Format: `low`
 Example of usage:
 
 `low`
-
-&nbsp;
-### Switch between different modes: `switch`
-Switches between profile, calories, grocery or recipe mode.
-
-Format: `switch`
-
-Example of usage:
-
-`switch`
 
 &nbsp;
 ### Finding groceries: `find`
@@ -165,6 +171,7 @@ Example of usage:
 
 `delloc cabinet`
 
+&nbsp;
 ### List all groceries: `list`
 Shows a list of all groceries you have.
 
@@ -174,6 +181,7 @@ Example of usage:
 
 `list`
 
+&nbsp;
 ### List all groceries by price: `listc`
 Shows a list of all groceries you have, sorted by price.
 
@@ -183,6 +191,7 @@ Example of usage:
 
 `listc`
 
+&nbsp;
 ### List all groceries by expiration date: `liste`
 Shows a list of all groceries you have, sorted by expiration date.
 
@@ -192,6 +201,7 @@ Example of usage:
 
 `liste`
 
+&nbsp;
 ## Calories management mode
 
 ### Add eaten food: `eat`
@@ -213,6 +223,7 @@ Example of usage:
 
 `view`
 
+&nbsp;
 ## Profile management mode
 
 ### Update user information: `update`
@@ -234,6 +245,7 @@ Example of usage:
 
 `view`
 
+&nbsp;
 ## Recipe management mode
 
 ### Add new recipe: `add`

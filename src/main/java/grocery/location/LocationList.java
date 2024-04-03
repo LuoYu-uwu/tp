@@ -32,6 +32,24 @@ public class LocationList {
     }
 
     /**
+     * Removes a location from tracking.
+     *
+     * @param name Name of location.
+     * @throws EmptyInputException Thrown if user does not input a location name.
+     * @throws NoSuchObjectException Thrown if the location does not exist.
+     */
+    public static void removeLocation(String name) throws EmptyInputException, NoSuchObjectException {
+        if (name == null || name.isBlank()) {
+            throw new EmptyInputException("location");
+        }
+
+        Location location = findLocation(name);
+        location.clearLocation();
+        locations.remove(location);
+        Ui.printLocationRemoved(name.strip());
+    }
+
+    /**
      * Returns the desired location.
      *
      * @param name Name of location
@@ -63,4 +81,5 @@ public class LocationList {
     public static void listLocations() {
         Ui.printLocationList(locations);
     }
+
 }

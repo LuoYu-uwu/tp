@@ -16,6 +16,7 @@ import grocery.location.Location;
 
 import enumerations.Mode;
 import grocery.location.LocationList;
+import recipe.Recipe;
 
 
 /**
@@ -265,11 +266,21 @@ public class Ui {
 
     /**
      * Prompts user for ingredients when adding recipe in RECIPE mode.
-     * @return the ingredients in a single line, unprocessed
+     * @return the ingredients in a single line, trimmed only
      */
     public String promptForIngredients(){
         System.out.println("Please enter the ingredients for this recipe in one line (e.g. egg, salt):");
         return in.nextLine().trim();
+    }
+
+    /**
+     * Informs the user that the recipe has been added to the recipe list.
+     *
+     * @param recipe Recipe added.
+     */
+    public static void printRecipeAdded(Recipe recipe){
+        assert !(recipe.getTitle().isEmpty()): "grocery name should not be empty";
+        System.out.println(recipe.getTitle() + " added!");
     }
 
     /**

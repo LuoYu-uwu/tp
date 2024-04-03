@@ -11,7 +11,13 @@ import grocery.Grocery;
 import grocery.GroceryList;
 import grocery.location.Location;
 import grocery.location.LocationList;
+import recipe.Recipe;
+import recipe.RecipeList;
 import user.UserInfo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Deals with commands entered by user.
@@ -21,7 +27,7 @@ public class Parser {
     private FoodList foodList;
     private UserInfo userInfo;
     private Ui ui;
-    private ParserForRecipe parserForRecipe;
+    private RecipeList recipeList;
 
     private boolean isRunning;
     private String currentMode;
@@ -37,6 +43,7 @@ public class Parser {
         foodList = new FoodList();
         String userName = Ui.getUserName();
         userInfo = new UserInfo(userName);
+        recipeList = new RecipeList();
         this.ui = ui;
         isRunning = true;
     }
@@ -217,8 +224,9 @@ public class Parser {
         case ADD:
             String title = ui.promptForTitle();
             String ingredients  = ui.promptForIngredients();
-//            String steps = ui.promptForSteps();
-//            userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
+            String[] ingList = ingredients.split(",");
+            ArrayList<String> ingArr = new ArrayList<String>(Arrays.asList(ingList));
+            recipeList.addRecipe(new Recipe(title, ingArr));
             break;
 
         //edit
@@ -245,8 +253,6 @@ public class Parser {
         case HELP:
             Ui.displayHelpForRecipe();
             break;
-
-
 
         default:
             throw new InvalidCommandException();

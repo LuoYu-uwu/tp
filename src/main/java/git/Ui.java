@@ -670,18 +670,20 @@ public class Ui {
                         "find KEYWORD: finds all groceries containing the KEYWORD.\n" +
                         "loc LOCATION: adds a LOCATION to track.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
+                        "cat GROCERY c/CATEGORY: edits the category for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
                         "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
-                        "th GROCERY a/AMOUNT: updates the threshold amount of GROCERY.\n" +
-                        "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
+                        "th GROCERY a/AMOUNT: edits the threshold amount of GROCERY.\n" +
+                        "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "rate GROCERY: rates and reviews GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "delloc LOCATION: removes LOCATION from tracking.\n" +
                         "list: shows list of all groceries you have.\n" +
-                        "listc: shows the list sorted by price.\n" +
-                        "liste: shows the list sorted by expiration date.\n" +
-                        "listl [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
+                        "listcat: shows the list sorted by category.\n" +
+                        "listcost: shows the list sorted by price.\n" +
+                        "listexp: shows the list sorted by expiration date.\n" +
+                        "listloc [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
                         "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
@@ -694,7 +696,7 @@ public class Ui {
         System.out.println(
                 "Here are some ways you can manage your calories intake!\n" +
                         "eat FOOD: adds the food that you have eaten.\n" +
-                        "view: adds the food you have eaten and total calories intake.\n" +
+                        "view: shows the food you have eaten and total calories intake.\n" +
                         "switch: switches the mode.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands for calories management."
@@ -761,6 +763,15 @@ public class Ui {
     public static void printExpSet(Grocery grocery) {
         assert !(grocery.getName().isEmpty()): "grocery name should not be empty";
         System.out.println(grocery.getName() + " will expire on: " + grocery.getExpiration());
+    }
+    /**
+     * Prints output after editing the selected grocery's category.
+     *
+     * @param grocery The grocery that should be updated.
+     */
+    public static void printCategorySet(Grocery grocery){
+        assert !(grocery.getCategory().isEmpty()): "grocery category should not be empty";
+        System.out.println(grocery.getName() + " is now a " + grocery.getCategory());
     }
 
     /**

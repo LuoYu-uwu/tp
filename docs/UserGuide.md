@@ -53,6 +53,51 @@ Example of usage:
 `use meat a/4`
 
 &nbsp;
+### Setting the cost of a grocery: `cost`
+Sets the cost of a grocery.
+
+Format: `cost GROCERY  $PRICE`
+
+* `PRICE` must be a valid integer.
+
+Example of usage:
+
+`cost milk $1.20`
+
+&nbsp;
+### Setting the threshold of a grocery: `th`
+Sets the threshold amount of a grocery.  
+The user should be reminded to top up the stock if amount falls below the threshold amount.
+
+Format: `th GROCERY a/AMOUNT`
+
+* `AMOUNT` must be a valid integer.
+
+Example of usage:
+
+`th milk 1`
+
+&nbsp;
+### View a list of groceries that are low in stock: `low`
+Shows a list of groceries below the threshold amount.
+
+Format: `low`
+
+Example of usage:
+
+`low`
+
+&nbsp;
+### Switch between different modes: `switch`
+Switches between profile, calories, grocery or recipe mode.
+
+Format: `switch`
+
+Example of usage:
+
+`switch`
+
+&nbsp;
 ### Finding groceries: `find`
 Find groceries containing a given keyword.
 
@@ -147,6 +192,49 @@ Example of usage:
 
 `liste`
 
+## Calories management mode
+
+### Add eaten food: `eat`
+Adds the food eaten and store its calories.
+
+Format: `eat FOOD`
+
+Example of usage:
+
+`eat burger`
+
+&nbsp;
+### View all food and calories intake: `view`
+Shows all the food consumed so far and their calories.
+
+Format: `view`
+
+Example of usage:
+
+`view`
+
+## Profile management mode
+
+### Update user information: `update`
+Stores information needed to calculate and manage calories intake.
+
+Format: `update`
+
+Example of usage:
+
+`update`
+
+&nbsp;
+### View user details: `view`
+Shows the user profile details.
+
+Format: `view`
+
+Example of usage:
+
+`view`
+
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
@@ -159,9 +247,19 @@ Example of usage:
 | Command                                                        | Format and example         |
 |----------------------------------------------------------------|----------------------------|
 | Set grocery amount                                             | `amt GROCERY a/AMOUNT`     |
+| Set grocery cost                                               | `cost GROCERY $PRICE`      |
+| Set grocery threshold amount                                   | `th GROCERY a/AMOUNT`      |
+| View groceries that are low in stock                           | `low`                      |
 | Use grocery                                                    | `use GROCERY a/AMOUNT`     | 
 | Find groceries                                                 | `find KEYWORD`             |
 | Add storage location                                           | `loc LOCATION`             |
 | Store grocery                                                  | `store GROCERY l/LOCATION` |
 | View storage locations <br> View groceries in a given location | `listl [LOCATION]`         |
 | Remove storage location                                        | `delloc LOCATION`          |
+| List all groceries                                             | `list`                     |
+| List all groceries by price                                    | `listcost`                 |
+| Switch between modes                                           | `switch`                   |
+| Add food consumed                                              | `eat FOOD`                 |
+| View consumed food and their calories                          | `view`                     |
+| Update user information                                        | `update`                   |
+| View user details                                              | `view`                     |

@@ -105,6 +105,7 @@ public class Ui {
             break;
 
         case RECIPE:
+            displayHelpForRecipe();
             System.out.println("Enter command:");
             break;
 
@@ -251,6 +252,24 @@ public class Ui {
             }
         }
         return expirationDate.toString(); // Formats to YYYY-MM-DD by default.
+    }
+
+    /**
+     * Prompts user for title when adding recipe in RECIPE mode.
+     * @return the title of the recipe
+     */
+    public String promptForTitle(){
+        System.out.println("Please enter the title of this recipe (e.g. fried egg):");
+        return in.nextLine().trim();
+    }
+
+    /**
+     * Prompts user for ingredients when adding recipe in RECIPE mode.
+     * @return the ingredients in a single line, unprocessed
+     */
+    public String promptForIngredients(){
+        System.out.println("Please enter the ingredients for this recipe in one line (e.g. egg, salt):");
+        return in.nextLine().trim();
     }
 
     /**
@@ -582,7 +601,7 @@ public class Ui {
 
 
     public static String switchMode() throws GitException {
-        System.out.println("What mode would you like to switch to?");
+        System.out.println("What mode would you like to enter?");
         System.out.println("Please select a mode: " +
                 "grocery, profile, calories or recipe:");
         String newMode = in.nextLine().trim();
@@ -642,12 +661,26 @@ public class Ui {
         );
     }
 
+    public static void displayHelpForRecipe() {
+        System.out.println(
+                "Here are some ways you can manage your recipes!\n" +
+                        "add: add a new recipe. \n" +
+                        "list: list all your recipes. \n" +
+                        "view TITLE: view your recipes details.\n" +
+                        "delete TITLE: delete the recipe. \n" +
+                        "switch: switches the mode.\n" +
+                        "exit: exits the program.\n" +
+                        "help: view all the possible commands for recipes management."
+        );
+    }
+
     public static void displayHelp() {
         System.out.println(
                 "Here are some ways you can use our app!\n" +
-                        "grocery: manages your calories.\n" +
+                        "grocery: manages your groceries.\n" +
                         "calories: manages your calories intake.\n" +
                         "profile: manages your profile.\n" +
+                        "recipe: manages your recipe. \n" +
                         "exit: exits the program.\n"
         );
     }

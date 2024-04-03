@@ -1,8 +1,7 @@
 package git;
 
 
-import enumerations.CalCommand;
-import enumerations.ProfileCommand;
+import enumerations.*;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -10,8 +9,6 @@ import food.Food;
 import food.FoodList;
 import grocery.Grocery;
 import grocery.GroceryList;
-import enumerations.Mode;
-import enumerations.GroceryCommand;
 import grocery.location.Location;
 import grocery.location.LocationList;
 import user.UserInfo;
@@ -24,6 +21,7 @@ public class Parser {
     private FoodList foodList;
     private UserInfo userInfo;
     private Ui ui;
+    private ParserForRecipe parserForRecipe;
 
     private boolean isRunning;
     private String currentMode;
@@ -84,6 +82,10 @@ public class Parser {
 
         case PROFILE:
             profileManagement(commandParts);
+            break;
+
+        case RECIPE:
+            recipeManagement(commandParts);
             break;
 
         case MODE:
@@ -198,6 +200,60 @@ public class Parser {
     }
 
     /**
+     * Handles commands related to recipe management.
+     *
+     * @param commandParts Fragments of the command entered by the user.
+     * @throws GitException Exception thrown depending on specific error.
+     */
+    public void recipeManagement(String[] commandParts) throws GitException {
+        RecipeCommand command;
+        try {
+            command = RecipeCommand.valueOf(commandParts[0].toUpperCase());
+        } catch (Exception e) {
+            throw new InvalidCommandException();
+        }
+
+        switch (command) {
+        case ADD:
+            String title = ui.promptForTitle();
+            String ingredients  = ui.promptForIngredients();
+//            String steps = ui.promptForSteps();
+//            userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
+            break;
+
+        //edit
+        case LIST:
+            break;
+        //edit
+        case VIEW:
+            //System.out.println(userInfo.viewProfile());
+            break;
+        //edit
+        case DELETE:
+            break;
+
+        case SWITCH:
+            currentMode = Ui.switchMode();
+            executeCommand(commandParts, currentMode);
+            break;
+
+        case EXIT:
+            System.out.println("bye bye!");
+            isRunning = false;
+            break;
+
+        case HELP:
+            Ui.displayHelpForRecipe();
+            break;
+
+
+
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    /**
      * Handles commands related to grocery management.
      *
      * @param commandParts Fragments of the command entered by the user.
@@ -226,6 +282,9 @@ public class Parser {
             viewListOrHelp(command);
         }
     }
+
+
+
 
     /**
      * Handles commands related to adding or deleting a grocery.

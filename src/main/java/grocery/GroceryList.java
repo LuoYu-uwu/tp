@@ -249,7 +249,6 @@ public class GroceryList {
     }
 
     /**
-
      * Updates the location of an existing grocery.
      *
      * @param details A string containing grocery name and details.
@@ -291,6 +290,7 @@ public class GroceryList {
         Ui.printGroceriesFound(relevantGroceries, key);
     }
 
+    /**
      * Updates the rating and review of an existing grocery.
      * 
      * @param details A string containing grocery name and details.
@@ -298,7 +298,7 @@ public class GroceryList {
      */
     public void editRatingAndReview(String details) throws GitException {
         if (details.isEmpty()) {
-            throw new EmptyGroceryException();
+            throw new EmptyInputException("grocery");
         }
         Grocery grocery = getGrocery(details);
         Ui.promptForRatingAndReview(grocery);

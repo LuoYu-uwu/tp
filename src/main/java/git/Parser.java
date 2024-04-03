@@ -31,6 +31,8 @@ public class Parser {
 
     /**
      * Constructs Parser.
+     * 
+     * @param ui Ui object.
      */
     public Parser(Ui ui) {
         groceryList = new GroceryList();
@@ -277,6 +279,10 @@ public class Parser {
 
         case COST:
             groceryList.editCost(commandParts[1]);
+            break;
+        
+        case RATE:
+            groceryList.editRatingAndReview(commandParts[1]);
             break;
 
         case STORE:

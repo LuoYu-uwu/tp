@@ -8,6 +8,8 @@ public class InvalidCostException extends GitException{
      * Constructs InvalidCostException.
      */
     public InvalidCostException() {
-        message = "Please input a valid cost!";
+
+        message = "Cost entered is invalid!\n" +
+                "Please enter the cost (e.g., $1.20):";
     }
 }

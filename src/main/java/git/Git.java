@@ -17,8 +17,8 @@ public class Git {
      * Constructs Git.
      */
     public Git() {
-        ui = new Ui();
-        parser = new Parser();
+        ui = Ui.getInstance();
+        parser = new Parser(ui);
         isRunning = true;
     }
 
@@ -27,15 +27,28 @@ public class Git {
      */
     private void run() {
         ui.printWelcome();
+
+        String mode = null;
+        boolean isInitialised = false;
+        while (!isInitialised) {
+            try {
+                mode = Ui.switchMode();
+                isInitialised = true;
+            } catch (GitException e) {
+                Ui.printLine();
+            }
+        }
+
         while (isRunning) {
             try {
-                String[] commandParts = ui.processInput();
-                parser.executeCommand(commandParts);
+                String[] commandParts = parser.processCommandParts();
+                parser.executeCommand(commandParts, mode);
                 isRunning = parser.getIsRunning();
+                mode = parser.getCurrentMode();
             } catch (GitException e) {
                 System.out.println(e.getMessage());
             } finally {
-                ui.printLine();
+                Ui.printLine();
             }
         }
     }

@@ -179,13 +179,13 @@ public class GroceryList {
         grocery.setCategory(newCategory);
         Ui.printCategorySet(grocery);
     }
-        /**
-         * Sets the amount of an existing grocery.
-         *
-         * @param details User input.
-         * @param use True to reduce the amount of a grocery, false to set a new amount.
-         * @throws GitException Exception thrown depending on error.
-         */
+    /**
+     * Sets the amount of an existing grocery.
+     *
+     * @param details User input.
+     * @param use True to reduce the amount of a grocery, false to set a new amount.
+     * @throws GitException Exception thrown depending on error.
+     */
     public void editAmount(String details, boolean use) throws GitException {
         // Assuming the format is "amt GROCERY a/AMOUNT"
         String [] amtParts;

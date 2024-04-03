@@ -7,6 +7,14 @@
 ## Design & implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+
+### _Designs_
+### 1. Calories Management Mode
+![Commands for managing calories](./diagrams/CaloriesManagement.png)
+   * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
+   * if `eat`, store the name and calories of the input food
+   * if `view`, display all the foods consumed
+
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\
      e.g., NAME, AMOUNT, EXPIRATION, PRICE.

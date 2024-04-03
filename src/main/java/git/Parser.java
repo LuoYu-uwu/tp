@@ -218,7 +218,7 @@ public class Parser {
             addOrDelGrocery(command, commandParts);
         } else if (index <= GroceryCommand.STORE.ordinal()) {
             editGrocery(command, commandParts);
-        } else if (index <= GroceryCommand.LISTL.ordinal()) {
+        } else if (index <= GroceryCommand.LISTLOC.ordinal()) {
             handleLocationCommands(command, commandParts[1]);
         } else if (index == GroceryCommand.FIND.ordinal()) {
             groceryList.findGroceries(commandParts[1]);
@@ -309,7 +309,7 @@ public class Parser {
             LocationList.addLocation(name);
             break;
 
-        case LISTL:
+        case LISTLOC:
             if (name.isBlank()) {
                 LocationList.listLocations();
             } else {
@@ -335,11 +335,15 @@ public class Parser {
             groceryList.listGroceries();
             break;
 
-        case LISTC:
+        case LISTCAT:
+            groceryList.sortByCategory();
+            break;
+
+        case LISTCOST:
             groceryList.sortByCost();
             break;
 
-        case LISTE:
+        case LISTEXP:
             groceryList.sortByExpiration();
             break;
 

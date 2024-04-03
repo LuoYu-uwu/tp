@@ -608,9 +608,10 @@ public class Ui {
                         "rate GROCERY: rates and reviews GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "list: shows list of all groceries you have.\n" +
-                        "listc: shows the list sorted by price.\n" +
-                        "liste: shows the list sorted by expiration date.\n" +
-                        "listl [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
+                        "listcat: shows the list sorted by category.\n" +
+                        "listcost: shows the list sorted by price.\n" +
+                        "listexp: shows the list sorted by expiration date.\n" +
+                        "listloc [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
                         "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
                         "exit: exits the program.\n" +
@@ -677,6 +678,11 @@ public class Ui {
         assert !(grocery.getName().isEmpty()): "grocery name should not be empty";
         System.out.println(grocery.getName() + " will expire on: " + grocery.getExpiration());
     }
+    /**
+     * Prints output after editing the selected grocery's category.
+     *
+     * @param grocery The grocery that should be updated.
+     */
     public static void printCategorySet(Grocery grocery){
         assert !(grocery.getCategory().isEmpty()): "grocery category should not be empty";
         System.out.println(grocery.getName() + " is now a " + grocery.getCategory());

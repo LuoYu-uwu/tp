@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -164,7 +165,12 @@ public class GroceryList {
         assert grocery.getExpiration().isEqual(date) : "Expiration date should be set correctly";
         Ui.printExpSet(grocery);
     }
-
+    /**
+     * Sets the category of an existing grocery.
+     *
+     * @param details User input.
+     * @throws GitException Exception thrown depending on error.
+     */
     public void editCategory(String details) throws GitException {
         String[] catParts = checkDetails(details, "cat", "c/");
         Grocery grocery = getGrocery(catParts[0].strip());
@@ -390,7 +396,13 @@ public class GroceryList {
             Ui.printGroceryList(groceriesByDate);
         }
     }
-
+    /**
+     * Sorts the groceries by category.
+     */
+    public void sortByCategory(){
+        Collections.sort(groceries, Comparator.comparing(Grocery::getCategory));
+        Ui.printGroceryList(groceries);
+    }
     /**
      * Removes a grocery.
      *

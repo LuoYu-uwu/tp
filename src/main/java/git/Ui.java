@@ -146,8 +146,9 @@ public class Ui {
         System.out.println("4. Expiration Date");
         System.out.println("5. Cost");
         System.out.println("6. Threshold Amount");
-        System.out.println("7. Help");
-        System.out.println("8. Skip");
+        System.out.println("7. Remark");
+        System.out.println("8. Help");
+        System.out.println("9. Skip");
         System.out.println("Please enter the number of the details you want to include:");
         System.out.println("You may enter multiple numbers. (e.g. 1234)");
         
@@ -200,11 +201,17 @@ public class Ui {
                 break;
 
             case '7':
+                System.out.println("Including Remark");
+                String remark = singleUi.promptForRemark();
+                grocery.setRemark(remark);
+                break;
+
+            case '8':
                 System.out.println("Displaying help");
                 singleUi.displayAddHelp();
                 break;
 
-            case '8':
+            case '9':
                 System.out.println("Skipping additional details");
                 break;
 
@@ -255,6 +262,16 @@ public class Ui {
         }
         return expirationDate.toString(); // Formats to YYYY-MM-DD by default.
     }
+
+    /**
+     * Prompts user for remark for grocery.
+     * @return the remark to be added.
+     */
+    public String promptForRemark(){
+        System.out.println("Please enter the remark for this grocery:");
+        return in.nextLine().trim();
+    }
+
 
     /**
      * Prompts user for title when adding recipe in RECIPE mode.

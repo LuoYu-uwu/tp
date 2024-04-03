@@ -21,6 +21,7 @@ public class Grocery {
     private Location location;
     private int rating;
     private String review;
+    private String remark;
 
 
 
@@ -126,6 +127,10 @@ public class Grocery {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     /**
@@ -240,7 +245,15 @@ public class Grocery {
             price = ", cost not set";
         }
 
-        return this.name + " (" + this.category + ")" + amountString + unitString + exp + price + locationString;
+        String remarkString;
+        if (remark != null) {
+            remarkString = ", remark: " + remark + " ";
+        } else {
+            remarkString = ", remark not set";
+        }
+
+        return this.name + " (" + this.category + ")" + amountString + unitString + exp + price +
+                locationString + remarkString;
 
     }
 }

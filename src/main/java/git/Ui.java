@@ -2,6 +2,7 @@ package git;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +17,7 @@ import grocery.location.Location;
 
 import enumerations.Mode;
 import grocery.location.LocationList;
+import recipe.Recipe;
 
 
 /**
@@ -105,6 +107,7 @@ public class Ui {
             break;
 
         case RECIPE:
+            displayHelpForRecipe();
             System.out.println("Enter command:");
             break;
 
@@ -251,6 +254,75 @@ public class Ui {
             }
         }
         return expirationDate.toString(); // Formats to YYYY-MM-DD by default.
+    }
+
+    /**
+     * Prompts user for title when adding recipe in RECIPE mode.
+     * @return the title of the recipe
+     */
+    public String promptForTitle(){
+        System.out.println("Please enter the title of the recipe (e.g. fried egg):");
+        return in.nextLine().trim();
+    }
+
+    /**
+     * Prompts user for ingredients when adding recipe in RECIPE mode.
+     * @return the ingredients in a single line, trimmed only
+     */
+    public String promptForIngredients(){
+        System.out.println("Please enter the ingredients for this recipe in one line (e.g. egg, salt):");
+        return in.nextLine().trim();
+    }
+
+    /**
+     * Prompts user for steps when adding recipe in RECIPE mode.
+     * @return the steps in a single line, trimmed only
+     */
+    public String promptForSteps(){
+        System.out.println("Please enter the steps for this recipe in one line (e.g. Fry the egg. Add salt. Serve.):");
+        return in.nextLine().trim();
+    }
+
+    /**
+     * Informs the user that the recipe has been added to the recipe list.
+     *
+     * @param recipe Recipe added.
+     */
+    public static void printRecipeAdded(Recipe recipe){
+        assert !(recipe.getTitle().isEmpty()): "grocery name should not be empty";
+        System.out.println(recipe.getTitle() + " added!");
+    }
+
+    /**
+     * Prints out when there are no recipe.
+     */
+    public static void printNoRecipe() {
+        System.out.println("There's no recipe!");
+    }
+
+    /**
+     * Prints all recipes.
+     *
+     * @param recipeArr An array list of groceries.
+     */
+    public static void printRecipeList(ArrayList<Recipe> recipeArr) {
+        assert !recipeArr.isEmpty() : "recipe list should not be empty";
+        System.out.println("Here are your recipe titles!");
+        int num = 1;
+        for (Recipe recipe: recipeArr) {
+            System.out.println(num + ". " + recipe.getTitle());
+            num += 1;
+        }
+    }
+
+    /**
+     * Prints output when the selected recipe is removed.
+     *
+     * @param recipe The recipe that is removed.
+     */
+    public static void printRecipeRemoved(Recipe recipe) {
+        assert recipe != null : "Recipe does not exist";
+        System.out.println(recipe.getTitle() + " is removed from the recipe list.");
     }
 
     /**
@@ -580,11 +652,9 @@ public class Ui {
         return month;
     }
 
-
     public static String switchMode() throws GitException {
-        System.out.println("What mode would you like to switch to?");
-        System.out.println("Please select a mode: " +
-                "grocery, profile, calories or recipe:");
+        System.out.println("What mode would you like to enter?");
+        System.out.println("Please select a mode: " + "grocery, profile, calories or recipe:");
         String newMode = in.nextLine().trim();
         displayCommands(newMode);
         return newMode;
@@ -644,12 +714,26 @@ public class Ui {
         );
     }
 
+    public static void displayHelpForRecipe() {
+        System.out.println(
+                "Here are some ways you can manage your recipes!\n" +
+                        "add: add a new recipe. \n" +
+                        "list: list all your recipes. \n" +
+                        "view: view your recipes details.\n" +
+                        "delete: delete the recipe. \n" +
+                        "switch: switches the mode.\n" +
+                        "exit: exits the program.\n" +
+                        "help: view all the possible commands for recipes management."
+        );
+    }
+
     public static void displayHelp() {
         System.out.println(
                 "Here are some ways you can use our app!\n" +
-                        "grocery: manages your calories.\n" +
+                        "grocery: manages your groceries.\n" +
                         "calories: manages your calories intake.\n" +
                         "profile: manages your profile.\n" +
+                        "recipe: manages your recipe. \n" +
                         "exit: exits the program.\n"
         );
     }

@@ -318,8 +318,6 @@ public class GroceryList {
         Ui.promptForRatingAndReview(grocery);
     }
 
-
-
     /**
      * Lists all the user's groceries.
      */

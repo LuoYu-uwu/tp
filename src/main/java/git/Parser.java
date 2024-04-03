@@ -318,6 +318,10 @@ public class Parser {
             }
             break;
 
+        case DELLOC:
+            LocationList.removeLocation(name);
+            break;
+
         default:
             throw new InvalidCommandException();
         }

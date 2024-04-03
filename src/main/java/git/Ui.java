@@ -597,6 +597,7 @@ public class Ui {
         System.out.println(
                 "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
+                        "find KEYWORD: finds all groceries containing the KEYWORD.\n" +
                         "loc LOCATION: adds a LOCATION to track.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "cat GROCERY c/CATEGORY: edits the category for GROCERY.\n" +
@@ -607,6 +608,7 @@ public class Ui {
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "rate GROCERY: rates and reviews GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
+                        "delloc LOCATION: removes LOCATION from tracking.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listcat: shows the list sorted by category.\n" +
                         "listcost: shows the list sorted by price.\n" +
@@ -805,6 +807,15 @@ public class Ui {
      */
     public static void printLocationAdded(String name) {
         System.out.println("New location added: " + name);
+    }
+
+    /**
+     * Prints output when a location is removed from LocationList.
+     *
+     * @param name Location name.
+     */
+    public static void printLocationRemoved(String name) {
+        System.out.println("Location: " + name + " has been removed from tracking!");
     }
 
     /**

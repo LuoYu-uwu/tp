@@ -224,9 +224,12 @@ public class Parser {
         case ADD:
             String title = ui.promptForTitle();
             String ingredients  = ui.promptForIngredients();
-            String[] ingList = ingredients.split(",");
-            ArrayList<String> ingArr = new ArrayList<String>(Arrays.asList(ingList));
-            recipeList.addRecipe(new Recipe(title, ingArr));
+            String[] ingredientsList = ingredients.split("[,]");
+            ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
+            String steps  = ui.promptForSteps();
+            String[] stepsList = steps.split("[.]");
+            ArrayList<String> stepsArr = new ArrayList<String>(Arrays.asList(stepsList));
+            recipeList.addRecipe(new Recipe(title, ingredientsArr, stepsArr));
             break;
 
         case LIST:

@@ -275,6 +275,15 @@ public class Ui {
     }
 
     /**
+     * Prompts user for steps when adding recipe in RECIPE mode.
+     * @return the steps in a single line, trimmed only
+     */
+    public String promptForSteps(){
+        System.out.println("Please enter the steps for this recipe in one line (e.g. Fry the egg. Add salt. Serve.):");
+        return in.nextLine().trim();
+    }
+
+    /**
      * Informs the user that the recipe has been added to the recipe list.
      *
      * @param recipe Recipe added.

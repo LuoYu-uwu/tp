@@ -6,24 +6,39 @@ public class Recipe {
     private String title;
     private ArrayList<String> ingredients;
 
-    public Recipe(String title, ArrayList<String> ingredients) {
+    private ArrayList<String> steps;
+
+    /**
+     * Constructs a Recipe.
+     *
+     * @param title Title of the recipe.
+     * @param ingredients Ingredients to be stored in the recipe.
+     * @param steps Steps to be stored in the recipe.
+     */
+    public Recipe(String title, ArrayList<String> ingredients, ArrayList<String> steps) {
         this.title = title;
         this.ingredients = ingredients;
+        this.steps = steps;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public ArrayList<String> getIngredients() {
-        return ingredients;
-    }
-
+    /**
+     * Prints the title, ingredients and steps of the recipe.
+     */
     public void viewRecipe() {
-        System.out.println("Recipe title: " + title);
+        System.out.println("Recipe title: " + title + "\n");
         System.out.println("Ingredients: ");
-        for (String currIng : ingredients) {
-            System.out.println("- " + currIng);
+        for (String currIngredient : ingredients) {
+            System.out.println("- " + currIngredient);
+        }
+        System.out.println("\nSteps: ");
+        int index = 1;
+        for (String currStep : steps) {
+            System.out.println(index + ": " + currStep);
+            index += 1;
         }
     }
 }

@@ -249,7 +249,6 @@ public class GroceryList {
     }
 
     /**
-
      * Updates the location of an existing grocery.
      *
      * @param details A string containing grocery name and details.

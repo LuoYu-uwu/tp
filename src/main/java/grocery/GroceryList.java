@@ -55,7 +55,7 @@ public class GroceryList {
             Ui.printGroceryAdded(grocery);
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
-            System.out.println("Failed to add grocery: he groceries collection is null.");
+            System.out.println("Failed to add grocery: the groceries collection is null.");
         } catch (Exception e) {
             System.out.println("An unexpected error occurred while adding the grocery: " + e.getMessage());
         }
@@ -250,6 +250,21 @@ public class GroceryList {
             throw new InvalidAmountException();
         }
     }
+
+    /**
+     * Updates the rating and review of an existing grocery.
+     * 
+     * @param details A string containing grocery name and details.
+     * @throws GitException If the input grocery is empty.
+     */
+    public void editRatingAndReview(String details) throws GitException {
+        if (details.isEmpty()) {
+            throw new EmptyGroceryException();
+        }
+        Grocery grocery = getGrocery(details);
+        Ui.promptForRatingAndReview(grocery);
+    }
+
 
     /**
      * Lists all the user's groceries.

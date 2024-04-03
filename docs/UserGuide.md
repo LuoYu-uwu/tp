@@ -29,6 +29,27 @@ Example of usage:
 
 `todo n/Refactor the User Guide to remove passive voice d/13/04/2020`
 
+### Setting the amount of a grocery: `amt`
+Sets the amount of a grocery.
+
+Format: `amt GROCERY a/AMOUNT`
+
+* The `DEADLINE` can be in a natural language format.
+* The `TODO_NAME` cannot contain punctuation.
+
+Example of usage:
+
+`amt milk a/5`
+
+### Using a grocery: `use`
+Reduce the amount of a grocery after using it.
+
+Format: `use GROCERY a/AMOUNT`
+
+Example of usage:
+
+`use milk a/4`
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 

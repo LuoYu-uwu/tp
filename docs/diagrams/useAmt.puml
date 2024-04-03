@@ -32,5 +32,9 @@ else else
 end
 
 ui --> user : message
+deactivate ui
+deactivate ui
+
+
 
 @enduml

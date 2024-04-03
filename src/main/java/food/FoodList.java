@@ -1,6 +1,6 @@
 package food;
 
-import exceptions.commands.EmptyFoodException;
+import exceptions.emptyinput.EmptyInputException;
 import git.Ui;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +9,15 @@ public class FoodList {
     private List<Food> foods;
 
     /**
-     * Constructs GroceryList.
+     * Constructs FoodList.
      */
     public FoodList() {
         foods = new ArrayList<>();
     }
 
-    public void addFood(Food food) throws EmptyFoodException {
+    public void addFood(Food food) throws EmptyInputException {
         if (food.getName() == null) {
-            throw new EmptyFoodException();
+            throw new EmptyInputException("food");
         }
 
         try {

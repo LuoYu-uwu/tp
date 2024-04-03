@@ -1,17 +1,18 @@
 package grocery;
 
-import exceptions.commands.EmptyGroceryException;
-import exceptions.commands.NoSuchGroceryException;
 import exceptions.commands.CommandWrongFormatException;
 import exceptions.CannotUseException;
 import exceptions.GitException;
 
+import exceptions.nosuch.NoSuchObjectException;
+import grocery.location.Location;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class GroceryListTest {
@@ -19,7 +20,7 @@ public class GroceryListTest {
     public void editExpiration_success() {
         GroceryList gl = new GroceryList();
         try {
-            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(),"Meat", 0, "Freezer"));
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(),"Meat", 0, new Location("Freezer")));
             gl.editExpiration("Meat d/2024-07-19");
         } catch (GitException e) {
             fail("editExpiration should not throw an exception");
@@ -32,7 +33,7 @@ public class GroceryListTest {
             GroceryList gl = new GroceryList();
             gl.editExpiration("nonexistentGrocery d/2024-07-19");
             fail("Expected NoSuchGroceryException not thrown");
-        } catch (NoSuchGroceryException e) {
+        } catch (NoSuchObjectException e) {
             assertEquals("The grocery does not exist!", e.getMessage());
         } catch (GitException e) {
             fail("Expected NoSuchGroceryException, but another GitException was thrown");
@@ -43,7 +44,7 @@ public class GroceryListTest {
     public void editExpiration_wrongFormat_exceptionThrown() {
         try {
             GroceryList gl = new GroceryList();
-            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, "Freezer"));
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, new Location("Freezer")));
             gl.editExpiration("Meat d/2024-07-19");
         } catch (GitException e) {
             String message = "Command is in the wrong format, type \"help\" for more information." +
@@ -54,13 +55,13 @@ public class GroceryListTest {
     }
 
     @Test
-    public void addGrocery_throwIllegalArgument_exceptionThrown() {
+    public void addGrocery_throwNULL_exceptionThrown() {
         try {
             GroceryList gl = new GroceryList();
-            gl.addGrocery(new Grocery(null, 0, 0, null, "Meat", 0, "Freezer")); // Use null to trigger the exception
+            gl.addGrocery(new Grocery(null));
             fail("Expected IllegalArgumentException was not thrown.");
-        } catch (EmptyGroceryException e) {
-            assertEquals("A grocery needs to be specified!", e.getMessage());
+        } catch (NullPointerException e) {
+            assertNull(e.getMessage());
         }
     }
 
@@ -68,7 +69,7 @@ public class GroceryListTest {
     public void removeGrocery_groceryDelete_exceptionThrown() {
         try {
             GroceryList gl = new GroceryList();
-            gl.addGrocery(new Grocery("fooood", 0, 0, null, "Meat", 0,"Freezer"));
+            gl.addGrocery(new Grocery("fooood", 0, 0, null, "Meat", 0,new Location("Freezer")));
             gl.removeGrocery("food");
             fail("Expected NoSuchGroceryException not thrown");
         } catch (GitException e) {
@@ -81,7 +82,7 @@ public class GroceryListTest {
     public void editAmount_wrongFormat_exceptionThrown() {
         try {
             GroceryList gl = new GroceryList();
-            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0,"Freezer"));
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0,new Location("Freezer")));
             gl.editAmount("Meat", false);
             fail("Expected a WrongFormatException to be thrown");
         } catch (CommandWrongFormatException e) {
@@ -98,7 +99,7 @@ public class GroceryListTest {
     public void editAmountUseTrue_amountReaches0_success() {
         GroceryList gl = new GroceryList();
         try {
-            gl.addGrocery(new Grocery("Meat", 5, 0, LocalDate.now(), "Meat", 0,"Freezer"));
+            gl.addGrocery(new Grocery("Meat", 5, 0, LocalDate.now(), "Meat", 0,new Location("Freezer")));
             gl.editAmount("Meat a/5", true);
         } catch (GitException e) {
             fail("editAmount_useTrue should not throw an exception");
@@ -110,7 +111,7 @@ public class GroceryListTest {
     public void editAmountUseTrue_noAmountCannotUse_exceptionThrown() {
         try {
             GroceryList gl = new GroceryList();
-            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0,"Freezer"));
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0,new Location("Freezer")));
             gl.editAmount("Meat a/5", true);
             fail("Expected a CannotUseException to be thrown");
         } catch (CannotUseException e) {

@@ -4,11 +4,8 @@ import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import git.Ui;
-import grocery.Grocery;
-import grocery.location.Location;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecipeList {
     private ArrayList<Recipe> recipeArr;

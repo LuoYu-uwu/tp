@@ -1,7 +1,11 @@
 package git;
 
 
-import enumerations.*;
+import enumerations.CalCommand;
+import enumerations.GroceryCommand;
+import enumerations.Mode;
+import enumerations.ProfileCommand;
+import enumerations.RecipeCommand;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -17,7 +21,6 @@ import user.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Deals with commands entered by user.

@@ -710,8 +710,8 @@ public class Ui {
                 "Here are some ways you can manage your recipes!\n" +
                         "add: add a new recipe. \n" +
                         "list: list all your recipes. \n" +
-                        "view TITLE: view your recipes details.\n" +
-                        "delete TITLE: delete the recipe. \n" +
+                        "view: view your recipes details.\n" +
+                        "delete: delete the recipe. \n" +
                         "switch: switches the mode.\n" +
                         "exit: exits the program.\n" +
                         "help: view all the possible commands for recipes management."

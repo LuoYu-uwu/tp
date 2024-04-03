@@ -1,6 +1,5 @@
 package recipe;
 
-
 import java.util.ArrayList;
 
 public class Recipe {
@@ -20,5 +19,11 @@ public class Recipe {
         return ingredients;
     }
 
-
+    public void viewRecipe() {
+        System.out.println("Recipe title: " + title);
+        System.out.println("Ingredients: ");
+        for (String currIng : ingredients) {
+            System.out.println("- " + currIng);
+        }
+    }
 }

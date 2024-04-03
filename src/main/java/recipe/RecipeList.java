@@ -57,7 +57,7 @@ public class RecipeList {
      * @return The specific recipe.
      * @throws NoSuchObjectException If the selected grocery does not exist.
      */
-    private Recipe getRecipe(String title) throws NoSuchObjectException {
+    public Recipe getRecipe(String title) throws NoSuchObjectException {
         int index = -1;
         for (Recipe recipe : recipeArr) {
             if(recipe.getTitle().equalsIgnoreCase(title)) {

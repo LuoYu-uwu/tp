@@ -234,7 +234,9 @@ public class Parser {
             break;
 
         case VIEW:
-            //System.out.println(userInfo.viewProfile());
+            String titleView = ui.promptForTitle();
+            Recipe recipeToView = recipeList.getRecipe(titleView);
+            recipeToView.viewRecipe();
             break;
 
         case DELETE:

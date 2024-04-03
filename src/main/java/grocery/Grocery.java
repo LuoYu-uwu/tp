@@ -75,6 +75,7 @@ public class Grocery {
     public LocalDate getExpiration() {
         return expiration;
     }
+    public String getCategory() {return this.category;}
 
     public double getCost() {
         return this.cost;

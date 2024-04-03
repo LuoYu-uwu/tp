@@ -267,7 +267,9 @@ public class Parser {
         case EXP:
             groceryList.editExpiration(commandParts[1]);
             break;
-
+        case CAT:
+            groceryList.editCategory(commandParts[1]);
+            break;
         case AMT:
         case USE:
             groceryList.editAmount(commandParts[1], commandParts[0].equals("use"));

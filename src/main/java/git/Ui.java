@@ -599,10 +599,11 @@ public class Ui {
                         "add GROCERY: adds the item GROCERY.\n" +
                         "loc LOCATION: adds a LOCATION to track.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
+                        "cat GROCERY c/CATEGORY: edits the category for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
                         "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
-                        "th GROCERY a/AMOUNT: updates the threshold amount of GROCERY.\n" +
-                        "cost GROCERY $PRICE: updates the price of GROCERY.\n" +
+                        "th GROCERY a/AMOUNT: edits the threshold amount of GROCERY.\n" +
+                        "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "rate GROCERY: rates and reviews GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
@@ -675,6 +676,10 @@ public class Ui {
     public static void printExpSet(Grocery grocery) {
         assert !(grocery.getName().isEmpty()): "grocery name should not be empty";
         System.out.println(grocery.getName() + " will expire on: " + grocery.getExpiration());
+    }
+    public static void printCategorySet(Grocery grocery){
+        assert !(grocery.getCategory().isEmpty()): "grocery category should not be empty";
+        System.out.println(grocery.getName() + " is now a " + grocery.getCategory());
     }
 
     /**

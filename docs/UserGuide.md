@@ -234,6 +234,66 @@ Example of usage:
 
 `view`
 
+## Recipe management mode
+
+### Add new recipe: `add`
+Adds new recipe, ingredient and steps.
+
+Format: `add`
+
+Example of usage:
+
+`add` 
+
+Please enter the title of the recipe:
+
+`Fried Egg`
+
+Please enter the ingredients for this recipe in one line:
+
+`egg, salt`
+
+Please enter the steps for this recipe in one line:
+
+`Fry the egg. Add salt. Serve.`
+
+Fried Egg added!
+
+&nbsp;
+### List all the recipes: `list`
+Shows all the recipe titles.
+
+Format: `list`
+
+&nbsp;
+### View a recipe: `view`
+Shows the recipe ingredients and steps.
+
+Format: `view` `RECIPE` 
+
+Example of usage:
+
+`view`
+
+Please enter the title of the recipe:
+
+`Fried Egg`
+
+&nbsp;
+### Delete a recipe: `delete`
+Shows the recipe ingredients and steps.
+
+Format: `delete` `RECIPE`
+
+Example of usage:
+
+`delete`
+
+Please enter the title of the recipe:
+
+`Fried Egg`
+
+Fried Egg is removed from the recipe list.
 
 ## FAQ
 
@@ -244,22 +304,26 @@ Example of usage:
 ## Command Summary
 
 
-| Command                                                        | Format and example         |
-|----------------------------------------------------------------|----------------------------|
-| Set grocery amount                                             | `amt GROCERY a/AMOUNT`     |
-| Set grocery cost                                               | `cost GROCERY $PRICE`      |
-| Set grocery threshold amount                                   | `th GROCERY a/AMOUNT`      |
-| View groceries that are low in stock                           | `low`                      |
-| Use grocery                                                    | `use GROCERY a/AMOUNT`     | 
-| Find groceries                                                 | `find KEYWORD`             |
-| Add storage location                                           | `loc LOCATION`             |
-| Store grocery                                                  | `store GROCERY l/LOCATION` |
-| View storage locations <br> View groceries in a given location | `listl [LOCATION]`         |
-| Remove storage location                                        | `delloc LOCATION`          |
-| List all groceries                                             | `list`                     |
-| List all groceries by price                                    | `listcost`                 |
-| Switch between modes                                           | `switch`                   |
-| Add food consumed                                              | `eat FOOD`                 |
-| View consumed food and their calories                          | `view`                     |
-| Update user information                                        | `update`                   |
-| View user details                                              | `view`                     |
+| Command                                                        | Format and example                  |
+|----------------------------------------------------------------|-------------------------------------|
+| Set grocery amount                                             | `amt GROCERY a/AMOUNT`              |
+| Set grocery cost                                               | `cost GROCERY $PRICE`               |
+| Set grocery threshold amount                                   | `th GROCERY a/AMOUNT`               |
+| View groceries that are low in stock                           | `low`                               |
+| Use grocery                                                    | `use GROCERY a/AMOUNT`              | 
+| Find groceries                                                 | `find KEYWORD`                      |
+| Add storage location                                           | `loc LOCATION`                      |
+| Store grocery                                                  | `store GROCERY l/LOCATION`          |
+| View storage locations <br> View groceries in a given location | `listl [LOCATION]`                  |
+| Remove storage location                                        | `delloc LOCATION`                   |
+| List all groceries                                             | `list`                              |
+| List all groceries by price                                    | `listcost`                          |
+| Switch between modes                                           | `switch`                            |
+| Add food consumed                                              | `eat FOOD`                          |
+| View consumed food and their calories                          | `view`                              |
+| Update user information                                        | `update`                            |
+| View user details                                              | `view`                              |
+| Add recipe                                                     | `add` `TITLE` `INGREDIENTS` `STEPS` |
+| List all recipes                                               | `list`                              |
+| View recipe details                                            | `view` `TITLE`                      |
+| Delete recipe                                                  | `delete` `TITLE`                    |

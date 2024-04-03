@@ -249,6 +249,7 @@ public class GroceryList {
     }
 
     /**
+
      * Updates the location of an existing grocery.
      *
      * @param details A string containing grocery name and details.
@@ -289,6 +290,21 @@ public class GroceryList {
 
         Ui.printGroceriesFound(relevantGroceries, key);
     }
+
+     * Updates the rating and review of an existing grocery.
+     * 
+     * @param details A string containing grocery name and details.
+     * @throws GitException If the input grocery is empty.
+     */
+    public void editRatingAndReview(String details) throws GitException {
+        if (details.isEmpty()) {
+            throw new EmptyGroceryException();
+        }
+        Grocery grocery = getGrocery(details);
+        Ui.promptForRatingAndReview(grocery);
+    }
+
+
 
     /**
      * Lists all the user's groceries.

@@ -19,6 +19,9 @@ public class Grocery {
     private String unit;
     private double cost;
     private Location location;
+    private int rating;
+    private String review;
+
 
 
     /**
@@ -31,7 +34,7 @@ public class Grocery {
      * @param location Location of where the grocery is stored.
      */
     public Grocery(String name, int amount, int threshold,
-                   LocalDate expiration, String category, double cost, Location location) {
+    LocalDate expiration, String category, double cost, Location location) {
         this.name = name;
         this.amount = amount;
         this.threshold = threshold;
@@ -40,6 +43,8 @@ public class Grocery {
         setUnit(category);
         this.cost = cost;
         this.location = location;
+        this.rating = 0;
+        this.review = "";
     }
 
     /**
@@ -54,6 +59,8 @@ public class Grocery {
         this.category = "";
         this.cost = 0;
         this.location = null;
+        this.rating = 0;
+        this.review = "";
     }
 
     // Getters and setters
@@ -81,6 +88,14 @@ public class Grocery {
         return this.threshold;
     }
 
+    public int getRating() {
+        return this.rating;
+    }
+
+    public String getReview() {
+        return this.review;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -101,6 +116,14 @@ public class Grocery {
 
     public String getUnit() {
         return unit;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 
     /**

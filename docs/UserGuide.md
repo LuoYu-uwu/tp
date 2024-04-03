@@ -50,6 +50,33 @@ Example of usage:
 
 `use milk a/4`
 
+### List all groceries: `list`
+Shows a list of all groceries you have.
+
+Format: `list`
+
+Example of usage:
+
+`list`
+
+### List all groceries by price: `listc`
+Shows a list of all groceries you have, sorted by price.
+
+Format: `listc`
+
+Example of usage:
+
+`listc`
+
+### List all groceries by expiration date: `liste`
+Shows a list of all groceries you have, sorted by expiration date.
+
+Format: `liste`
+
+Example of usage:
+
+`liste`
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 

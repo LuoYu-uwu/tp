@@ -14,6 +14,7 @@ Here are some ways you can use our app!
 grocery: manages your groceries.
 calories: manages your calories intake.
 profile: manages your profile.
+recipe: manages your recipe. 
 exit: exits the program.
 
 What mode would you like to enter?

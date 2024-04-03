@@ -26,7 +26,22 @@ It allows users to track and manage their groceries around their home easily.
 > * Features requiring the `GROCERY` input are case-insensitive. 
 > <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 
-## grocery management mode
+## Switch between different modes: `switch`
+Switches between profile, calories, grocery or recipe mode.
+GiT comes in different modes and will prompt the user to choose their desired mode.
+
+Format: `switch`
+
+* Enter the desired mode to switch to after inputting `switch`.
+
+Example of usage:
+
+`switch`
+
+![Switch example output](images/featureExampleOutputs/SwitchExOut.png)
+
+&nbsp;
+## Grocery management mode
 
 ### Adding a new grocery: `add`
 Adds a grocery.  
@@ -133,16 +148,6 @@ Example of usage:
 `low`
 
 &nbsp;
-### Switch between different modes: `switch`
-Switches between profile, calories, grocery or recipe mode.
-
-Format: `switch`
-
-Example of usage:
-
-`switch`
-
-&nbsp;
 ### Finding groceries: `find`
 Find groceries containing a given keyword.
 
@@ -220,6 +225,7 @@ Example of usage:
 
 `delloc cabinet`
 
+&nbsp;
 ### List all groceries: `list`
 Shows a list of all groceries you have.
 
@@ -229,7 +235,12 @@ Example of usage:
 
 `list`
 
+<<<<<<< HEAD
+&nbsp;
+### List all groceries by price: `listc`
+=======
 ### List all groceries by price: `listcost`
+>>>>>>> 732ea24123b4e0ef53fc087a8f3d9f6f74f64b49
 Shows a list of all groceries you have, sorted by price.
 
 Format: `listcost`
@@ -238,7 +249,12 @@ Example of usage:
 
 `listcost`
 
+<<<<<<< HEAD
+&nbsp;
+### List all groceries by expiration date: `liste`
+=======
 ### List all groceries by expiration date: `listexp`
+>>>>>>> 732ea24123b4e0ef53fc087a8f3d9f6f74f64b49
 Shows a list of all groceries you have, sorted by expiration date.
 
 Format: `listexp`
@@ -247,6 +263,7 @@ Example of usage:
 
 `listexp`
 
+&nbsp;
 ## Calories management mode
 
 ### Add eaten food: `eat`
@@ -268,6 +285,7 @@ Example of usage:
 
 `view`
 
+&nbsp;
 ## Profile management mode
 
 ### Update user information: `update`
@@ -289,6 +307,7 @@ Example of usage:
 
 `view`
 
+&nbsp;
 ## Recipe management mode
 
 ### Add new recipe: `add`

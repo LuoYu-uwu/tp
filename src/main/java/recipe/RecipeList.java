@@ -1,6 +1,12 @@
 package recipe;
 
+import exceptions.GitException;
+import exceptions.emptyinput.EmptyInputException;
+import exceptions.nosuch.NoSuchObjectException;
 import git.Ui;
+import grocery.Grocery;
+import grocery.location.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,4 +38,55 @@ public class RecipeList {
 
     }
 
+    /**
+     * Lists all the user's recipes.
+     */
+    public void listRecipes() {
+        int size = recipeArr.size();
+        if (size == 0) {
+            Ui.printNoRecipe();
+        } else {
+            Ui.printRecipeList(recipeArr);
+        }
+    }
+
+    /**
+     * Returns the desired recipe.
+     *
+     * @param title Title of the recipe.
+     * @return The specific recipe.
+     * @throws NoSuchObjectException If the selected grocery does not exist.
+     */
+    private Recipe getRecipe(String title) throws NoSuchObjectException {
+        int index = -1;
+        for (Recipe recipe : recipeArr) {
+            if(recipe.getTitle().equalsIgnoreCase(title)) {
+                index = recipeArr.indexOf(recipe);
+                break;
+            }
+        }
+
+        if (index != -1) {
+            assert recipeArr != null : "Found grocery should not be null";
+            return recipeArr.get(index);
+        } else {
+            throw new NoSuchObjectException("recipe");
+        }
+    }
+
+    /**
+     * Removes a recipe.
+     *
+     * @param title Recipe title from user input.
+     * @throws GitException If recipe is empty.
+     */
+    public void removeRecipe(String title) throws GitException {
+        if (title.isEmpty()) {
+            throw new EmptyInputException("recipe");
+        }
+
+        Recipe currRecipe = getRecipe(title);
+        recipeArr.remove(currRecipe);
+        Ui.printRecipeRemoved(currRecipe);
+    }
 }

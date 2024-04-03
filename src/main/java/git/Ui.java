@@ -2,6 +2,7 @@ package git;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -260,7 +261,7 @@ public class Ui {
      * @return the title of the recipe
      */
     public String promptForTitle(){
-        System.out.println("Please enter the title of this recipe (e.g. fried egg):");
+        System.out.println("Please enter the title of the recipe (e.g. fried egg):");
         return in.nextLine().trim();
     }
 
@@ -281,6 +282,38 @@ public class Ui {
     public static void printRecipeAdded(Recipe recipe){
         assert !(recipe.getTitle().isEmpty()): "grocery name should not be empty";
         System.out.println(recipe.getTitle() + " added!");
+    }
+
+    /**
+     * Prints out when there are no recipe.
+     */
+    public static void printNoRecipe() {
+        System.out.println("There's no recipe!");
+    }
+
+    /**
+     * Prints all recipes.
+     *
+     * @param recipeArr An array list of groceries.
+     */
+    public static void printRecipeList(ArrayList<Recipe> recipeArr) {
+        assert !recipeArr.isEmpty() : "recipe list should not be empty";
+        System.out.println("Here are your recipe titles!");
+        int num = 1;
+        for (Recipe recipe: recipeArr) {
+            System.out.println(num + ". " + recipe.getTitle());
+            num += 1;
+        }
+    }
+
+    /**
+     * Prints output when the selected recipe is removed.
+     *
+     * @param recipe The recipe that is removed.
+     */
+    public static void printRecipeRemoved(Recipe recipe) {
+        assert recipe != null : "Recipe does not exist";
+        System.out.println(recipe.getTitle() + " is removed from the recipe list.");
     }
 
     /**

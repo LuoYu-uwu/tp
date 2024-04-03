@@ -19,4 +19,6 @@ public class Recipe {
     public ArrayList<String> getIngredients() {
         return ingredients;
     }
+
+
 }

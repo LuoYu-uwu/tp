@@ -229,15 +229,17 @@ public class Parser {
             recipeList.addRecipe(new Recipe(title, ingArr));
             break;
 
-        //edit
         case LIST:
+            recipeList.listRecipes();
             break;
-        //edit
+
         case VIEW:
             //System.out.println(userInfo.viewProfile());
             break;
-        //edit
+
         case DELETE:
+            String recipeTitle = ui.promptForTitle();
+            recipeList.removeRecipe(recipeTitle);
             break;
 
         case SWITCH:

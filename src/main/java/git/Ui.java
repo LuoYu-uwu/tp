@@ -689,7 +689,6 @@ public class Ui {
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "cat GROCERY c/CATEGORY: edits the category for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
-                        "remark GROCERY r/REMARK: sets the remark of GROCERY.\n" +
                         "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
                         "th GROCERY a/AMOUNT: edits the threshold amount of GROCERY.\n" +
                         "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
@@ -790,16 +789,6 @@ public class Ui {
     public static void printCategorySet(Grocery grocery){
         assert !(grocery.getCategory().isEmpty()): "grocery category should not be empty";
         System.out.println(grocery.getName() + " is now a " + grocery.getCategory());
-    }
-
-    /**
-     * Prints output after editing the selected grocery's remark.
-     *
-     * @param grocery The grocery that should be updated.
-     */
-    public static void printRemarkSet(Grocery grocery){
-        assert !(grocery.getRemark().isEmpty()): "grocery category should not be empty";
-        System.out.println(grocery.getName() + " is updated with this remark: " + grocery.getRemark());
     }
 
     /**

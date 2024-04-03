@@ -180,20 +180,6 @@ public class GroceryList {
         Ui.printCategorySet(grocery);
     }
     /**
-     * Sets the remark of an existing grocery.
-     *
-     * @param details User input.
-     * @throws GitException Exception thrown depending on error.
-     */
-    public void editRemark(String details) throws GitException {
-        String[] remarkParts = checkDetails(details, "remark", "r/");
-        Grocery grocery = getGrocery(remarkParts[0].strip());
-        String newRemark = remarkParts[1].strip();
-
-        grocery.setRemark(newRemark);
-        Ui.printRemarkSet(grocery);
-    }
-    /**
      * Sets the amount of an existing grocery.
      *
      * @param details User input.

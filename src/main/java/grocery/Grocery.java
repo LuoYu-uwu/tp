@@ -132,10 +132,6 @@ public class Grocery {
         this.remark = remark;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
     /**
      * Checks if the grocery is low in stock.
      *

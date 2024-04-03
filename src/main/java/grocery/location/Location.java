@@ -49,7 +49,8 @@ public class Location {
     }
 
     /**
-     * Sets the location attribute of all stored groceries to NULL. Called when a location is being removed from tracking.
+     * Sets the location attribute of all stored groceries to NULL.
+     * Called when a location is being removed from tracking.
      */
     public void clearLocation() {
         for (Grocery grocery : groceries) {

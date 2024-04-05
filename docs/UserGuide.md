@@ -159,6 +159,7 @@ Format: `find KEYWORD`
 Example of usage:
 
 `find cheese`
+
 ![Find example output](images/featureExampleOutputs/FindExOut.png)
 
 
@@ -235,12 +236,8 @@ Example of usage:
 
 `list`
 
-<<<<<<< HEAD
 &nbsp;
-### List all groceries by price: `listc`
-=======
 ### List all groceries by price: `listcost`
->>>>>>> 732ea24123b4e0ef53fc087a8f3d9f6f74f64b49
 Shows a list of all groceries you have, sorted by price.
 
 Format: `listcost`
@@ -249,12 +246,8 @@ Example of usage:
 
 `listcost`
 
-<<<<<<< HEAD
 &nbsp;
-### List all groceries by expiration date: `liste`
-=======
 ### List all groceries by expiration date: `listexp`
->>>>>>> 732ea24123b4e0ef53fc087a8f3d9f6f74f64b49
 Shows a list of all groceries you have, sorted by expiration date.
 
 Format: `listexp`

@@ -159,6 +159,7 @@ Format: `find KEYWORD`
 Example of usage:
 
 `find cheese`
+
 ![Find example output](images/featureExampleOutputs/FindExOut.png)
 
 

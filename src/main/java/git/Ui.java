@@ -906,12 +906,14 @@ public class Ui {
      * @param groceries An array list of groceries.
      */
     public static void printLowStocks(List<Grocery> groceries) {
-        assert !groceries.isEmpty() : "grocery list should not be empty";
-        System.out.println("Time to top up these groceries!");
-        for (Grocery grocery: groceries) {
-            if (grocery.isLow()) {
-                System.out.println(" - " + grocery.getName()
-                        + " only left: " +grocery.getAmount());
+        int size = groceries.size();
+        if (size == 0) {
+            System.out.println("There are no items low in stock :)");
+        } else {
+            System.out.println("Time to top up these groceries!");
+            for (Grocery grocery : groceries) {
+                    System.out.println(" - " + grocery.getName()
+                            + " only left: " + grocery.getAmount());
             }
         }
     }

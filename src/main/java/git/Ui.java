@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import enumerations.ProfileCommand;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
@@ -705,6 +706,16 @@ public class Ui {
         System.out.println("What mode would you like to enter?");
         System.out.println("Please select a mode: " + "grocery, profile, calories or recipe:");
         String newMode = in.nextLine().trim();
+        Mode mode;
+        while (true) {
+            try {
+                mode = Mode.valueOf(newMode.toUpperCase());
+                break;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid mode:");
+                newMode = in.nextLine().trim();
+            }
+        }
         displayCommands(newMode);
         return newMode;
     }

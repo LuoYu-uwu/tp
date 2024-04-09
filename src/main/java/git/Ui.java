@@ -609,7 +609,7 @@ public class Ui {
                 break;
             } else {
                 System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Please enter your gender (e.g. F):");
             }
         }
         return gender;
@@ -705,6 +705,16 @@ public class Ui {
         System.out.println("What mode would you like to enter?");
         System.out.println("Please select a mode: " + "grocery, profile, calories or recipe:");
         String newMode = in.nextLine().trim();
+        Mode mode;
+        while (true) {
+            try {
+                mode = Mode.valueOf(newMode.toUpperCase());
+                break;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid mode:");
+                newMode = in.nextLine().trim();
+            }
+        }
         displayCommands(newMode);
         return newMode;
     }
@@ -906,12 +916,14 @@ public class Ui {
      * @param groceries An array list of groceries.
      */
     public static void printLowStocks(List<Grocery> groceries) {
-        assert !groceries.isEmpty() : "grocery list should not be empty";
-        System.out.println("Time to top up these groceries!");
-        for (Grocery grocery: groceries) {
-            if (grocery.isLow()) {
+        int size = groceries.size();
+        if (size == 0) {
+            System.out.println("There are no items low in stock :)");
+        } else {
+            System.out.println("Time to top up these groceries!");
+            for (Grocery grocery : groceries) {
                 System.out.println(" - " + grocery.getName()
-                        + " only left: " +grocery.getAmount());
+                        + " only left: " + grocery.getAmount());
             }
         }
     }

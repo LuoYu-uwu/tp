@@ -336,12 +336,13 @@ public class GroceryList {
      * Lists all the groceries that are low in stock.
      */
     public void listLowStocks() {
-        int size = groceries.size();
-        if (size == 0) {
-            Ui.printNoGrocery();
-        } else {
-            Ui.printLowStocks(groceries);
+        List<Grocery> lowStockGroceries = new ArrayList<>();
+        for (Grocery grocery: groceries) {
+            if (grocery.isLow()) {
+                lowStockGroceries.add(grocery);
+            }
         }
+        Ui.printLowStocks(lowStockGroceries);
     }
 
     /**

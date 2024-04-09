@@ -234,6 +234,9 @@ public class GroceryList {
 
         try {
             double cost = Double.parseDouble(price);
+            if (cost < 0) {
+                throw new InvalidCostException();
+            }
             grocery.setCost(cost);
             Ui.printCostSet(grocery);
         } catch (NumberFormatException e) {

@@ -118,7 +118,7 @@ Sets the cost of a grocery.
 
 Format: `cost GROCERY  $PRICE`
 
-* `PRICE` must be a valid integer.
+* `PRICE` must be a valid numerical value.
 
 Example of usage:
 
@@ -135,7 +135,7 @@ Format: `th GROCERY a/AMOUNT`
 
 Example of usage:
 
-`th milk 1`
+`th milk a/1`
 
 &nbsp;
 ### View a list of groceries that are low in stock: `low`

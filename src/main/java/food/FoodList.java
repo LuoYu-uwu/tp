@@ -15,6 +15,12 @@ public class FoodList {
         foods = new ArrayList<>();
     }
 
+    /**
+     * Adds a new food into the list of food.
+     *
+     * @param food New consumed food.
+     * @throws EmptyInputException When food name entered is empty.
+     */
     public void addFood(Food food) throws EmptyInputException {
         if (food.getName() == null) {
             throw new EmptyInputException("food");
@@ -31,6 +37,9 @@ public class FoodList {
         }
     }
 
+    /**
+     * Prints the list of food in the list.
+     */
     public void printFoods() {
         assert !foods.isEmpty() : "food list should not be empty";
         System.out.println("Here are the food you have consumed today:");

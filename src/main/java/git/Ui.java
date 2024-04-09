@@ -683,6 +683,11 @@ public class Ui {
         return gender;
     }
 
+    /**
+     * Prompts user for aim.
+     *
+     * @return The entered valid aim or empty.
+     */
     public String promptForAim() {
         System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
         String aim = "";
@@ -706,6 +711,11 @@ public class Ui {
         return aim;
     }
 
+    /**
+     * Prompts user for activeness.
+     *
+     * @return The entered valid activeness or empty.
+     */
     public String promptForActiveness() {
         System.out.println("Please enter your activeness " +
                 "(e.g. inactive/light/moderate/active/very):");
@@ -799,7 +809,7 @@ public class Ui {
     }
 
     /**
-     * Displays help message containing all possible commands.
+     * Displays help message containing all possible commands for grocery management.
      */
     public static void displayHelpForGrocery() {
         System.out.println(
@@ -830,6 +840,9 @@ public class Ui {
         );
     }
 
+    /**
+     * Displays help message containing all possible commands for calories management.
+     */
     public static void displayHelpForCal() {
         System.out.println(
                 "Here are some ways you can manage your calories intake!\n" +
@@ -841,6 +854,9 @@ public class Ui {
         );
     }
 
+    /**
+     * Displays help message containing all possible commands for profile management.
+     */
     public static void displayHelpForProf() {
         System.out.println(
                 "Here are some ways you can manage your profile!\n" +
@@ -865,6 +881,9 @@ public class Ui {
         );
     }
 
+    /**
+     * Displays help message containing all possible commands for this app.
+     */
     public static void displayHelp() {
         System.out.println(
                 "Here are some ways you can use our app!\n" +

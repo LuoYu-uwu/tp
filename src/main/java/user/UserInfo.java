@@ -73,6 +73,17 @@ public class UserInfo {
         return currentCalories;
     }
 
+    /**
+     * Updates the user's information using the given input.
+     *
+     * @param name Entered name.
+     * @param weight Entered weight.
+     * @param height Entered height.
+     * @param age Entered age.
+     * @param gender Entered gender.
+     * @param activeness Entered activeness.
+     * @param aim Entered aim.
+     */
     public void updateInfo(String name, double weight, double height, int age,
                            String gender, String activeness, String aim) {
         setName(name);
@@ -93,6 +104,11 @@ public class UserInfo {
         }
     }
 
+    /**
+     * Calculate's the user's Basal metabolic rate if there is sufficient information.
+     *
+     * @throws InsufficientInfoException When there is not enough information for calculation.
+     */
     private void calBMR() throws InsufficientInfoException {
         if (this.weight == 0 || this.height == 0 || this.age == 0) {
             throw new InsufficientInfoException();
@@ -106,6 +122,11 @@ public class UserInfo {
         this.BMR = result;
     }
 
+    /**
+     * Calculate's the user's Active Metabolic Rate given the activeness.
+     *
+     * @throws GitException When invalid activeness was given.
+     */
     private void calAMR() throws GitException {
         switch (this.activeness) {
         case "inactive":
@@ -128,6 +149,11 @@ public class UserInfo {
         }
     }
 
+    /**
+     * Calculate's the user's target calories given the aim.
+     *
+     * @throws GitException When invalid aim was given.
+     */
     private void setCaloriesCap() throws GitException {
         switch (this.aim) {
         case "lose":
@@ -144,6 +170,13 @@ public class UserInfo {
         }
     }
 
+    /**
+     * Calculates the total calories consumed.
+     * Only check if it has exceeded the target calories if sufficient information was given.
+     *
+     * @param food Consumed food.
+     * @throws GitException When insufficient information about the user was given.
+     */
     public void consumptionOfCalories(Food food) throws GitException{
         this.currentCalories = food.getCalories() + this.currentCalories;
         if (this.weight == 0 || this.height == 0 || this.age == 0 ||
@@ -157,6 +190,11 @@ public class UserInfo {
         }
     }
 
+    /**
+     * Stores user details as a string.
+     *
+     * @return A string containing all the user's details.
+     */
     public String viewProfile(){
         String userName = "Name: " + this.name + "\n";
         String height = "Height: " + this.height + "\n";

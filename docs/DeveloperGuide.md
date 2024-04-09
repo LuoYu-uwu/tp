@@ -7,6 +7,14 @@
 ## Design & implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+
+### _Designs_
+### 1. Calories Management Mode
+![Commands for managing calories](./diagrams/CaloriesManagement.png)
+   * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
+   * if `eat`, store the name and calories of the input food
+   * if `view`, display all the foods consumed
+
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\
      e.g., NAME, AMOUNT, EXPIRATION, PRICE.
@@ -100,7 +108,8 @@ Furthermore, the app can generate a list of items that are expiring soon, remind
 | v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                    |
 | v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                          |
 | v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                              |
-| v2.0    | user who cooks with recipes | create and keep my own version of recipes   | refer to my own recipes when I cook 
+| v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                    |
+
 ## Non-Functional Requirements
 
 {Give non-functional requirements}

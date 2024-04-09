@@ -76,6 +76,7 @@ public class Grocery {
     public LocalDate getExpiration() {
         return expiration;
     }
+    
     public String getCategory() {return this.category;}
 
     public double getCost() {
@@ -176,6 +177,9 @@ public class Grocery {
      */
     public void setExpiration(String expiration) throws PastExpirationDateException {
         assert !(expiration.isEmpty()) : "Expiration date entered is invalid!";
+        if(expiration == null||expiration.isEmpty()) {
+            throw new IllegalArgumentException("Expiration date entered is invalid!");
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate expirationDate = LocalDate.parse(expiration, formatter);
 

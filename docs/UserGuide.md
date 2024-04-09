@@ -26,6 +26,66 @@ It allows users to track and manage their groceries around their home easily.
 > * Features requiring the `GROCERY` input are case-insensitive. 
 > <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 
+## Switch between different modes: `switch`
+Switches between profile, calories, grocery or recipe mode.
+GiT comes in different modes and will prompt the user to choose their desired mode.
+
+Format: `switch`
+
+* Enter the desired mode to switch to after inputting `switch`.
+
+Example of usage:
+
+`switch`
+
+![Switch example output](images/featureExampleOutputs/SwitchExOut.png)
+
+&nbsp;
+## Grocery management mode
+
+### Adding a new grocery: `add`
+Adds a grocery.  
+
+Format: `add GROCERY`
+
+* `Grocery` must be a valid String.
+
+Example of usage:
+
+`add milk`
+
+&nbsp;
+### Setting the expiration date of a grocery: `exp`
+Sets the expiration date of a grocery.  
+
+Format: `exp GROCERY d/EXPIRATION_DATE`
+
+* `EXPIRATION_DATE` must be a in yyyy-MM-dd format.
+
+Example of usage:
+
+`exp milk d/2024-07-20`
+
+&nbsp;
+### Adding Details to a Grocery: Extended Options
+After executing add GROCERY, you will see:
+```
+Do you want to include the following details?
+1. Category
+2. Amount
+3. Location
+4. Expiration Date
+5. Cost
+6. Threshold Amount
+7. Help
+8. Skip
+Please enter the number of the details you want to include:
+You may enter multiple numbers. (e.g. 1234)
+```
+Example of usage :
+
+`124`
+
 &nbsp;
 ### Setting the amount of a grocery: `amt`
 Sets the amount of a grocery.
@@ -88,16 +148,6 @@ Example of usage:
 `low`
 
 &nbsp;
-### Switch between different modes: `switch`
-Switches between profile, calories, grocery or recipe mode.
-
-Format: `switch`
-
-Example of usage:
-
-`switch`
-
-&nbsp;
 ### Finding groceries: `find`
 Find groceries containing a given keyword.
 
@@ -109,6 +159,7 @@ Format: `find KEYWORD`
 Example of usage:
 
 `find cheese`
+
 ![Find example output](images/featureExampleOutputs/FindExOut.png)
 
 
@@ -121,6 +172,16 @@ Format: `loc LOCATION`
 Example of usage:
 
 `loc freezer`
+
+&nbsp;
+### Adding rating and review of a grocery: `rate`
+Adds rating and review of an existing grocery
+
+Format: `rate GROCERY`
+
+Example of usage:
+
+`rate milk`
 
 &nbsp;
 ### Storing a grocery in a storage location: `store`
@@ -136,10 +197,10 @@ Example of usage:
 `store paprika l/spice rack`
 
 &nbsp;
-### Viewing storage locations and their groceries: `listl`
+### Viewing storage locations and their groceries: `listloc`
 View all storage locations being tracked, or the groceries stored in a given location
 
-Format: `listl [LOCATION]`
+Format: `listloc [LOCATION]`
 
 * `LOCATION` is an optional parameter.
 * Without `LOCATION`, all storage locations will be displayed.
@@ -147,11 +208,11 @@ Format: `listl [LOCATION]`
 
 Example of usage:
 
-* `listl`
+* `listloc`
 
 ![Listl example output](images/featureExampleOutputs/ListlExOut.png)
 
-* `listl cubby`
+* `listloc cubby`
 
 ![Listl LOCATION example output](images/featureExampleOutputs/ListlLocExOut.png)
 
@@ -165,6 +226,7 @@ Example of usage:
 
 `delloc cabinet`
 
+&nbsp;
 ### List all groceries: `list`
 Shows a list of all groceries you have.
 
@@ -174,24 +236,27 @@ Example of usage:
 
 `list`
 
-### List all groceries by price: `listc`
+&nbsp;
+### List all groceries by price: `listcost`
 Shows a list of all groceries you have, sorted by price.
 
-Format: `listc`
+Format: `listcost`
 
 Example of usage:
 
-`listc`
+`listcost`
 
-### List all groceries by expiration date: `liste`
+&nbsp;
+### List all groceries by expiration date: `listexp`
 Shows a list of all groceries you have, sorted by expiration date.
 
-Format: `liste`
+Format: `listexp`
 
 Example of usage:
 
-`liste`
+`listexp`
 
+&nbsp;
 ## Calories management mode
 
 ### Add eaten food: `eat`
@@ -213,6 +278,7 @@ Example of usage:
 
 `view`
 
+&nbsp;
 ## Profile management mode
 
 ### Update user information: `update`
@@ -234,6 +300,7 @@ Example of usage:
 
 `view`
 
+&nbsp;
 ## Recipe management mode
 
 ### Add new recipe: `add`
@@ -306,6 +373,8 @@ Fried Egg is removed from the recipe list.
 
 | Command                                                        | Format and example                  |
 |----------------------------------------------------------------|-------------------------------------|
+| Add grocery                                                    | `add GROCERY`                       |
+| Set grocery expiration date                                    | `exp GROCERY d/EXPIRATION_DATE`     |
 | Set grocery amount                                             | `amt GROCERY a/AMOUNT`              |
 | Set grocery cost                                               | `cost GROCERY $PRICE`               |
 | Set grocery threshold amount                                   | `th GROCERY a/AMOUNT`               |
@@ -313,11 +382,14 @@ Fried Egg is removed from the recipe list.
 | Use grocery                                                    | `use GROCERY a/AMOUNT`              | 
 | Find groceries                                                 | `find KEYWORD`                      |
 | Add storage location                                           | `loc LOCATION`                      |
+| Rate and review groceries                                      | `rate GROCERY`                      |
 | Store grocery                                                  | `store GROCERY l/LOCATION`          |
-| View storage locations <br> View groceries in a given location | `listl [LOCATION]`                  |
+| View storage locations <br> View groceries in a given location | `listloc [LOCATION]`                |
 | Remove storage location                                        | `delloc LOCATION`                   |
 | List all groceries                                             | `list`                              |
 | List all groceries by price                                    | `listcost`                          |
+| List all groceries by expiration date                          | `listexp`                           |
+| View all groceries expiring in the next 3 days                 | `expiring`                          |
 | Switch between modes                                           | `switch`                            |
 | Add food consumed                                              | `eat FOOD`                          |
 | View consumed food and their calories                          | `view`                              |

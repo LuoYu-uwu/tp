@@ -160,11 +160,10 @@ public class GroceryList {
             System.out.println(e.getMessage());
         }
 
-    
         // Verification and UI feedback
-        assert grocery.getExpiration().isEqual(date) : "Expiration date should be set correctly";
         Ui.printExpSet(grocery);
     }
+
     /**
      * Sets the category of an existing grocery.
      *

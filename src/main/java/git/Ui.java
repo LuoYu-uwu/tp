@@ -609,7 +609,7 @@ public class Ui {
                 break;
             } else {
                 System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Please enter your gender (e.g. F):");
             }
         }
         return gender;

@@ -29,6 +29,9 @@ public class Ui {
     private static Ui singleUi = null;
     private static Scanner in;
     private static String userName;
+    private static final double MAX_HEIGHT = 280;
+    private static final double MAX_WEIGHT = 370;
+    private static final double MAX_AGE = 160;
 
     // METHODS
     /**
@@ -538,7 +541,7 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 weight = Double.parseDouble(input);
-                if (weight > 0) {
+                if (weight > 0 && weight < MAX_WEIGHT) {
                     break;
                 } else {
                     weight = 0;
@@ -560,7 +563,7 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 height = Double.parseDouble(input);
-                if (height > 0 ){
+                if (height > 0 && height < MAX_HEIGHT){
                     break;
                 } else {
                     height = 0;
@@ -576,22 +579,22 @@ public class Ui {
     }
 
     public int promptForAge() {
-        System.out.println("Please enter your age in years:");
+        System.out.println("Please enter your age in years (nearest whole number):");
         int age = 0;
         for (int i = 0; i < 5; i++) {
             String input = in.nextLine().trim();
             try {
                 age = Integer.parseInt(input);
-                if (age > 0 ){
+                if (age > 0 && age < MAX_AGE){
                     break;
                 } else {
                     age = 0;
                     System.out.println("Age entered is invalid!");
-                    System.out.println("Please enter your age in years:");
+                    System.out.println("Please enter your age in years (nearest whole number):");
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Age entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Please enter your age in years (nearest whole number):");
             }
         }
         return age;

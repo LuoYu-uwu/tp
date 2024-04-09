@@ -146,10 +146,10 @@ public class UserInfo {
     }
 
     public void consumptionOfCalories(Food food) throws GitException{
+        this.currentCalories = food.getCalories() + this.currentCalories;
         if (this.weight == 0 || this.height == 0 || this.age == 0) {
             throw new InsufficientInfoException();
         }
-        this.currentCalories = food.getCalories() + this.currentCalories;
         if (this.currentCalories > this.caloriesCap) {
             System.out.println("You have exceeded your calories intake!");
             System.out.println("You have consumed " + currentCalories + "kcal");

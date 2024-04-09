@@ -77,8 +77,9 @@ Do you want to include the following details?
 4. Expiration Date
 5. Cost
 6. Threshold Amount
-7. Help
-8. Skip
+7. Remark
+8. Help
+9. Skip
 Please enter the number of the details you want to include:
 You may enter multiple numbers. (e.g. 1234)
 ```
@@ -308,29 +309,39 @@ Adds new recipe, ingredient and steps.
 
 Format: `add`
 
-Example of usage:
-
-`add` 
+Example:
+```
+add
 
 Please enter the title of the recipe:
 
-`Fried Egg`
+Fried Egg
 
 Please enter the ingredients for this recipe in one line:
 
-`egg, salt`
+egg,salt
 
 Please enter the steps for this recipe in one line:
 
-`Fry the egg. Add salt. Serve.`
+Fry the egg. Add salt. Serve.
 
 Fried Egg added!
-
+```
 &nbsp;
 ### List all the recipes: `list`
 Shows all the recipe titles.
 
 Format: `list`
+
+Example:
+```
+list
+
+Here are your recipe titles!
+
+1. fried egg
+- - - - -
+```
 
 &nbsp;
 ### View a recipe: `view`
@@ -338,29 +349,30 @@ Shows the recipe ingredients and steps.
 
 Format: `view` `RECIPE` 
 
-Example of usage:
-
-`view`
+Example:
+```
+view
 
 Please enter the title of the recipe:
 
-`Fried Egg`
-
+Fried Egg
+```
 &nbsp;
 ### Delete a recipe: `delete`
 Shows the recipe ingredients and steps.
 
 Format: `delete` `RECIPE`
 
-Example of usage:
-
-`delete`
+Example:
+```
+delete
 
 Please enter the title of the recipe:
 
-`Fried Egg`
+Fried Egg
 
 Fried Egg is removed from the recipe list.
+```
 
 ## FAQ
 

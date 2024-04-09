@@ -22,6 +22,7 @@ public class Grocery {
     private int rating;
     private String review;
     private String remark;
+    private boolean isSetCost;
 
 
 
@@ -43,6 +44,7 @@ public class Grocery {
         this.category = category;
         setUnit(category);
         this.cost = cost;
+        this.isSetCost = true;
         this.location = location;
         this.rating = 0;
         this.review = "";
@@ -59,6 +61,7 @@ public class Grocery {
         this.expiration = null;
         this.category = "";
         this.cost = 0;
+        this.isSetCost = false;
         this.location = null;
         this.rating = 0;
         this.review = "";
@@ -198,6 +201,7 @@ public class Grocery {
     public void setCost(double cost) {
         assert cost >= 0 : "Cost entered is invalid!"; // Ensure that the cost is non-negative.
         this.cost = cost;
+        this.isSetCost = true;
     }
 
     public void setLocation(Location location) {
@@ -241,6 +245,8 @@ public class Grocery {
         String price;
         if (cost != 0) {
             price = ", cost: $" + String.format("%.2f", cost);
+        } else if (isSetCost) {
+            price = ", cost: $0.00";
         } else {
             price = ", cost not set";
         }

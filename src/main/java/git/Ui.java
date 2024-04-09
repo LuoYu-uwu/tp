@@ -9,6 +9,7 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
+import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import exceptions.PastExpirationDateException;
@@ -507,6 +508,11 @@ public class Ui {
         grocery.setReview(review);
     }
 
+    /**
+     * Prompts user for calories of the food.
+     *
+     * @return The calories of the consumed food.
+     */
     public double promptForCalories() {
         System.out.println("Please enter the calories of the food in kcal:");
         double calories = 0;
@@ -529,9 +535,23 @@ public class Ui {
         return calories;
     }
 
+    /**
+     * Prompts user for a name.
+     *
+     * @return The entered name.
+     */
     public String promptForName() {
         System.out.println("Please enter your name");
-        return in.nextLine().trim();
+        String name = "";
+        for (int i = 0; i < 5; i++) {
+            name = in.nextLine().trim();
+            if (name.isBlank()) {
+                System.out.println("Please enter a valid name");
+            } else {
+                break;
+            }
+        }
+        return name;
     }
 
     public double promptForWeight() {

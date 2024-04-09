@@ -829,8 +829,14 @@ public class Ui {
      * @param grocery The grocery that should be updated.
      */
     public static void printThresholdSet(Grocery grocery) {
+        String unit;
+        if (grocery.getUnit() == null) {
+            unit = "";
+        } else {
+            unit = " " + grocery.getUnit();
+        }
         System.out.println(grocery.getName() + "'s threshold is now " +
-                grocery.getThreshold() + " " + grocery.getUnit());
+                grocery.getThreshold() + unit);
     }
 
     /**

@@ -135,7 +135,7 @@ Format: `th GROCERY a/AMOUNT`
 
 Example of usage:
 
-`th milk 1`
+`th milk a/1`
 
 &nbsp;
 ### View a list of groceries that are low in stock: `low`

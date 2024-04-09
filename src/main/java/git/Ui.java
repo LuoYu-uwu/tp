@@ -9,7 +9,6 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
-import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import exceptions.PastExpirationDateException;
@@ -538,7 +537,7 @@ public class Ui {
     /**
      * Prompts user for a name.
      *
-     * @return The entered name.
+     * @return The entered valid name or empty.
      */
     public String promptForName() {
         System.out.println("Please enter your name");
@@ -548,7 +547,7 @@ public class Ui {
             if (name.isBlank()) {
                 if (i == 4) {
                     System.out.println("Failed to enter valid name, " +
-                            "namewill be stored as empty");
+                            "name will be stored as empty");
                 } else {
                     System.out.println("Please enter a valid name");
                 }
@@ -656,6 +655,11 @@ public class Ui {
         return age;
     }
 
+    /**
+     * Prompts user for gender.
+     *
+     * @return The entered valid gender or empty.
+     */
     public String promptForGender() {
         System.out.println("Please enter your gender (e.g. F):");
         String gender = "";
@@ -668,7 +672,12 @@ public class Ui {
                 break;
             } else {
                 System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your gender (e.g. F):");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid gender, " +
+                            "gender will be stored as empty");
+                } else {
+                    System.out.println("Please enter your gender (e.g. F):");
+                }
             }
         }
         return gender;
@@ -685,8 +694,13 @@ public class Ui {
                 aim = input;
                 break;
             } else {
-                System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Aim entered is invalid!");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid aim, " +
+                            "aim will be stored as empty");
+                } else {
+                    System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
+                }
             }
         }
         return aim;
@@ -706,8 +720,14 @@ public class Ui {
                 activeness = input;
                 break;
             } else {
-                System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Activeness entered is invalid!");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid activeness, " +
+                            "activeness will be stored as empty");
+                } else {
+                    System.out.println("Please enter your activeness " +
+                            "(e.g. inactive/light/moderate/active/very):");
+                }
             }
         }
         return activeness;

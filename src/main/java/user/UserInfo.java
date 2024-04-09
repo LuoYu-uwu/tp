@@ -1,9 +1,8 @@
 package user;
 
 import exceptions.GitException;
+import exceptions.FailToCalculateCalories;
 import exceptions.InsufficientInfoException;
-import exceptions.InvalidActivenessException;
-import exceptions.InvalidAimException;
 import food.Food;
 
 public class UserInfo {
@@ -125,7 +124,7 @@ public class UserInfo {
             this.AMR = this.BMR * 1.9;
             break;
         default:
-            throw new InvalidActivenessException();
+            throw new FailToCalculateCalories();
         }
     }
 
@@ -141,13 +140,14 @@ public class UserInfo {
             this.caloriesCap = this.AMR*1.2;
             break;
         default:
-            throw new InvalidAimException();
+            throw new FailToCalculateCalories();
         }
     }
 
     public void consumptionOfCalories(Food food) throws GitException{
         this.currentCalories = food.getCalories() + this.currentCalories;
-        if (this.weight == 0 || this.height == 0 || this.age == 0) {
+        if (this.weight == 0 || this.height == 0 || this.age == 0 ||
+                this.gender.isEmpty() || this.aim.isEmpty() || this.activeness.isEmpty()) {
             throw new InsufficientInfoException();
         }
         if (this.currentCalories > this.caloriesCap) {

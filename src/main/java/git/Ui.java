@@ -912,8 +912,8 @@ public class Ui {
         } else {
             System.out.println("Time to top up these groceries!");
             for (Grocery grocery : groceries) {
-                    System.out.println(" - " + grocery.getName()
-                            + " only left: " + grocery.getAmount());
+                System.out.println(" - " + grocery.getName()
+                        + " only left: " + grocery.getAmount());
             }
         }
     }

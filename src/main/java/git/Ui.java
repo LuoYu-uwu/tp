@@ -67,9 +67,16 @@ public class Ui {
 
         System.out.println(gitlogo + System.lineSeparator());
         System.out.println("Hello from GiT");
-        System.out.println("What is your name?");
-        printLine();
-        userName = in.nextLine();
+        userName = null;
+        while (userName == null) {
+            System.out.println("What is your name?");
+            printLine();
+            userName = in.nextLine();
+            if (userName.isEmpty()) {
+                System.out.println("Invalid input. Please enter a valid name.");
+                userName = null;
+            }
+        }
         printHello(userName);
         displayHelp();
     }

@@ -9,7 +9,6 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
-import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import exceptions.PastExpirationDateException;
@@ -322,7 +321,8 @@ public class Ui {
     public String promptForSteps(){
         String steps = null;
         while (steps == null) {
-            System.out.println("Please enter the steps for this recipe in one line (e.g. Fry the egg. Add salt. Serve.):");
+            System.out.println("Please enter the steps for this recipe in one line " +
+                    "(e.g. Fry the egg. Add salt. Serve.):");
             steps = in.nextLine().trim();
             if (steps.isEmpty()) {
                 System.out.println("Invalid input. Steps cannot be empty.");

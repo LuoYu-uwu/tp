@@ -546,7 +546,12 @@ public class Ui {
         for (int i = 0; i < 5; i++) {
             name = in.nextLine().trim();
             if (name.isBlank()) {
-                System.out.println("Please enter a valid name");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid name, " +
+                            "namewill be stored as empty");
+                } else {
+                    System.out.println("Please enter a valid name");
+                }
             } else {
                 break;
             }
@@ -554,6 +559,11 @@ public class Ui {
         return name;
     }
 
+    /**
+     * Prompts user for weight.
+     *
+     * @return The entered valid weight or 0.
+     */
     public double promptForWeight() {
         System.out.println("Please enter your weight in KG:");
         double weight = 0;
@@ -570,12 +580,22 @@ public class Ui {
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Weight entered is invalid!");
-                System.out.println("Please enter your weight in KG:");
+                if(i == 4) {
+                    System.out.println("Failed to enter valid weight, " +
+                            "weight will be stored as 0");
+                } else {
+                    System.out.println("Please enter your weight in KG:");
+                }
             }
         }
         return weight;
     }
 
+    /**
+     * Prompts user for height.
+     *
+     * @return The entered valid height or 0.
+     */
     public double promptForHeight() {
         System.out.println("Please enter your height in cm:");
         double height = 0;
@@ -592,12 +612,22 @@ public class Ui {
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Height entered is invalid!");
-                System.out.println("Please enter your height in cm:");
+                if(i == 4) {
+                    System.out.println("Failed to enter valid height, " +
+                            "height will be stored as 0");
+                } else {
+                    System.out.println("Please enter your height in cm:");
+                }
             }
         }
         return height;
     }
 
+    /**
+     * Prompts user for age.
+     *
+     * @return The entered valid age or 0.
+     */
     public int promptForAge() {
         System.out.println("Please enter your age in years (nearest whole number):");
         int age = 0;
@@ -614,7 +644,13 @@ public class Ui {
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Age entered is invalid!");
-                System.out.println("Please enter your age in years (nearest whole number):");
+                if(i == 4) {
+                    System.out.println("Failed to enter valid age, " +
+                            "age will be stored as 0");
+                } else {
+                    System.out.println("Please enter your age in years " +
+                            "(nearest whole number):");
+                }
             }
         }
         return age;

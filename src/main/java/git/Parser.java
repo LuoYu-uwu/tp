@@ -215,7 +215,7 @@ public class Parser {
      * @param commandParts Fragments of the command entered by the user.
      * @throws GitException Exception thrown depending on specific error.
      */
-    public void recipeManagement(String[] commandParts) throws GitException {
+    public void recipeManagement(String[] commandParts) throws GitException, EmptyInputException {
         RecipeCommand command;
         try {
             command = RecipeCommand.valueOf(commandParts[0].toUpperCase());

@@ -66,9 +66,16 @@ public class Ui {
 
         System.out.println(gitlogo + System.lineSeparator());
         System.out.println("Hello from GiT");
-        System.out.println("What is your name?");
-        printLine();
-        userName = in.nextLine();
+        userName = null;
+        while (userName == null) {
+            System.out.println("What is your name?");
+            printLine();
+            userName = in.nextLine();
+            if (userName.isEmpty()) {
+                System.out.println("Invalid input. Please enter a valid name.");
+                userName = null;
+            }
+        }
         printHello(userName);
         displayHelp();
     }
@@ -277,9 +284,17 @@ public class Ui {
      * Prompts user for title when adding recipe in RECIPE mode.
      * @return the title of the recipe
      */
-    public String promptForTitle(){
-        System.out.println("Please enter the title of the recipe (e.g. fried egg):");
-        return in.nextLine().trim();
+    public String promptForTitle() {
+        String title = null;
+        while (title == null) {
+            System.out.println("Please enter the title of the recipe (e.g. fried egg):");
+            title = in.nextLine().trim();
+            if (title.isEmpty()) {
+                System.out.println("Invalid input. Title cannot be empty.");
+                title = null;
+            }
+        }
+        return title;
     }
 
     /**
@@ -287,8 +302,16 @@ public class Ui {
      * @return the ingredients in a single line, trimmed only
      */
     public String promptForIngredients(){
-        System.out.println("Please enter the ingredients for this recipe in one line (e.g. egg, salt):");
-        return in.nextLine().trim();
+        String ingredients = null;
+        while (ingredients == null) {
+            System.out.println("Please enter the ingredients for this recipe in one line (e.g. egg, salt):");
+            ingredients = in.nextLine().trim();
+            if (ingredients.isEmpty()) {
+                System.out.println("Invalid input. Ingredients cannot be empty.");
+                ingredients = null;
+            }
+        }
+        return ingredients;
     }
 
     /**
@@ -296,8 +319,17 @@ public class Ui {
      * @return the steps in a single line, trimmed only
      */
     public String promptForSteps(){
-        System.out.println("Please enter the steps for this recipe in one line (e.g. Fry the egg. Add salt. Serve.):");
-        return in.nextLine().trim();
+        String steps = null;
+        while (steps == null) {
+            System.out.println("Please enter the steps for this recipe in one line " +
+                    "(e.g. Fry the egg. Add salt. Serve.):");
+            steps = in.nextLine().trim();
+            if (steps.isEmpty()) {
+                System.out.println("Invalid input. Steps cannot be empty.");
+                steps = null;
+            }
+        }
+        return steps;
     }
 
     /**

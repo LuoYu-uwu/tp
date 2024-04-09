@@ -132,8 +132,12 @@ public class Parser {
 
         switch (command) {
         case EAT:
+            String name = commandParts[1];
+            if (name == null || name.isBlank() || !name.matches("[a-zA-Z]+")) {
+                throw new EmptyInputException("valid food name");
+            }
             double calories = ui.promptForCalories();
-            Food food = new Food(commandParts[1], calories);
+            Food food = new Food(name, calories);
             foodList.addFood(food);
             userInfo.consumptionOfCalories(food);
             break;

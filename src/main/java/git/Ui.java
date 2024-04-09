@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import enumerations.ProfileCommand;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;

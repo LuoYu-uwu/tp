@@ -118,7 +118,7 @@ Sets the cost of a grocery.
 
 Format: `cost GROCERY  $PRICE`
 
-* `PRICE` must be a valid integer.
+* `PRICE` must be a valid numerical value.
 
 Example of usage:
 

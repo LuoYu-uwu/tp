@@ -91,6 +91,18 @@ cheese added!
 - - - - -
 ```
 
+
+&nbsp;
+### Deleting a grocery: `del`
+Delete a grocery.
+
+Format: `del GROCERY`
+
+Example of usage:
+
+`del pork`
+
+
 &nbsp;
 ### Setting the expiration date of a grocery: `exp`
 Sets the expiration date of a grocery.

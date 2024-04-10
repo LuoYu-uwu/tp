@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.LinkedHashSet;
 
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
@@ -167,8 +165,9 @@ public class Ui {
         // Remove duplicates
         StringBuilder addNums = new StringBuilder();
         for (char choice : rawInput.toCharArray()) {
-            if (!addNums.toString().contains(String.valueOf(choice)))
+            if (!addNums.toString().contains(String.valueOf(choice))) {
                 addNums.append(choice);
+            }
         }
 
         processAddMenu(grocery, addNums.toString());

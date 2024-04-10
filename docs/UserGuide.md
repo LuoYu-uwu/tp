@@ -73,7 +73,7 @@ Before adding milk, do you want to include the following details?
 8. Help
 Please enter the number of the details you want to include:
 You may enter multiple numbers. (e.g. 1234)
-If nothing or invalid values are entered, no additional details are included!
+To skip this step, do not enter any values.
 
 >> 23
 

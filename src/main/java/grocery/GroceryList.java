@@ -67,7 +67,7 @@ public class GroceryList {
      * @param name Name of the grocery.
      * @return True if the grocery exists, false otherwise.
      */
-    private boolean isGroceryExists(String name) {
+    public boolean isGroceryExists(String name) {
         for (Grocery grocery : groceries) {
             if (grocery.getName().equalsIgnoreCase(name)) {
                 return true;

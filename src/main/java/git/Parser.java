@@ -6,6 +6,7 @@ import enumerations.GroceryCommand;
 import enumerations.Mode;
 import enumerations.ProfileCommand;
 import enumerations.RecipeCommand;
+import exceptions.DuplicateGroceryException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -323,6 +324,11 @@ public class Parser {
             if (name == null || name.isBlank()) {
                 throw new EmptyInputException("grocery");
             }
+
+            if (groceryList.isGroceryExists(name)) {
+                throw new DuplicateGroceryException(name);
+            }
+
             Grocery grocery = new Grocery(commandParts[1]);
             ui.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);

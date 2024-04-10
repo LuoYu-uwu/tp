@@ -443,7 +443,9 @@ public class GroceryList {
         Grocery grocery = getGrocery(name);
         groceries.remove(grocery);
         Location location = grocery.getLocation();
-        location.removeGrocery(grocery);
+        if (location != null) {
+            location.removeGrocery(grocery);
+        }
 
         Ui.printGroceryRemoved(grocery, groceries);
     }

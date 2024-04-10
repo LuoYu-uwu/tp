@@ -69,7 +69,7 @@ public class GroceryList {
      */
     private boolean isGroceryExists(String name) {
         for (Grocery grocery : groceries) {
-            if (grocery.getName().equals(name)) {
+            if (grocery.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -96,7 +96,7 @@ public class GroceryList {
             assert groceries != null : "Found grocery should not be null";
             return groceries.get(index);
         } else {
-            throw new NoSuchObjectException("grocery");
+            throw new NoSuchObjectException("grocery (" + name + ")");
         }
     }
 
@@ -119,9 +119,10 @@ public class GroceryList {
 
         // Check if the grocery exists
         if (!isGroceryExists(detailParts[0].strip())) {
-            throw new NoSuchObjectException("grocery");
-        }   
+            throw new NoSuchObjectException("grocery (" + detailParts[0].strip() + ")");
+        }
 
+        // Missing parameter
         if (detailParts.length < 2) {
             throw new CommandWrongFormatException(command, parameter);
         }

@@ -9,6 +9,7 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
+import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import exceptions.PastExpirationDateException;
@@ -775,6 +776,11 @@ public class Ui {
         System.out.println("Please enter the location (e.g. freezer first compartment)");
         String name = in.nextLine().strip();
 
+        while (name.isBlank()) {
+            System.out.println("The location cannot be empty!");
+            name = in.nextLine().strip();
+        }
+
         Location location;
         try {
             location = LocationList.findLocation(name);
@@ -922,14 +928,13 @@ public class Ui {
     public void displayAddHelp() {
         System.out.println(
             "Here are some details you can include when adding a grocery:\n" +
-            "Category - Enter the category of the grocery.\n" +
-            "Amount - Enter the amount of the grocery.\n" +
-            "Location - Enter the location of the grocery.\n" +
-            "Expiration Date - Enter the expiration date of the grocery.\n" +
-            "Cost - Enter the cost of the grocery.\n" +
-            "Minimum Amount - Enter the minimum amount of the grocery to set reminder.\n" +
-            "Skip - Skip adding additional details."
-        );
+            "1. Category - what type of grocery is it.\n" +
+            "2. Amount - how much of the grocery is stored.\n" +
+            "3. Location - where the grocery is stored.\n" +
+            "4. Expiration Date - when the grocery expires.\n" +
+            "5. Cost - how much did the grocery cost.\n" +
+            "6. Threshold Amount - the minimum amount of the grocery that sets reminder.\n" +
+            "7. Remark - extra information about the grocery.\n");
     }
 
 

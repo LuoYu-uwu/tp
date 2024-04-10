@@ -26,7 +26,7 @@ It allows users to track and manage their groceries around their home easily.
 > * Features requiring the `GROCERY` input are case-insensitive. 
 > <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 
-## Switch between different modes: `switch`
+## Switching between different modes: `switch`
 Switches between profile, calories, grocery or recipe mode.
 GiT comes in different modes and will prompt the user to choose their desired mode.
 
@@ -141,6 +141,7 @@ Example of usage:
 
 `cost milk $1.20`
 
+
 &nbsp;
 ### Setting the threshold of a grocery: `th`
 Sets the threshold amount of a grocery.  
@@ -154,8 +155,9 @@ Example of usage:
 
 `th milk a/1`
 
+
 &nbsp;
-### View a list of groceries that are low in stock: `low`
+### Viewing a list of groceries that are low in stock: `low`
 Shows a list of groceries below the threshold amount.
 
 Format: `low`
@@ -163,6 +165,18 @@ Format: `low`
 Example of usage:
 
 `low`
+
+
+&nbsp;
+### Adding rating and review of a grocery: `rate`
+Adds rating and review of an existing grocery
+
+Format: `rate GROCERY`
+
+Example of usage:
+
+`rate milk`
+
 
 &nbsp;
 ### Finding groceries: `find`
@@ -190,15 +204,6 @@ Example of usage:
 
 `loc freezer`
 
-&nbsp;
-### Adding rating and review of a grocery: `rate`
-Adds rating and review of an existing grocery
-
-Format: `rate GROCERY`
-
-Example of usage:
-
-`rate milk`
 
 &nbsp;
 ### Storing a grocery in a storage location: `store`
@@ -213,8 +218,49 @@ Example of usage:
 
 `store paprika l/spice rack`
 
+
 &nbsp;
-### Viewing storage locations and their groceries: `listloc`
+### Removing a storage location: `delloc`
+Remove a storage location from tracking.
+
+Format: `delloc LOCATION`
+
+Example of usage:
+
+`delloc cabinet`
+
+&nbsp;
+### Listing all groceries: `list`
+Shows a list of all groceries you have.
+
+Format: `list`
+
+Example of usage:
+
+`list`
+
+&nbsp;
+### Listing all groceries by price: `listcost`
+Shows a list of all groceries you have, sorted by price.
+
+Format: `listcost`
+
+Example of usage:
+
+`listcost`
+
+&nbsp;
+### Listing all groceries by expiration date: `listexp`
+Shows a list of all groceries you have, sorted by expiration date.
+
+Format: `listexp`
+
+Example of usage:
+
+`listexp`
+
+&nbsp;
+### Listing storage locations and their groceries: `listloc`
 View all storage locations being tracked, or the groceries stored in a given location
 
 Format: `listloc [LOCATION]`
@@ -233,45 +279,6 @@ Example of usage:
 
 ![Listl LOCATION example output](images/featureExampleOutputs/ListlLocExOut.png)
 
-&nbsp;
-### Removing a storage location: `delloc`
-Remove a storage location from tracking.
-
-Format: `delloc LOCATION`
-
-Example of usage:
-
-`delloc cabinet`
-
-&nbsp;
-### List all groceries: `list`
-Shows a list of all groceries you have.
-
-Format: `list`
-
-Example of usage:
-
-`list`
-
-&nbsp;
-### List all groceries by price: `listcost`
-Shows a list of all groceries you have, sorted by price.
-
-Format: `listcost`
-
-Example of usage:
-
-`listcost`
-
-&nbsp;
-### List all groceries by expiration date: `listexp`
-Shows a list of all groceries you have, sorted by expiration date.
-
-Format: `listexp`
-
-Example of usage:
-
-`listexp`
 
 &nbsp;
 ## Calories management mode
@@ -343,6 +350,7 @@ Fry the egg. Add salt. Serve.
 
 Fried Egg added!
 ```
+
 &nbsp;
 ### List all the recipes: `list`
 Shows all the recipe titles.

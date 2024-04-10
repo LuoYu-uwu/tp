@@ -8,6 +8,6 @@ public class InvalidAmountException extends GitException {
      * Constructs InvalidAmountException.
      */
     public InvalidAmountException() {
-        message = "Please input a valid integer!";
+        message = "Please input a valid integer that is greater than 0!";
     }
 }

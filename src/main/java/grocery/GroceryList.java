@@ -178,6 +178,29 @@ public class GroceryList {
         grocery.setCategory(newCategory);
         Ui.printCategorySet(grocery);
     }
+
+    /**
+     * Checks whether the amount inputted by the user is valid.
+     *
+     * @param amountString String of amount inputted by the user.
+     * @return Valid amount.
+     * @throws InvalidAmountException Thrown if the amount is not a valid integer that is greater than 0
+     */
+    private int checkAmount (String amountString) throws InvalidAmountException {
+        int amount;
+        try {
+            amount = Integer.parseInt(amountString);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
+        }
+
+        if (amount <= 0) {
+            throw new InvalidAmountException();
+        }
+
+        return amount;
+    }
+
     /**
      * Sets the amount of an existing grocery.
      *
@@ -195,13 +218,7 @@ public class GroceryList {
         }
         Grocery grocery = getGrocery(amtParts[0].strip());
         String amountString = amtParts[1].strip();
-
-        int amount;
-        try {
-            amount = Integer.parseInt(amountString);
-        } catch (NumberFormatException e) {
-            throw new InvalidAmountException();
-        }
+        int amount = checkAmount(amountString);
 
         // "use" is not valid if an amount was not previously set
         if (use && grocery.getAmount() == 0) {
@@ -254,14 +271,10 @@ public class GroceryList {
         String [] amtParts = checkDetails(details, "th", "a/");
         Grocery grocery = getGrocery(amtParts[0].strip());
         String thresholdString = amtParts[1].strip();
+        int threshold = checkAmount(thresholdString);
 
-        try {
-            int threshold = Integer.parseInt(thresholdString);
-            grocery.setThreshold(threshold);
-            Ui.printThresholdSet(grocery);
-        } catch (NumberFormatException e) {
-            throw new InvalidAmountException();
-        }
+        grocery.setThreshold(threshold);
+        Ui.printThresholdSet(grocery);
     }
 
     /**
@@ -349,8 +362,13 @@ public class GroceryList {
      * Sorts the groceries by expiration date.
      */
     public void sortByExpiration() {
-        Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
-        Ui.printGroceryList(groceries);
+        int size = groceries.size();
+        if (size == 0) {
+            Ui.printNoGrocery();
+        } else {
+            Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
+            Ui.printGroceryList(groceries);
+        }
     }
 
     /**
@@ -401,8 +419,13 @@ public class GroceryList {
      * Sorts the groceries by category.
      */
     public void sortByCategory(){
-        Collections.sort(groceries, Comparator.comparing(Grocery::getCategory));
-        Ui.printGroceryList(groceries);
+        int size = groceries.size();
+        if (size == 0) {
+            Ui.printNoGrocery();
+        } else {
+            Collections.sort(groceries, Comparator.comparing(Grocery::getCategory));
+            Ui.printGroceryList(groceries);
+        }
     }
     /**
      * Removes a grocery.

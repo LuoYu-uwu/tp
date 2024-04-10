@@ -9,7 +9,6 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCostException;
-import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import exceptions.PastExpirationDateException;

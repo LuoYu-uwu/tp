@@ -83,7 +83,9 @@ public class Grocery {
         return expiration;
     }
     
-    public String getCategory() {return this.category;}
+    public String getCategory() {
+        return this.category;
+    }
 
     public double getCost() {
         return this.cost;

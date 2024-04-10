@@ -58,7 +58,7 @@ public class Ui {
     /**
      * Prints welcome message.
      */
-    public void printWelcome() {
+    public String printWelcome() {
         final String gitlogo =
                 "   ______   _  _________\n" +
                 " .' ___  | (_)|  _   _  |\n" +
@@ -81,6 +81,8 @@ public class Ui {
         }
         printHello(userName);
         displayHelp();
+
+        return userName;
     }
 
     /**
@@ -144,12 +146,38 @@ public class Ui {
     }
 
     /**
-     * Prints the add grocery menu.
+     * Prompts user for additional details when adding a grocery.
      * 
      * @param grocery The grocery to be added.
      */
-    public void printAddMenu(Grocery grocery) {
-        System.out.println("Do you want to include the following details?");
+    public void promptAddMenu(Grocery grocery) {
+        printAddMenu(grocery.getName());
+        String rawInput = in.nextLine().replaceAll(" ", "");
+
+        // Help is always shown first
+        if (rawInput.contains("8")) {
+            System.out.println("Displaying help:");
+            singleUi.displayAddHelp();
+            printLine();
+            rawInput = rawInput.replaceAll("8","");
+        }
+
+        // Remove duplicates
+        StringBuilder addNums = new StringBuilder();
+        for (char choice : rawInput.toCharArray()) {
+            if (!addNums.toString().contains(String.valueOf(choice))) {
+                addNums.append(choice);
+            }
+        }
+
+        processAddMenu(grocery, addNums.toString());
+    }
+
+    /**
+     * Prints the additional details menu.
+     */
+    public void printAddMenu(String name) {
+        System.out.println("Before adding " + name + ", do you want to include the following details?");
         System.out.println("1. Category");
         System.out.println("2. Amount");
         System.out.println("3. Location");
@@ -158,14 +186,19 @@ public class Ui {
         System.out.println("6. Threshold Amount");
         System.out.println("7. Remark");
         System.out.println("8. Help");
-        System.out.println("9. Skip");
-        System.out.println("Please enter the number of the details you want to include:");
+        System.out.println("Please enter the numbers of the details you want to include:");
         System.out.println("You may enter multiple numbers. (e.g. 1234)");
-        
-        // Reading the user input as a string
-        String input = singleUi.processInput()[0];
-        // Iterating over each character in the string
-        for (char choice : input.toCharArray()) {
+        System.out.println("To skip this step, do not enter any values.");
+    }
+
+    /**
+     * Processes the additional details of the grocery to be added.
+     *
+     * @param grocery The grocery to be added.
+     * @param addNums String containing the numbers of the additional details to be added.
+     */
+    public void processAddMenu (Grocery grocery, String addNums) {
+        for (char choice : addNums.toCharArray()) {
             switch (choice) {
             case '1':
                 System.out.println("Including Category");
@@ -216,29 +249,17 @@ public class Ui {
                 grocery.setRemark(remark);
                 break;
 
-            case '8':
-                System.out.println("Displaying help");
-                singleUi.displayAddHelp();
-                break;
-
-            case '9':
-                System.out.println("Skipping additional details");
-                break;
-
             default:
                 System.out.println("Invalid choice: " + choice);
                 break;
             }
 
-            if (choice == '6') {
-                break;
-            }
+            printLine();
         }
     }
 
     /**
      * Prompts user for expiration date.
-     *
      * Validates the input date for correct format and future dates.
      *
      * @return Formatted expiration date in the format YYYY-MM-DD.
@@ -754,6 +775,11 @@ public class Ui {
         System.out.println("Please enter the location (e.g. freezer first compartment)");
         String name = in.nextLine().strip();
 
+        while (name.isBlank()) {
+            System.out.println("The location cannot be empty!");
+            name = in.nextLine().strip();
+        }
+
         Location location;
         try {
             location = LocationList.findLocation(name);
@@ -901,14 +927,13 @@ public class Ui {
     public void displayAddHelp() {
         System.out.println(
             "Here are some details you can include when adding a grocery:\n" +
-            "Category - Enter the category of the grocery.\n" +
-            "Amount - Enter the amount of the grocery.\n" +
-            "Location - Enter the location of the grocery.\n" +
-            "Expiration Date - Enter the expiration date of the grocery.\n" +
-            "Cost - Enter the cost of the grocery.\n" +
-            "Minimum Amount - Enter the minimum amount of the grocery to set reminder.\n" +
-            "Skip - Skip adding additional details."
-        );
+            "1. Category - what type of grocery is it.\n" +
+            "2. Amount - how much of the grocery is stored.\n" +
+            "3. Location - where the grocery is stored.\n" +
+            "4. Expiration Date - when the grocery expires.\n" +
+            "5. Cost - how much did the grocery cost.\n" +
+            "6. Threshold Amount - the minimum amount of the grocery that sets reminder.\n" +
+            "7. Remark - extra information about the grocery.\n");
     }
 
 

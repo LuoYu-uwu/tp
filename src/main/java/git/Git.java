@@ -26,7 +26,8 @@ public class Git {
      * Runs Git.
      */
     private void run() {
-        ui.printWelcome();
+        String username = ui.printWelcome();
+        parser.setUsername(username);
 
         String mode = null;
         boolean isInitialised = false;

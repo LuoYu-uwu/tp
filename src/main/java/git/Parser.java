@@ -44,8 +44,7 @@ public class Parser {
     public Parser(Ui ui) {
         groceryList = new GroceryList();
         foodList = new FoodList();
-        String userName = Ui.getUserName();
-        userInfo = new UserInfo(userName);
+        userInfo = new UserInfo();
         recipeList = new RecipeList();
         this.ui = ui;
         isRunning = true;
@@ -163,6 +162,13 @@ public class Parser {
         default:
             throw new InvalidCommandException();
         }
+    }
+
+    /**
+     * Sets username after user input.
+     */
+    public void setUsername(String username) {
+        userInfo.setName(username);
     }
 
     /**
@@ -303,9 +309,6 @@ public class Parser {
         }
     }
 
-
-
-
     /**
      * Handles commands related to adding or deleting a grocery.
      *
@@ -321,7 +324,7 @@ public class Parser {
                 throw new EmptyInputException("grocery");
             }
             Grocery grocery = new Grocery(commandParts[1]);
-            ui.printAddMenu(grocery);
+            ui.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
             break;
 

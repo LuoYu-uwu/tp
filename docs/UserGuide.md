@@ -150,7 +150,7 @@ Example of usage:
 
 &nbsp;
 ### Finding groceries: `find`
-Find groceries containing a given keyword.
+Find groceries containing a given keyword in their name.
 
 Format: `find KEYWORD`
 

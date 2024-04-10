@@ -44,33 +44,25 @@ Example of usage:
 ## Grocery management mode
 
 ### Adding a new grocery: `add`
-Adds a grocery.  
+Adds a grocery and any desired additional details.
 
 Format: `add GROCERY`
 
-* `Grocery` must be a valid String.
+* `GROCERY` must be a valid String.
+* After executing `add GROCERY`, GiT will ask if the user wishes to include additional details.
+  * If so, the user has to enter the numbers corresponding to the details they wish to add.
+  * Multiple numbers can be entered in any order and spaces between numbers are ignored.
+  * Details are prompted for in the order their numbers are entered.
+  * If `8` is entered, another menu explaining what each detail means will always be displayed first.
+  * Invalid values are ignored.
+  * This step can be skipped by inputting nothing.
+* Any details not included here can be edited using other commands in the future.
 
-Example of usage:
-
-`add milk`
-
-&nbsp;
-### Setting the expiration date of a grocery: `exp`
-Sets the expiration date of a grocery.  
-
-Format: `exp GROCERY d/EXPIRATION_DATE`
-
-* `EXPIRATION_DATE` must be a in yyyy-MM-dd format.
-
-Example of usage:
-
-`exp milk d/2024-07-20`
-
-&nbsp;
-### Adding Details to a Grocery: Extended Options
-After executing add GROCERY, you will see:
+Example of usage :
 ```
-Do you want to include the following details?
+>> add milk
+
+Before adding milk, do you want to include the following details?
 1. Category
 2. Amount
 3. Location
@@ -79,13 +71,37 @@ Do you want to include the following details?
 6. Threshold Amount
 7. Remark
 8. Help
-9. Skip
 Please enter the number of the details you want to include:
 You may enter multiple numbers. (e.g. 1234)
-```
-Example of usage :
+If nothing or invalid values are entered, no additional details are included!
 
-`124`
+>> 23
+
+Including Amount
+Please enter the amount (e.g. 3):
+
+>> 5
+
+Including Location
+Please enter the location (e.g. freezer first compartment)
+
+>> cabinet
+
+cheese added!
+- - - - -
+```
+
+&nbsp;
+### Setting the expiration date of a grocery: `exp`
+Sets the expiration date of a grocery.
+
+Format: `exp GROCERY d/EXPIRATION_DATE`
+
+* `EXPIRATION_DATE` must be a in yyyy-MM-dd format.
+
+Example of usage:
+
+`exp milk d/2024-07-20`
 
 &nbsp;
 ### Setting the amount of a grocery: `amt`

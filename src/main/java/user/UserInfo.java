@@ -18,8 +18,8 @@ public class UserInfo {
     private double caloriesCap;
     private double currentCalories;
 
-    public UserInfo(String name) {
-        this.name = name;
+    public UserInfo() {
+        this.name = null;
         this.weight = 0;
         this.height = 0;
         this.age = 0;

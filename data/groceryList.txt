@@ -1,2 +1,0 @@
-tomato | null | null | 2024-04-23 | fruit | 5.00 | house 
-milk | null | null | null | beverage | null | null 

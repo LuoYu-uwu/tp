@@ -8,6 +8,7 @@ import exceptions.GitException;
 public class Git {
     // ATTRIBUTES
     private Ui ui;
+    private GroceryUi groceryUi;
     private boolean isRunning;
 
     private Parser parser;
@@ -18,6 +19,7 @@ public class Git {
      */
     public Git() {
         ui = Ui.getInstance();
+        groceryUi = GroceryUi.getInstance();
         parser = new Parser(ui);
         isRunning = true;
     }

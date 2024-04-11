@@ -1,7 +1,7 @@
 package food;
 
 import exceptions.emptyinput.EmptyInputException;
-import git.Ui;
+import git.GroceryUi;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class FoodList {
 
         try {
             foods.add(food);
-            Ui.printFoodAdded(food);
+            GroceryUi.printFoodAdded(food);
             assert foods.contains(food) : "Food should be added to the list";
         } catch (NullPointerException e) {
             System.out.println("Failed to add food: the food collection is null.");

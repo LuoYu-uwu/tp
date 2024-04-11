@@ -15,8 +15,8 @@ public class UserInfo {
     private String activeness;
     private double BMR;
     private double AMR;
-    private double caloriesCap;
-    private double currentCalories;
+    private int caloriesCap;
+    private int currentCalories;
 
     public UserInfo() {
         this.name = null;
@@ -157,13 +157,13 @@ public class UserInfo {
     private void setCaloriesCap() throws GitException {
         switch (this.aim) {
         case "lose":
-            this.caloriesCap = this.AMR*0.8;
+            this.caloriesCap = (int)(this.AMR*0.8);
             break;
         case "maintain":
-            this.caloriesCap = AMR;
+            this.caloriesCap = (int)(AMR);
             break;
         case "gain":
-            this.caloriesCap = this.AMR*1.2;
+            this.caloriesCap = (int)(this.AMR*1.2);
             break;
         default:
             throw new FailToCalculateCalories();
@@ -178,7 +178,7 @@ public class UserInfo {
      * @throws GitException When insufficient information about the user was given.
      */
     public void consumptionOfCalories(Food food) throws GitException{
-        this.currentCalories = food.getCalories() + this.currentCalories;
+        this.currentCalories = (int)(food.getCalories() + this.currentCalories);
         if (this.weight == 0 || this.height == 0 || this.age == 0 ||
                 this.gender.isEmpty() || this.aim.isEmpty() || this.activeness.isEmpty()) {
             throw new InsufficientInfoException();

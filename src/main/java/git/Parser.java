@@ -31,7 +31,10 @@ public class Parser {
     private FoodList foodList;
     private UserInfo userInfo;
     private Ui ui;
+    private GroceryUi groceryUi;
     private RecipeUi recipeUi;
+    private ProfileUi profileUi;
+    private CaloriesUi caloriesUi;
     private RecipeList recipeList;
 
     private boolean isRunning;
@@ -48,6 +51,9 @@ public class Parser {
         foodList = new FoodList();
         userInfo = new UserInfo();
         recipeUi = new RecipeUi();
+        groceryUi = new GroceryUi();
+        profileUi = new ProfileUi();
+        caloriesUi = new CaloriesUi();
         recipeList = new RecipeList();
         this.ui = ui;
         isRunning = true;
@@ -138,7 +144,7 @@ public class Parser {
             if (name == null || name.isBlank() || !name.matches("[a-zA-Z]+")) {
                 throw new EmptyInputException("valid food name");
             }
-            double calories = ui.promptForCalories();
+            double calories = caloriesUi.promptForCalories();
             Food food = new Food(name, calories);
             foodList.addFood(food);
             userInfo.consumptionOfCalories(food);
@@ -190,13 +196,13 @@ public class Parser {
 
         switch (command) {
         case UPDATE:
-            String name = ui.promptForName();
-            double weight = ui.promptForWeight();
-            double height = ui.promptForHeight();
-            int age = ui.promptForAge();
-            String gender = ui.promptForGender();
-            String activeness = ui.promptForActiveness();
-            String aim = ui.promptForAim();
+            String name = profileUi.promptForName();
+            double weight = profileUi.promptForWeight();
+            double height = profileUi.promptForHeight();
+            int age = profileUi.promptForAge();
+            String gender = profileUi.promptForGender();
+            String activeness = profileUi.promptForActiveness();
+            String aim = profileUi.promptForAim();
             userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
             break;
 
@@ -332,7 +338,7 @@ public class Parser {
             }
 
             Grocery grocery = new Grocery(commandParts[1]);
-            ui.promptAddMenu(grocery);
+            groceryUi.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
             break;
 

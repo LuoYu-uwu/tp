@@ -464,7 +464,8 @@ public class GroceryUi {
                     expirationDate = null; // Reset to null to re-prompt the user.
                 }
             } catch (DateTimeException | NumberFormatException e) {
-                System.out.println("Invalid date. Please ensure the year, month, and day are correct and try again.");
+                System.out.println("Invalid date. Please ensure the year, " +
+                        "month, and day are correct and try again.");
             }
         }
         return expirationDate.toString(); // Formats to YYYY-MM-DD by default.
@@ -510,7 +511,7 @@ public class GroceryUi {
     private String convertMonthToNumber(String month) {
         // Convert month from name to number (e.g., "July" to "07")
         String[] monthNames = {"January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"};
+            "July", "August", "September", "October", "November", "December"};
         String[] monthNumbers = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
         for (int i = 0; i < monthNames.length; i++) {
             if (month.equalsIgnoreCase(monthNames[i]) || month.equals(monthNumbers[i])) {

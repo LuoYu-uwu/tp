@@ -10,10 +10,16 @@
 
 ### _Designs_
 ### 1. Calories Management Mode
-![Commands for managing calories](./diagrams/CaloriesManagement.png)
+![Commands for managing calories](./diagrams/caloriesManagement.png)
    * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
    * if `eat`, store the name and calories of the input food
    * if `view`, display all the foods consumed
+
+### 2. Profile Management Mode
+![Commands for managing profile](./diagrams/profileManagement.png)
+  * when `profileManagement` is executed in Parser, different actions will be carried out based on the commands.
+  * if `update`, store the user data required for calories calculation.
+  * if `view`, display user information
 
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\

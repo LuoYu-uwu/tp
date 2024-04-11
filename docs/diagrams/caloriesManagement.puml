@@ -1,0 +1,39 @@
+@startuml
+
+participant ":Parser" as p
+participant "command:CalCommand" as cal
+participant "ui:Ui" as ui
+participant "food:Food" as f
+participant "userInfo:UserInfo" as info
+participant "foodList:foodList" as fl
+participant ":System.out" as sys
+
+ -> p : caloriesManagement(commandParts)
+create cal
+p -> cal : valueOf(commandParts[0].toUpperCase())
+cal --> p : command
+
+alt command == eat
+    p -> ui : promptForCalories()
+    ui --> p : calories
+    create f
+    p -> f : Food(commandParts[1],calories)
+    f --> p : food
+    p -> fl : addFood(food)
+    p -> info : consumptionOfCalories(food)
+else command == view
+    p -> fl: printFoods()
+else command == switch
+    p -> ui : switchMode()
+    ui --> p : currentMode
+else command == help
+    p -> ui : displayHelpForCal()
+else command == exit
+    p -> sys : println("bye bye")
+else else
+    p -> sys : println(GitException.getMessage())
+end
+
+
+
+@enduml

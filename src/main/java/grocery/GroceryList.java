@@ -378,14 +378,21 @@ public class GroceryList {
     }
 
     /**
-     * Sorts the groceries by expiration date.
+     * Sorts the groceries by expiration date. Groceries without an expiration date are sorted to the end.
      */
     public void sortByExpiration() {
         int size = groceries.size();
         if (size == 0) {
             GroceryUi.printNoGrocery();
         } else {
-            Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
+            Collections.sort(groceries, (g1, g2) -> {
+                LocalDate exp1 = g1.getExpiration();
+                LocalDate exp2 = g2.getExpiration();
+                if (exp1 == null && exp2 == null) return 0; // Both are null, considered equal
+                if (exp1 == null) return 1; // Null exp1 should be sorted to the end
+                if (exp2 == null) return -1; // Null exp2 should be sorted to the end
+                return exp1.compareTo(exp2);
+            });
             GroceryUi.printGroceryList(groceries);
         }
     }

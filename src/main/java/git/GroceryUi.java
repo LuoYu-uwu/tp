@@ -6,7 +6,6 @@ import exceptions.PastExpirationDateException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import grocery.Grocery;
-import grocery.GroceryList;
 import grocery.location.Location;
 import grocery.location.LocationList;
 

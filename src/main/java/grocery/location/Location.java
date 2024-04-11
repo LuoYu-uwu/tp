@@ -1,6 +1,6 @@
 package grocery.location;
 
-import git.Ui;
+import git.GroceryUi;
 import grocery.Grocery;
 
 import java.util.ArrayList;
@@ -42,9 +42,9 @@ public class Location {
     public void listGroceries() {
         System.out.println("Viewing location: " + name);
         if (groceries.isEmpty()) {
-            Ui.printNoGrocery();
+            GroceryUi.printNoGrocery();
         } else {
-            Ui.printGroceryList(groceries);
+            GroceryUi.printGroceryList(groceries);
         }
     }
 

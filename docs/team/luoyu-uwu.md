@@ -27,7 +27,9 @@ Given below are my contributions to the project.
         * Added documentation for the features `switch`, `cost`, `th`, `low`, `eat`, `view` and `update`.
     * Developer Guide:
         * Added implementation details of the `list` and `listcost` feature.
+        * Added `Execute Command` sequence diagram.
         * Added `Calories Management Mode` sequence diagram.
+        * Added `Profile Management Mode` sequence diagram.
 
 * Review/mentoring contributions:
     * [#18](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/18) ,

@@ -3,7 +3,7 @@ package recipe;
 import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
-import git.Ui;
+import git.RecipeUi;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class RecipeList {
     public void addRecipe(Recipe recipe) {
         try {
             recipeArr.add(recipe);
-            Ui.printRecipeAdded(recipe);
+            RecipeUi.printRecipeAdded(recipe);
             assert recipeArr.contains(recipe) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
             System.out.println("Failed to add recipe: the recipe is null.");
@@ -41,9 +41,9 @@ public class RecipeList {
     public void listRecipes() {
         int size = recipeArr.size();
         if (size == 0) {
-            Ui.printNoRecipe();
+            RecipeUi.printNoRecipe();
         } else {
-            Ui.printRecipeList(recipeArr);
+            RecipeUi.printRecipeList(recipeArr);
         }
     }
 
@@ -84,6 +84,6 @@ public class RecipeList {
 
         Recipe currRecipe = getRecipe(title);
         recipeArr.remove(currRecipe);
-        Ui.printRecipeRemoved(currRecipe);
+        RecipeUi.printRecipeRemoved(currRecipe);
     }
 }

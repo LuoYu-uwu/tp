@@ -2,7 +2,7 @@ package grocery.location;
 
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
-import git.Ui;
+import git.GroceryUi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class LocationList {
 
         Location location = new Location(name.strip());
         locations.add(location);
-        Ui.printLocationAdded(name.strip());
+        GroceryUi.printLocationAdded(name.strip());
     }
 
     /**
@@ -46,7 +46,7 @@ public class LocationList {
         Location location = findLocation(name);
         location.clearLocation();
         locations.remove(location);
-        Ui.printLocationRemoved(name.strip());
+        GroceryUi.printLocationRemoved(name.strip());
     }
 
     /**
@@ -79,7 +79,7 @@ public class LocationList {
      * Lists all locations being tracked.
      */
     public static void listLocations() {
-        Ui.printLocationList(locations);
+        GroceryUi.printLocationList(locations);
     }
 
 }

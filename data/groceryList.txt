@@ -1,1 +1,1 @@
-milk | 400 | 300 | 2024-09-20 | bev | 6.00 | firdge 
+tomato | null | null | 2024-04-23 | fruit | 5.00 | house 

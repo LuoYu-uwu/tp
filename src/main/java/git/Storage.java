@@ -39,7 +39,6 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                //                --------------------------------
                 Grocery grocery = parseGrocery(line);
                 System.out.println(grocery);
                 groceryList.addGrocery(grocery);

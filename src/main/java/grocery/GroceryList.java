@@ -39,7 +39,6 @@ public class GroceryList {
      */
     public GroceryList() {
         groceries = new ArrayList<>();
-        //storage.loadFile();
         LoggerGroceryList.setupLogger();
         logger = Logger.getLogger(GroceryList.class.getName());
     }
@@ -54,6 +53,7 @@ public class GroceryList {
         try {
             groceries.add(grocery);
             Ui.printGroceryAdded(grocery);
+            storage.saveFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
             System.out.println("Failed to add grocery: the grocery is null.");
@@ -174,6 +174,7 @@ public class GroceryList {
 
         // Verification and UI feedback
         Ui.printExpSet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -189,6 +190,7 @@ public class GroceryList {
 
         grocery.setCategory(newCategory);
         Ui.printCategorySet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -240,6 +242,7 @@ public class GroceryList {
         }
 
         grocery.setAmount(amount);
+        storage.saveFile(getGroceries());
         if (amount == 0) {
             Ui.printAmtDepleted(grocery);
         } else if (grocery.isLow()){
@@ -268,6 +271,7 @@ public class GroceryList {
             }
             grocery.setCost(cost);
             Ui.printCostSet(grocery);
+            storage.saveFile(getGroceries());
         } catch (NumberFormatException e) {
             throw new InvalidCostException();
         }
@@ -287,6 +291,7 @@ public class GroceryList {
 
         grocery.setThreshold(threshold);
         Ui.printThresholdSet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -311,6 +316,7 @@ public class GroceryList {
         grocery.setLocation(location);
         location.addGrocery(grocery);
         Ui.printLocationSet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -343,6 +349,7 @@ public class GroceryList {
         }
         Grocery grocery = getGrocery(details);
         Ui.promptForRatingAndReview(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -459,5 +466,6 @@ public class GroceryList {
         }
 
         Ui.printGroceryRemoved(grocery, groceries);
+        storage.saveFile(getGroceries());
     }
 }

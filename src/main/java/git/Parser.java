@@ -45,12 +45,12 @@ public class Parser {
      * @param ui Ui object.
      */
     public Parser(Ui ui) {
-        groceryList = new GroceryList();
+        this.storage = new Storage();
+        groceryList = storage.loadFile();
         foodList = new FoodList();
         userInfo = new UserInfo();
         recipeList = new RecipeList();
         this.ui = ui;
-        this.storage = new Storage();
         isRunning = true;
     }
 
@@ -87,7 +87,6 @@ public class Parser {
         switch (mode) {
         case GROCERY:
             groceryManagement(commandParts);
-            GroceryList x = this.storage.loadFile();
             break;
 
         case CALORIES:
@@ -336,7 +335,6 @@ public class Parser {
             Grocery grocery = new Grocery(commandParts[1]);
             ui.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
-            storage.saveFile(groceryList.getGroceries());
             break;
 
         case DEL:

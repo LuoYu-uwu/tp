@@ -29,6 +29,10 @@
   * if `update`, store the user data required for calories calculation.
   * if `view`, display user information
 
+### 4. Grocery Management Mode
+![Commands for managing grocery](./diagrams/groceryManagement.png)
+* different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
+
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\
      e.g., NAME, AMOUNT, EXPIRATION, PRICE.

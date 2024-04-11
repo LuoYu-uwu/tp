@@ -27,7 +27,6 @@ public class Storage {
     private List<Grocery> groceries;
     private GroceryList groceryList;
     private Recipe recipe;
-    ArrayList<Recipe> recipeArr = new ArrayList<>();
     private RecipeList recipeList;
     /**
      * Saves the current list of groceries to the file.

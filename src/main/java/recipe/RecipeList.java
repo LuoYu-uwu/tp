@@ -3,7 +3,6 @@ package recipe;
 import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
-import git.Ui;
 import git.RecipeUi;
 
 import java.util.ArrayList;

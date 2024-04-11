@@ -117,8 +117,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -166,8 +170,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("Bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -221,8 +229,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -277,8 +289,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         case HELP:
@@ -316,7 +332,7 @@ public class Parser {
         } else if (index == GroceryCommand.FIND.ordinal()) {
             groceryList.findGroceries(commandParts[1]);
         } else {
-            viewListOrHelp(command);
+            viewListOrHelp(command, commandParts);
         }
     }
 
@@ -438,7 +454,7 @@ public class Parser {
      * @param command Command keyword of data type Enum.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void viewListOrHelp(GroceryCommand command) throws GitException {
+    private void viewListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
         case LIST:
             groceryList.listGroceries();
@@ -473,8 +489,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:

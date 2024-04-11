@@ -1,0 +1,21 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class FoodList {
+    +FoodList()
+    +addFood(food: Food) : void
+    +printFoods() : void
+}
+class Food {
+    -name: String
+    -calories: Double
+    +Food(name: String, calories: double)
+    +getName(): String
+    +getCalories(): Double
+    +print(): String
+}
+
+FoodList *--> "*" Food : contains
+
+
+@enduml

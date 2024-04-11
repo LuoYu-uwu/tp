@@ -36,6 +36,7 @@ public class Parser {
     private ProfileUi profileUi;
     private CaloriesUi caloriesUi;
     private RecipeList recipeList;
+    private Storage storage;
 
     private boolean isRunning;
     private String currentMode;
@@ -47,7 +48,8 @@ public class Parser {
      * @param ui Ui object.
      */
     public Parser(Ui ui) {
-        groceryList = new GroceryList();
+        this.storage = new Storage();
+        groceryList = storage.loadFile();
         foodList = new FoodList();
         userInfo = new UserInfo();
         recipeUi = new RecipeUi();
@@ -164,7 +166,7 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
+            System.out.println("Bye bye!");
             isRunning = false;
             break;
 

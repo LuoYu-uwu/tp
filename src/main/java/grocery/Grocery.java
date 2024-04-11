@@ -12,7 +12,6 @@ import grocery.location.Location;
 public class Grocery {
     private String name;
     private int amount;
-
     private int threshold;
     private LocalDate expiration;
     private String category;
@@ -272,6 +271,65 @@ public class Grocery {
 
         return this.name + " (" + this.category + ")" + amountString + unitString + exp + price +
                 locationString + remarkString;
+
+    }
+    /**
+     * Returns the name, amount, threshold, expiration date, category, cost and location of the grocery for saving.
+     *
+     * @return String representation of the Grocery.
+     */
+    public String toSaveFormat() {
+        assert !(this.name.isEmpty()) : "Grocery does not exist!!";
+
+        String amountString;
+        if (amount != 0) {
+            amountString = "| " + amount + " ";
+        } else {
+            amountString = "| null ";
+        }
+
+        String locationString;
+        if (this.location != null) {
+            locationString = "| " + this.location.getName() + " ";
+        } else {
+            locationString = "| null ";
+        }
+
+        String thresholdString;
+        if (this.threshold != 0){
+            thresholdString = "| " + threshold + " ";
+        } else {
+            thresholdString = "| null ";
+        }
+
+        String exp;
+        if (expiration != null) {
+            exp = "| " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " ";
+        } else {
+            exp = "| null ";
+        }
+
+        String categoryString;
+        if (category != null) {
+            categoryString = "| " + this.category + " ";
+        } else {
+            categoryString = "| null ";
+        }
+
+        String price;
+        if (cost != 0) {
+            price = "| " + String.format("%.2f", cost) + " ";
+        } else {
+            price = "| null ";
+        }
+
+        String remarkString;
+        if (remark != null) {
+            remarkString = "| " + remark + " ";
+        } else {
+            remarkString = "| null ";
+        }
+        return this.name + " " + amountString + thresholdString + exp + categoryString + price + locationString;
 
     }
 }

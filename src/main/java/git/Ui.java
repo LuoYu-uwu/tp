@@ -156,6 +156,7 @@ public class Ui {
         System.out.println(
                 "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
+                        "addmulti: adds multiple items GROCERIES.\n" +
                         "find KEYWORD: finds all groceries containing the KEYWORD.\n" +
                         "loc LOCATION: adds a LOCATION to track.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +

@@ -4,15 +4,14 @@ participant ":Parser" as p
 participant "command:ProfileCommand" as cal
 participant "ui:Ui" as ui
 participant "userInfo:UserInfo" as info
-participant "foodList:foodList" as fl
 participant ":System.out" as sys
 
- -> p : caloriesManagement(commandParts)
+ -> p : profileManagement(commandParts)
 create cal
 p -> cal : valueOf(commandParts[0].toUpperCase())
 cal --> p : command
 
-alt command == update
+alt command == UPDATE
     p -> ui : promptForName()
     ui --> p : name
     p -> ui : promptForWeight()
@@ -28,16 +27,16 @@ alt command == update
     p -> ui : promptForAim()
     ui --> p : Aim
     p -> info : updateInfo(name, weight,height,age,gender,activeness,aim)
-else command == view
+else command == VIEW
     p -> info: viewProfile()
     info --> p : profile
     p -> sys : println(profile)
-else command == switch
+else command == SWITCH
     p -> ui : switchMode()
     ui --> p : currentMode
-else command == help
+else command == HELP
     p -> ui : displayHelpForProf()
-else command == exit
+else command == EXIT
     p -> sys : println("bye bye")
 else else
     p -> sys : println(GitException.getMessage())

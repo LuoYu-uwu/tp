@@ -1,15 +1,15 @@
 @startuml
 
 participant ":Parser" as p
-participant "command:ProfileCommand" as cal
+participant "command:ProfileCommand" as prof
 participant "ui:Ui" as ui
 participant "userInfo:UserInfo" as info
 participant ":System.out" as sys
 
  -> p : profileManagement(commandParts)
-create cal
-p -> cal : valueOf(commandParts[0].toUpperCase())
-cal --> p : command
+create prof
+p -> prof : valueOf(commandParts[0].toUpperCase())
+prof --> p : command
 
 alt command == UPDATE
     p -> ui : promptForName()

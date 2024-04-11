@@ -32,12 +32,12 @@ public class Recipe {
         System.out.println("Recipe title: " + title + "\n");
         System.out.println("Ingredients: ");
         for (String currIngredient : ingredients) {
-            System.out.println("- " + currIngredient);
+            System.out.println("- " + currIngredient.trim());
         }
         System.out.println("\nSteps: ");
         int index = 1;
         for (String currStep : steps) {
-            System.out.println(index + ": " + currStep);
+            System.out.println(index + ": " + currStep.trim());
             index += 1;
         }
     }

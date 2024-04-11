@@ -36,6 +36,7 @@ public class Parser {
     private ProfileUi profileUi;
     private CaloriesUi caloriesUi;
     private RecipeList recipeList;
+    private Storage storage;
 
     private boolean isRunning;
     private String currentMode;
@@ -47,14 +48,15 @@ public class Parser {
      * @param ui Ui object.
      */
     public Parser(Ui ui) {
-        groceryList = new GroceryList();
+        this.storage = new Storage();
+        groceryList = storage.loadGroceryFile();
         foodList = new FoodList();
         userInfo = new UserInfo();
         recipeUi = new RecipeUi();
         groceryUi = new GroceryUi();
         profileUi = new ProfileUi();
         caloriesUi = new CaloriesUi();
-        recipeList = new RecipeList();
+        recipeList = storage.loadRecipeFile();
         this.ui = ui;
         isRunning = true;
     }
@@ -115,8 +117,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -164,8 +170,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -219,8 +229,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -275,8 +289,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         case HELP:
@@ -314,7 +332,7 @@ public class Parser {
         } else if (index == GroceryCommand.FIND.ordinal()) {
             groceryList.findGroceries(commandParts[1]);
         } else {
-            viewListOrHelp(command);
+            viewListOrHelp(command, commandParts);
         }
     }
 
@@ -340,6 +358,13 @@ public class Parser {
             Grocery grocery = new Grocery(commandParts[1]);
             groceryUi.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
+            break;
+
+        case ADDMULTI:
+            Grocery[] groceries = groceryUi.promptAddMultipleMenu();
+            for (Grocery g : groceries) {
+                groceryList.addGrocery(g);
+            }
             break;
 
         case DEL:
@@ -429,7 +454,7 @@ public class Parser {
      * @param command Command keyword of data type Enum.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void viewListOrHelp(GroceryCommand command) throws GitException {
+    private void viewListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
         case LIST:
             groceryList.listGroceries();
@@ -464,8 +489,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:

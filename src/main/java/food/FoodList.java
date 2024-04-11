@@ -41,10 +41,13 @@ public class FoodList {
      * Prints the list of food in the list.
      */
     public void printFoods() {
-        assert !foods.isEmpty() : "food list should not be empty";
-        System.out.println("Here are the food you have consumed today:");
-        for (Food food: foods) {
-            System.out.println(" - " + food.print());
+        if (foods.isEmpty()) {
+            System.out.println("You have not consumed any food today");
+        } else {
+            System.out.println("Here are the food you have consumed today:");
+            for (Food food : foods) {
+                System.out.println(" - " + food.print());
+            }
         }
     }
 }

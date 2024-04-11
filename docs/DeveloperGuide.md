@@ -17,6 +17,9 @@
 * if mode is `profile`, execute `profileManagement`
 * if mode is `recipe`, execute `recipeManagement`
 
+The following is a class diagram containing Food, FoodList and UserInfo
+![Food, FoodList, UserInfo](./diagrams/UserInfo.png)
+
 ### 2. Calories Management Mode
 ![Commands for managing calories](./diagrams/caloriesManagement.png)
    * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
@@ -28,6 +31,22 @@
   * when `profileManagement` is executed in Parser, different actions will be carried out based on the commands.
   * if `update`, store the user data required for calories calculation.
   * if `view`, display user information
+
+### 4. Grocery Management Mode
+![Commands for managing grocery](./diagrams/groceryManagement.png)
+* different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
+
+#### 4.1 addOrDelGrocery
+![addOrDelGrocery](./diagrams/addOrDelGrocery.png)
+To add a new grocery or delete an existing grocery.
+
+#### 4.2 editGrocery
+![editDelGrocery](./diagrams/editGrocery.png)
+To edit the information of an existing grocery.
+
+#### 4.3 viewListOrHelp
+![viewListOrHelp](./diagrams/viewListOrHelp.png)
+
 
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\

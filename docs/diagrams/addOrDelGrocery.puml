@@ -1,0 +1,39 @@
+@startuml
+
+participant ":Parser" as p
+participant "groceryList:GroceryList" as gl
+participant "grocery:Grocery" as g
+participant ":System.out" as sys
+participant "groceryUi:GroceryUi" as ui
+
+ -> p : addOrDelGrocery(command, commandParts)
+
+ alt command == ADD
+    opt name == null
+        p -> sys : println(GitException.getMessage())
+    end
+    p -> gl : isGroceryExists(name)
+    gl --> p : isExist
+    opt isExist == true
+        p -> sys : println(GitException.getMessage())
+    end
+    create g
+    p -> g : Grocery(commandParts[1])
+    g --> p : grocery
+    p -> ui : promptAddMenu(grocery)
+    p -> gl : addGrocery(grocery)
+ else command == ADDMULTI
+    p -> ui : promptAddMultipleMenu()
+    ui --> p : groceries
+    loop all grocery g in groceries
+        p -> gl : addGrocery(g)
+    end
+
+ else command == DEL
+    p -> gl : removeGrocery(commandParts[1])
+
+ else else
+    p -> sys : println(GitException.getMessage())
+ end
+
+@enduml

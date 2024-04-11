@@ -1,7 +1,6 @@
 package git;
 
 import exceptions.GitException;
-
 /**
  * Represents the Grocery in Time (GiT) program, allowing users to store and track their groceries!
  */
@@ -12,7 +11,6 @@ public class Git {
     private boolean isRunning;
 
     private Parser parser;
-
     // METHODS
     /**
      * Constructs Git.

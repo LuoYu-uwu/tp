@@ -1,0 +1,37 @@
+@startuml
+
+participant ":Parser" as p
+participant "groceryList:GroceryList" as gl
+participant ":System.out" as sys
+participant "ui:Ui" as ui
+
+ -> p : viewListOrHelp(command, commandParts)
+
+ alt command == LIST
+    p -> gl : listGroceries()
+ else command == LISTCAT
+    p -> gl : sortByCategory()
+ else command == LISTCOST
+    p -> gl : sortByCost()
+ else command == LISTEXP
+    p -> gl : sortByExpiration()
+ else command == EXPIRING
+    p -> gl : displayGroceriesExpiringInNext3Days()
+ else command == LOW
+    p -> gl : listLowStocks()
+ else command == HELP
+    p -> ui : displayHelpForGrocery()
+ else command == SWITCH
+    p -> ui : switchMode()
+    ui --> p : currentMode
+ else command == EXIT
+    alt commandParts[1].isEmpty()
+        p -> sys : println("bye bye")
+    else else
+         p -> sys : println(GitException.getMessage())
+    end
+ else else
+    p -> sys : println(GitException.getMessage())
+ end
+
+@enduml

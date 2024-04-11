@@ -67,9 +67,9 @@ public class GroceryList {
      * @param name Name of the grocery.
      * @return True if the grocery exists, false otherwise.
      */
-    private boolean isGroceryExists(String name) {
+    public boolean isGroceryExists(String name) {
         for (Grocery grocery : groceries) {
-            if (grocery.getName().equals(name)) {
+            if (grocery.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -96,7 +96,7 @@ public class GroceryList {
             assert groceries != null : "Found grocery should not be null";
             return groceries.get(index);
         } else {
-            throw new NoSuchObjectException("grocery");
+            throw new NoSuchObjectException("grocery (" + name + ")");
         }
     }
 
@@ -119,9 +119,10 @@ public class GroceryList {
 
         // Check if the grocery exists
         if (!isGroceryExists(detailParts[0].strip())) {
-            throw new NoSuchObjectException("grocery");
-        }   
+            throw new NoSuchObjectException("grocery (" + detailParts[0].strip() + ")");
+        }
 
+        // Missing parameter
         if (detailParts.length < 2) {
             throw new CommandWrongFormatException(command, parameter);
         }
@@ -178,6 +179,29 @@ public class GroceryList {
         grocery.setCategory(newCategory);
         Ui.printCategorySet(grocery);
     }
+
+    /**
+     * Checks whether the amount inputted by the user is valid.
+     *
+     * @param amountString String of amount inputted by the user.
+     * @return Valid amount.
+     * @throws InvalidAmountException Thrown if the amount is not a valid integer that is greater than 0
+     */
+    private int checkAmount (String amountString) throws InvalidAmountException {
+        int amount;
+        try {
+            amount = Integer.parseInt(amountString);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
+        }
+
+        if (amount <= 0) {
+            throw new InvalidAmountException();
+        }
+
+        return amount;
+    }
+
     /**
      * Sets the amount of an existing grocery.
      *
@@ -195,13 +219,7 @@ public class GroceryList {
         }
         Grocery grocery = getGrocery(amtParts[0].strip());
         String amountString = amtParts[1].strip();
-
-        int amount;
-        try {
-            amount = Integer.parseInt(amountString);
-        } catch (NumberFormatException e) {
-            throw new InvalidAmountException();
-        }
+        int amount = checkAmount(amountString);
 
         // "use" is not valid if an amount was not previously set
         if (use && grocery.getAmount() == 0) {
@@ -234,6 +252,9 @@ public class GroceryList {
 
         try {
             double cost = Double.parseDouble(price);
+            if (cost < 0) {
+                throw new InvalidCostException();
+            }
             grocery.setCost(cost);
             Ui.printCostSet(grocery);
         } catch (NumberFormatException e) {
@@ -251,14 +272,10 @@ public class GroceryList {
         String [] amtParts = checkDetails(details, "th", "a/");
         Grocery grocery = getGrocery(amtParts[0].strip());
         String thresholdString = amtParts[1].strip();
+        int threshold = checkAmount(thresholdString);
 
-        try {
-            int threshold = Integer.parseInt(thresholdString);
-            grocery.setThreshold(threshold);
-            Ui.printThresholdSet(grocery);
-        } catch (NumberFormatException e) {
-            throw new InvalidAmountException();
-        }
+        grocery.setThreshold(threshold);
+        Ui.printThresholdSet(grocery);
     }
 
     /**
@@ -333,20 +350,26 @@ public class GroceryList {
      * Lists all the groceries that are low in stock.
      */
     public void listLowStocks() {
-        int size = groceries.size();
-        if (size == 0) {
-            Ui.printNoGrocery();
-        } else {
-            Ui.printLowStocks(groceries);
+        List<Grocery> lowStockGroceries = new ArrayList<>();
+        for (Grocery grocery: groceries) {
+            if (grocery.isLow()) {
+                lowStockGroceries.add(grocery);
+            }
         }
+        Ui.printLowStocks(lowStockGroceries);
     }
 
     /**
      * Sorts the groceries by expiration date.
      */
     public void sortByExpiration() {
-        Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
-        Ui.printGroceryList(groceries);
+        int size = groceries.size();
+        if (size == 0) {
+            Ui.printNoGrocery();
+        } else {
+            Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
+            Ui.printGroceryList(groceries);
+        }
     }
 
     /**
@@ -397,8 +420,13 @@ public class GroceryList {
      * Sorts the groceries by category.
      */
     public void sortByCategory(){
-        Collections.sort(groceries, Comparator.comparing(Grocery::getCategory));
-        Ui.printGroceryList(groceries);
+        int size = groceries.size();
+        if (size == 0) {
+            Ui.printNoGrocery();
+        } else {
+            Collections.sort(groceries, Comparator.comparing(Grocery::getCategory));
+            Ui.printGroceryList(groceries);
+        }
     }
     /**
      * Removes a grocery.
@@ -415,7 +443,9 @@ public class GroceryList {
         Grocery grocery = getGrocery(name);
         groceries.remove(grocery);
         Location location = grocery.getLocation();
-        location.removeGrocery(grocery);
+        if (location != null) {
+            location.removeGrocery(grocery);
+        }
 
         Ui.printGroceryRemoved(grocery, groceries);
     }

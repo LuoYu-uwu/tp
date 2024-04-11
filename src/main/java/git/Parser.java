@@ -6,6 +6,7 @@ import enumerations.GroceryCommand;
 import enumerations.Mode;
 import enumerations.ProfileCommand;
 import enumerations.RecipeCommand;
+import exceptions.DuplicateGroceryException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -44,8 +45,7 @@ public class Parser {
     public Parser(Ui ui) {
         groceryList = new GroceryList();
         foodList = new FoodList();
-        String userName = Ui.getUserName();
-        userInfo = new UserInfo(userName);
+        userInfo = new UserInfo();
         recipeList = new RecipeList();
         this.ui = ui;
         isRunning = true;
@@ -132,8 +132,12 @@ public class Parser {
 
         switch (command) {
         case EAT:
+            String name = commandParts[1];
+            if (name == null || name.isBlank() || !name.matches("[a-zA-Z]+")) {
+                throw new EmptyInputException("valid food name");
+            }
             double calories = ui.promptForCalories();
-            Food food = new Food(commandParts[1], calories);
+            Food food = new Food(name, calories);
             foodList.addFood(food);
             userInfo.consumptionOfCalories(food);
             break;
@@ -159,6 +163,13 @@ public class Parser {
         default:
             throw new InvalidCommandException();
         }
+    }
+
+    /**
+     * Sets username after user input.
+     */
+    public void setUsername(String username) {
+        userInfo.setName(username);
     }
 
     /**
@@ -299,9 +310,6 @@ public class Parser {
         }
     }
 
-
-
-
     /**
      * Handles commands related to adding or deleting a grocery.
      *
@@ -316,8 +324,13 @@ public class Parser {
             if (name == null || name.isBlank()) {
                 throw new EmptyInputException("grocery");
             }
+
+            if (groceryList.isGroceryExists(name)) {
+                throw new DuplicateGroceryException(name);
+            }
+
             Grocery grocery = new Grocery(commandParts[1]);
-            ui.printAddMenu(grocery);
+            ui.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
             break;
 

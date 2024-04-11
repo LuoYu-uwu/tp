@@ -10,6 +10,9 @@ Given below are my contributions to the project.
 * New Feature: Added the ability to store grocery threshold amount.
   * What it does: allows the user to view low-stock groceries and receive reminders when consumption dips below set thresholds.
   * Justification: This feature greatly enhances the product by keeping users informed about which groceries need replenishing.
+* New Feature: Added the ability to select different modes and switch between them.
+  * What it does: allows the users to seamlessly switch between grocery, profile, calories, and recipe management modes.
+  * Justification: This feature enhances user experience by facilitating easy navigation between various functions.
 * New Feature: Added the ability to consumed food.
   * What it does: allows the user to input their details to calculate target calorie intake, track consumed calories, 
   and receive reminders if they exceed their target intake.

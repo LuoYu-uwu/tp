@@ -22,6 +22,8 @@ public class Grocery {
     private int rating;
     private String review;
     private String remark;
+    private boolean isSetCost;
+    private boolean isSetAmount;
 
 
 
@@ -43,6 +45,8 @@ public class Grocery {
         this.category = category;
         setUnit(category);
         this.cost = cost;
+        this.isSetCost = true;
+        this.isSetAmount = true;
         this.location = location;
         this.rating = 0;
         this.review = "";
@@ -59,6 +63,8 @@ public class Grocery {
         this.expiration = null;
         this.category = "";
         this.cost = 0;
+        this.isSetCost = false;
+        this.isSetAmount = false;
         this.location = null;
         this.rating = 0;
         this.review = "";
@@ -77,7 +83,9 @@ public class Grocery {
         return expiration;
     }
     
-    public String getCategory() {return this.category;}
+    public String getCategory() {
+        return this.category;
+    }
 
     public double getCost() {
         return this.cost;
@@ -111,6 +119,7 @@ public class Grocery {
     public void setAmount(int amount) {
         assert amount >= 0 : "Amount entered is invalid!";
         this.amount = amount;
+        this.isSetAmount = true;
     }
 
     public void setThreshold(int threshold) {
@@ -136,10 +145,14 @@ public class Grocery {
     /**
      * Checks if the grocery is low in stock.
      *
-     * @return True if current amount is lesser than threshold.
+     * @return True if current amount is lesser than threshold, or amount is 0.
      */
     public boolean isLow() {
-        return this.amount < this.threshold;
+        if (this.amount == 0) {
+            return true;
+        } else {
+            return this.amount < this.threshold;
+        }
     }
 
     /**
@@ -177,7 +190,7 @@ public class Grocery {
      */
     public void setExpiration(String expiration) throws PastExpirationDateException {
         assert !(expiration.isEmpty()) : "Expiration date entered is invalid!";
-        if(expiration == null||expiration.isEmpty()) {
+        if (expiration == null||expiration.isEmpty()) {
             throw new IllegalArgumentException("Expiration date entered is invalid!");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -198,6 +211,7 @@ public class Grocery {
     public void setCost(double cost) {
         assert cost >= 0 : "Cost entered is invalid!"; // Ensure that the cost is non-negative.
         this.cost = cost;
+        this.isSetCost = true;
     }
 
     public void setLocation(Location location) {
@@ -222,6 +236,8 @@ public class Grocery {
         String amountString;
         if (amount != 0) {
             amountString = ", amount: " + amount + " ";
+        } else if (isSetAmount) {
+            amountString = ", amount: 0";
         } else {
             amountString = ", amount not set";
         }
@@ -241,6 +257,8 @@ public class Grocery {
         String price;
         if (cost != 0) {
             price = ", cost: $" + String.format("%.2f", cost);
+        } else if (isSetCost) {
+            price = ", cost: $0.00";
         } else {
             price = ", cost not set";
         }

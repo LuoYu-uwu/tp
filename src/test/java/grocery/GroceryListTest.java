@@ -34,7 +34,7 @@ public class GroceryListTest {
             gl.editExpiration("nonexistentGrocery d/2024-07-19");
             fail("Expected NoSuchGroceryException not thrown");
         } catch (NoSuchObjectException e) {
-            assertEquals("The grocery does not exist!", e.getMessage());
+            assertEquals("The grocery (nonexistentGrocery) does not exist!", e.getMessage());
         } catch (GitException e) {
             fail("Expected NoSuchGroceryException, but another GitException was thrown");
         }
@@ -74,7 +74,7 @@ public class GroceryListTest {
             fail("Expected NoSuchGroceryException not thrown");
         } catch (GitException e) {
             // NoSuchGroceryException
-            assertEquals("The grocery does not exist!", e.getMessage());
+            assertEquals("The grocery (food) does not exist!", e.getMessage());
         }
     }
 

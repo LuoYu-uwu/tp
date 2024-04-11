@@ -29,6 +29,9 @@ public class Ui {
     private static Ui singleUi = null;
     private static Scanner in;
     private static String userName;
+    private static final double MAX_HEIGHT = 280;
+    private static final double MAX_WEIGHT = 370;
+    private static final double MAX_AGE = 160;
 
     // METHODS
     /**
@@ -55,7 +58,7 @@ public class Ui {
     /**
      * Prints welcome message.
      */
-    public void printWelcome() {
+    public String printWelcome() {
         final String gitlogo =
                 "   ______   _  _________\n" +
                 " .' ___  | (_)|  _   _  |\n" +
@@ -78,6 +81,8 @@ public class Ui {
         }
         printHello(userName);
         displayHelp();
+
+        return userName;
     }
 
     /**
@@ -141,12 +146,38 @@ public class Ui {
     }
 
     /**
-     * Prints the add grocery menu.
+     * Prompts user for additional details when adding a grocery.
      * 
      * @param grocery The grocery to be added.
      */
-    public void printAddMenu(Grocery grocery) {
-        System.out.println("Do you want to include the following details?");
+    public void promptAddMenu(Grocery grocery) {
+        printAddMenu(grocery.getName());
+        String rawInput = in.nextLine().replaceAll(" ", "");
+
+        // Help is always shown first
+        if (rawInput.contains("8")) {
+            System.out.println("Displaying help:");
+            singleUi.displayAddHelp();
+            printLine();
+            rawInput = rawInput.replaceAll("8","");
+        }
+
+        // Remove duplicates
+        StringBuilder addNums = new StringBuilder();
+        for (char choice : rawInput.toCharArray()) {
+            if (!addNums.toString().contains(String.valueOf(choice))) {
+                addNums.append(choice);
+            }
+        }
+
+        processAddMenu(grocery, addNums.toString());
+    }
+
+    /**
+     * Prints the additional details menu.
+     */
+    public void printAddMenu(String name) {
+        System.out.println("Before adding " + name + ", do you want to include the following details?");
         System.out.println("1. Category");
         System.out.println("2. Amount");
         System.out.println("3. Location");
@@ -155,14 +186,19 @@ public class Ui {
         System.out.println("6. Threshold Amount");
         System.out.println("7. Remark");
         System.out.println("8. Help");
-        System.out.println("9. Skip");
-        System.out.println("Please enter the number of the details you want to include:");
+        System.out.println("Please enter the numbers of the details you want to include:");
         System.out.println("You may enter multiple numbers. (e.g. 1234)");
-        
-        // Reading the user input as a string
-        String input = singleUi.processInput()[0];
-        // Iterating over each character in the string
-        for (char choice : input.toCharArray()) {
+        System.out.println("To skip this step, do not enter any values.");
+    }
+
+    /**
+     * Processes the additional details of the grocery to be added.
+     *
+     * @param grocery The grocery to be added.
+     * @param addNums String containing the numbers of the additional details to be added.
+     */
+    public void processAddMenu (Grocery grocery, String addNums) {
+        for (char choice : addNums.toCharArray()) {
             switch (choice) {
             case '1':
                 System.out.println("Including Category");
@@ -213,29 +249,17 @@ public class Ui {
                 grocery.setRemark(remark);
                 break;
 
-            case '8':
-                System.out.println("Displaying help");
-                singleUi.displayAddHelp();
-                break;
-
-            case '9':
-                System.out.println("Skipping additional details");
-                break;
-
             default:
                 System.out.println("Invalid choice: " + choice);
                 break;
             }
 
-            if (choice == '6') {
-                break;
-            }
+            printLine();
         }
     }
 
     /**
      * Prompts user for expiration date.
-     *
      * Validates the input date for correct format and future dates.
      *
      * @return Formatted expiration date in the format YYYY-MM-DD.
@@ -504,6 +528,11 @@ public class Ui {
         grocery.setReview(review);
     }
 
+    /**
+     * Prompts user for calories of the food.
+     *
+     * @return The calories of the consumed food.
+     */
     public double promptForCalories() {
         System.out.println("Please enter the calories of the food in kcal:");
         double calories = 0;
@@ -526,11 +555,35 @@ public class Ui {
         return calories;
     }
 
+    /**
+     * Prompts user for a name.
+     *
+     * @return The entered valid name or empty.
+     */
     public String promptForName() {
         System.out.println("Please enter your name");
-        return in.nextLine().trim();
+        String name = "";
+        for (int i = 0; i < 5; i++) {
+            name = in.nextLine().trim();
+            if (name.isBlank()) {
+                if (i == 4) {
+                    System.out.println("Failed to enter valid name, " +
+                            "name will be stored as empty");
+                } else {
+                    System.out.println("Please enter a valid name");
+                }
+            } else {
+                break;
+            }
+        }
+        return name;
     }
 
+    /**
+     * Prompts user for weight.
+     *
+     * @return The entered valid weight or 0.
+     */
     public double promptForWeight() {
         System.out.println("Please enter your weight in KG:");
         double weight = 0;
@@ -538,7 +591,7 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 weight = Double.parseDouble(input);
-                if (weight > 0) {
+                if (weight > 0 && weight < MAX_WEIGHT) {
                     break;
                 } else {
                     weight = 0;
@@ -547,12 +600,22 @@ public class Ui {
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Weight entered is invalid!");
-                System.out.println("Please enter your weight in KG:");
+                if(i == 4) {
+                    System.out.println("Failed to enter valid weight, " +
+                            "weight will be stored as 0");
+                } else {
+                    System.out.println("Please enter your weight in KG:");
+                }
             }
         }
         return weight;
     }
 
+    /**
+     * Prompts user for height.
+     *
+     * @return The entered valid height or 0.
+     */
     public double promptForHeight() {
         System.out.println("Please enter your height in cm:");
         double height = 0;
@@ -560,7 +623,7 @@ public class Ui {
             String input = in.nextLine().trim();
             try {
                 height = Double.parseDouble(input);
-                if (height > 0 ){
+                if (height > 0 && height < MAX_HEIGHT){
                     break;
                 } else {
                     height = 0;
@@ -569,34 +632,55 @@ public class Ui {
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Height entered is invalid!");
-                System.out.println("Please enter your height in cm:");
+                if(i == 4) {
+                    System.out.println("Failed to enter valid height, " +
+                            "height will be stored as 0");
+                } else {
+                    System.out.println("Please enter your height in cm:");
+                }
             }
         }
         return height;
     }
 
+    /**
+     * Prompts user for age.
+     *
+     * @return The entered valid age or 0.
+     */
     public int promptForAge() {
-        System.out.println("Please enter your age in years:");
+        System.out.println("Please enter your age in years (nearest whole number):");
         int age = 0;
         for (int i = 0; i < 5; i++) {
             String input = in.nextLine().trim();
             try {
                 age = Integer.parseInt(input);
-                if (age > 0 ){
+                if (age > 0 && age < MAX_AGE){
                     break;
                 } else {
                     age = 0;
                     System.out.println("Age entered is invalid!");
-                    System.out.println("Please enter your age in years:");
+                    System.out.println("Please enter your age in years (nearest whole number):");
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Age entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                if(i == 4) {
+                    System.out.println("Failed to enter valid age, " +
+                            "age will be stored as 0");
+                } else {
+                    System.out.println("Please enter your age in years " +
+                            "(nearest whole number):");
+                }
             }
         }
         return age;
     }
 
+    /**
+     * Prompts user for gender.
+     *
+     * @return The entered valid gender or empty.
+     */
     public String promptForGender() {
         System.out.println("Please enter your gender (e.g. F):");
         String gender = "";
@@ -609,12 +693,22 @@ public class Ui {
                 break;
             } else {
                 System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid gender, " +
+                            "gender will be stored as empty");
+                } else {
+                    System.out.println("Please enter your gender (e.g. F):");
+                }
             }
         }
         return gender;
     }
 
+    /**
+     * Prompts user for aim.
+     *
+     * @return The entered valid aim or empty.
+     */
     public String promptForAim() {
         System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
         String aim = "";
@@ -626,13 +720,23 @@ public class Ui {
                 aim = input;
                 break;
             } else {
-                System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Aim entered is invalid!");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid aim, " +
+                            "aim will be stored as empty");
+                } else {
+                    System.out.println("Please enter your aim (e.g. lose/maintain/gain):");
+                }
             }
         }
         return aim;
     }
 
+    /**
+     * Prompts user for activeness.
+     *
+     * @return The entered valid activeness or empty.
+     */
     public String promptForActiveness() {
         System.out.println("Please enter your activeness " +
                 "(e.g. inactive/light/moderate/active/very):");
@@ -647,8 +751,14 @@ public class Ui {
                 activeness = input;
                 break;
             } else {
-                System.out.println("Gender entered is invalid!");
-                System.out.println("Please enter your age in years:");
+                System.out.println("Activeness entered is invalid!");
+                if (i == 4) {
+                    System.out.println("Failed to enter valid activeness, " +
+                            "activeness will be stored as empty");
+                } else {
+                    System.out.println("Please enter your activeness " +
+                            "(e.g. inactive/light/moderate/active/very):");
+                }
             }
         }
         return activeness;
@@ -664,6 +774,11 @@ public class Ui {
     public Location promptForLocation() {
         System.out.println("Please enter the location (e.g. freezer first compartment)");
         String name = in.nextLine().strip();
+
+        while (name.isBlank()) {
+            System.out.println("The location cannot be empty!");
+            name = in.nextLine().strip();
+        }
 
         Location location;
         try {
@@ -705,12 +820,22 @@ public class Ui {
         System.out.println("What mode would you like to enter?");
         System.out.println("Please select a mode: " + "grocery, profile, calories or recipe:");
         String newMode = in.nextLine().trim();
+        Mode mode;
+        while (true) {
+            try {
+                mode = Mode.valueOf(newMode.toUpperCase());
+                break;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid mode:");
+                newMode = in.nextLine().trim();
+            }
+        }
         displayCommands(newMode);
         return newMode;
     }
 
     /**
-     * Displays help message containing all possible commands.
+     * Displays help message containing all possible commands for grocery management.
      */
     public static void displayHelpForGrocery() {
         System.out.println(
@@ -741,6 +866,9 @@ public class Ui {
         );
     }
 
+    /**
+     * Displays help message containing all possible commands for calories management.
+     */
     public static void displayHelpForCal() {
         System.out.println(
                 "Here are some ways you can manage your calories intake!\n" +
@@ -752,6 +880,9 @@ public class Ui {
         );
     }
 
+    /**
+     * Displays help message containing all possible commands for profile management.
+     */
     public static void displayHelpForProf() {
         System.out.println(
                 "Here are some ways you can manage your profile!\n" +
@@ -776,6 +907,9 @@ public class Ui {
         );
     }
 
+    /**
+     * Displays help message containing all possible commands for this app.
+     */
     public static void displayHelp() {
         System.out.println(
                 "Here are some ways you can use our app!\n" +
@@ -793,14 +927,13 @@ public class Ui {
     public void displayAddHelp() {
         System.out.println(
             "Here are some details you can include when adding a grocery:\n" +
-            "Category - Enter the category of the grocery.\n" +
-            "Amount - Enter the amount of the grocery.\n" +
-            "Location - Enter the location of the grocery.\n" +
-            "Expiration Date - Enter the expiration date of the grocery.\n" +
-            "Cost - Enter the cost of the grocery.\n" +
-            "Minimum Amount - Enter the minimum amount of the grocery to set reminder.\n" +
-            "Skip - Skip adding additional details."
-        );
+            "1. Category - what type of grocery is it.\n" +
+            "2. Amount - how much of the grocery is stored.\n" +
+            "3. Location - where the grocery is stored.\n" +
+            "4. Expiration Date - when the grocery expires.\n" +
+            "5. Cost - how much did the grocery cost.\n" +
+            "6. Threshold Amount - the minimum amount of the grocery that sets reminder.\n" +
+            "7. Remark - extra information about the grocery.\n");
     }
 
 
@@ -861,8 +994,14 @@ public class Ui {
      * @param grocery The grocery that should be updated.
      */
     public static void printThresholdSet(Grocery grocery) {
+        String unit;
+        if (grocery.getUnit() == null) {
+            unit = "";
+        } else {
+            unit = " " + grocery.getUnit();
+        }
         System.out.println(grocery.getName() + "'s threshold is now " +
-                grocery.getThreshold() + " " + grocery.getUnit());
+                grocery.getThreshold() + unit);
     }
 
     /**
@@ -900,12 +1039,14 @@ public class Ui {
      * @param groceries An array list of groceries.
      */
     public static void printLowStocks(List<Grocery> groceries) {
-        assert !groceries.isEmpty() : "grocery list should not be empty";
-        System.out.println("Time to top up these groceries!");
-        for (Grocery grocery: groceries) {
-            if (grocery.isLow()) {
+        int size = groceries.size();
+        if (size == 0) {
+            System.out.println("There are no items low in stock :)");
+        } else {
+            System.out.println("Time to top up these groceries!");
+            for (Grocery grocery : groceries) {
                 System.out.println(" - " + grocery.getName()
-                        + " only left: " +grocery.getAmount());
+                        + " only left: " + grocery.getAmount());
             }
         }
     }

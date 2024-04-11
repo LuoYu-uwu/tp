@@ -388,9 +388,18 @@ public class GroceryList {
             Collections.sort(groceries, (g1, g2) -> {
                 LocalDate exp1 = g1.getExpiration();
                 LocalDate exp2 = g2.getExpiration();
-                if (exp1 == null && exp2 == null) return 0; // Both are null, considered equal
-                if (exp1 == null) return 1; // Null exp1 should be sorted to the end
-                if (exp2 == null) return -1; // Null exp2 should be sorted to the end
+                if (exp1 == null && exp2 == null) {
+                    // If both groceries have no expiration date, they are equal
+                    return 0; 
+                } 
+                if (exp1 == null) {
+                    // If only the first grocery has no expiration date, it is greater
+                    return 1; 
+                } 
+                if (exp2 == null) {
+                    // If only the second grocery has no expiration date, it is greater
+                    return -1; 
+                } 
                 return exp1.compareTo(exp2);
             });
             GroceryUi.printGroceryList(groceries);

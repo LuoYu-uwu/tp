@@ -21,6 +21,7 @@ import user.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Deals with commands entered by user.
@@ -31,6 +32,7 @@ public class Parser {
     private UserInfo userInfo;
     private Ui ui;
     private RecipeList recipeList;
+    private Storage storage;
 
     private boolean isRunning;
     private String currentMode;
@@ -48,6 +50,7 @@ public class Parser {
         userInfo = new UserInfo(userName);
         recipeList = new RecipeList();
         this.ui = ui;
+        this.storage = new Storage();
         isRunning = true;
     }
 
@@ -84,6 +87,7 @@ public class Parser {
         switch (mode) {
         case GROCERY:
             groceryManagement(commandParts);
+            GroceryList x = this.storage.loadFile();
             break;
 
         case CALORIES:
@@ -152,7 +156,7 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
+            System.out.println("Bye bye!");
             isRunning = false;
             break;
 
@@ -299,9 +303,6 @@ public class Parser {
         }
     }
 
-
-
-
     /**
      * Handles commands related to adding or deleting a grocery.
      *
@@ -319,6 +320,7 @@ public class Parser {
             Grocery grocery = new Grocery(commandParts[1]);
             ui.printAddMenu(grocery);
             groceryList.addGrocery(grocery);
+            storage.saveFile(groceryList.getGroceries());
             break;
 
         case DEL:

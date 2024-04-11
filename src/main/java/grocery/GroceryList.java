@@ -1,6 +1,7 @@
 package grocery;
 
 import exceptions.emptyinput.EmptyInputException;
+import git.Storage;
 import git.Ui;
 import exceptions.GitException;
 import exceptions.nosuch.NoSuchObjectException;
@@ -32,12 +33,13 @@ import java.util.stream.Collectors;
 public class GroceryList {
     private List<Grocery> groceries;
     private Logger logger;
-
+    private Storage storage;
     /**
      * Constructs GroceryList.
      */
     public GroceryList() {
         groceries = new ArrayList<>();
+        //storage.loadFile();
         LoggerGroceryList.setupLogger();
         logger = Logger.getLogger(GroceryList.class.getName());
     }
@@ -48,6 +50,7 @@ public class GroceryList {
      * @param grocery Grocery to be added.
      */
     public void addGrocery(Grocery grocery) {
+
         try {
             groceries.add(grocery);
             Ui.printGroceryAdded(grocery);
@@ -59,6 +62,7 @@ public class GroceryList {
         }
 
         logger.log(Level.INFO, "Added " + grocery.printGrocery());
+
     }
 
     /**
@@ -99,7 +103,14 @@ public class GroceryList {
             throw new NoSuchObjectException("grocery");
         }
     }
-
+    /**
+     * Returns the desired groceries.
+     *
+     * @return The needed groceries.
+     */
+    public List<Grocery> getGroceries(){
+        return groceries;
+    }
     /**
      * Checks whether details are valid, else throw GitException accordingly.
      *

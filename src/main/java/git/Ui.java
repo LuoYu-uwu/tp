@@ -320,7 +320,7 @@ public class Ui {
     /**
      * Prints all recipes.
      *
-     * @param recipeArr An array list of groceries.
+     * @param recipeArr An array list of recipes.
      */
     public static void printRecipeList(ArrayList<Recipe> recipeArr) {
         assert !recipeArr.isEmpty() : "recipe list should not be empty";

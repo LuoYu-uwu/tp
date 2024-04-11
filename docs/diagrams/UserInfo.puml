@@ -1,5 +1,20 @@
 @startuml
 skinparam classAttributeIconSize 0
+class FoodList {
+    +FoodList()
+    +addFood(food: Food): Void
+    +printFoods(): Void
+}
+class Food {
+    -name: String
+    -calories: Double
+    +Food(name: String, calories: Double)
+    +getName(): String
+    +getCalories: Double
+    +print(): String
+}
+FoodList *--> "*" Food: contains >
+
 class UserInfo {
     -name: String
     -weight: Double
@@ -29,5 +44,5 @@ class UserInfo {
     +viewProfile(): String
     -consumptionOfCalories(food: Food): Void
 }
-
+UserInfo ..> Food
 @enduml

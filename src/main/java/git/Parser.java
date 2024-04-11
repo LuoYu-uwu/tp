@@ -49,14 +49,17 @@ public class Parser {
      */
     public Parser(Ui ui) {
         this.storage = new Storage();
-        groceryList = storage.loadFile();
+        groceryList = storage.loadGroceryFile();
         foodList = new FoodList();
         userInfo = new UserInfo();
         recipeUi = new RecipeUi();
         groceryUi = new GroceryUi();
         profileUi = new ProfileUi();
         caloriesUi = new CaloriesUi();
-        recipeList = new RecipeList();
+        System.out.println("beforeload");
+        recipeList = storage.loadRecipeFile();
+        System.out.println("afterload");
+
         this.ui = ui;
         isRunning = true;
     }

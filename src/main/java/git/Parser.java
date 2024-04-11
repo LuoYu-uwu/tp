@@ -31,6 +31,7 @@ public class Parser {
     private FoodList foodList;
     private UserInfo userInfo;
     private Ui ui;
+    private RecipeUi recipeUi;
     private RecipeList recipeList;
 
     private boolean isRunning;
@@ -46,6 +47,7 @@ public class Parser {
         groceryList = new GroceryList();
         foodList = new FoodList();
         userInfo = new UserInfo();
+        recipeUi = new RecipeUi();
         recipeList = new RecipeList();
         this.ui = ui;
         isRunning = true;
@@ -236,11 +238,11 @@ public class Parser {
 
         switch (command) {
         case ADD:
-            String title = ui.promptForTitle();
-            String ingredients  = ui.promptForIngredients();
+            String title = recipeUi.promptForTitle();
+            String ingredients  = recipeUi.promptForIngredients();
             String[] ingredientsList = ingredients.split("[,]");
             ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
-            String steps  = ui.promptForSteps();
+            String steps  = recipeUi.promptForSteps();
             String[] stepsList = steps.split("[.]");
             ArrayList<String> stepsArr = new ArrayList<String>(Arrays.asList(stepsList));
             recipeList.addRecipe(new Recipe(title, ingredientsArr, stepsArr));
@@ -251,13 +253,13 @@ public class Parser {
             break;
 
         case VIEW:
-            String titleView = ui.promptForTitle();
+            String titleView = recipeUi.promptForTitle();
             Recipe recipeToView = recipeList.getRecipe(titleView);
             recipeToView.viewRecipe();
             break;
 
         case DELETE:
-            String recipeTitle = ui.promptForTitle();
+            String recipeTitle = recipeUi.promptForTitle();
             recipeList.removeRecipe(recipeTitle);
             break;
 

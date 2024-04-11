@@ -1,0 +1,39 @@
+@startuml
+
+participant ":Parser" as p
+participant "command:GroceryCommand" as g
+participant "groceryList:GroceryList" as gl
+
+ -> p : groceryManagement(commandParts)
+create g
+p -> g : valueOf(commandParts[0].toUpperCase())
+g --> p : command
+
+p -> g : ordinal()
+g --> p : index
+p -> g: DEL.ordinal()
+g --> p : indexOfDel
+p -> g: STORE.ordinal()
+g --> p : indexOfStore
+p -> g: LISTLOC.ordinal()
+g --> p : indexOfListloc
+p -> g: FIND.ordinal()
+g --> p : indexOfFind
+alt index <= indexOfDel
+    p -> p : addOrDelGrocery(command, commandParts)
+    ref over p : caloriesManagement
+else index <= indexOfStore
+    p -> p : editGrocery(command, commandParts)
+    ref over p : editGrocery
+else index <= indexOfListloc
+    p -> p : handleLocationCommands(command, commandParts[1])
+    ref over p : handleLocationCommands
+else index == indexOfFind
+    p -> gl : findGroceries(commandParts[1])
+    ref over p, gl : findGroceries
+else else
+    p -> p : viewListOrHelp(command)
+    ref over p : viewListOrHelp
+end
+
+@enduml

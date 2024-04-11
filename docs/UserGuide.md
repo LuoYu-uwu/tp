@@ -354,7 +354,7 @@ Fried Egg
 
 Please enter the ingredients for this recipe in one line:
 
-egg,salt
+egg, salt
 
 Please enter the steps for this recipe in one line:
 

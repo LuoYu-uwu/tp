@@ -1,0 +1,46 @@
+@startuml
+
+participant ":Parser" as p
+participant "command:ProfileCommand" as prof
+participant "ui:Ui" as ui
+participant "userInfo:UserInfo" as info
+participant ":System.out" as sys
+
+ -> p : profileManagement(commandParts)
+create prof
+p -> prof : valueOf(commandParts[0].toUpperCase())
+prof --> p : command
+
+alt command == UPDATE
+    p -> ui : promptForName()
+    ui --> p : name
+    p -> ui : promptForWeight()
+    ui --> p : Weight
+    p -> ui : promptForHeight()
+    ui --> p : Height
+    p -> ui : promptForAge()
+    ui --> p : Age
+    p -> ui : promptForGender()
+    ui --> p : Gender
+    p -> ui : promptForActiveness()
+    ui --> p : Activeness
+    p -> ui : promptForAim()
+    ui --> p : Aim
+    p -> info : updateInfo(name, weight,height,age,gender,activeness,aim)
+else command == VIEW
+    p -> info: viewProfile()
+    info --> p : profile
+    p -> sys : println(profile)
+else command == SWITCH
+    p -> ui : switchMode()
+    ui --> p : currentMode
+else command == HELP
+    p -> ui : displayHelpForProf()
+else command == EXIT
+    p -> sys : println("bye bye")
+else else
+    p -> sys : println(GitException.getMessage())
+end
+
+
+@enduml

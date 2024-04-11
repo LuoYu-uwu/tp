@@ -1,0 +1,35 @@
+@startuml
+
+participant ":Parser" as p
+participant "ui:Ui" as ui
+participant "mode:Mode" as m
+participant ":System.out" as sys
+
+-> p : executeCommand(commandParts, selectedMode)
+create m
+p -> m : valueOf(currentMode.toUpperCase())
+m --> p : mode
+
+alt mode == GROCERY
+    p -> p : groceryManagement(commandParts)
+    ref over p, ui, sys : groceryManagement
+else mode == CALORIES
+    p -> p : caloriesManagement(commandParts)
+    ref over p, ui, sys : caloriesManagement
+else mode == PROFILE
+    p -> p : profileManagement(commandParts)
+    ref over p, ui, sys : profileManagement
+else mode == RECIPE
+    p -> p : recipeManagement(commandParts)
+    ref over p, ui, sys : recipeManagement
+else mode == MODE
+    p -> ui : switchMode()
+    ui --> p : mode
+else mode == HELP
+    p -> ui : displayHelp()
+else mode == EXIT
+    p -> sys : println("bye bye")
+else else
+    p -> sys : println(GitException.getMessage())
+end
+@enduml

@@ -2,7 +2,7 @@ package grocery;
 
 import exceptions.emptyinput.EmptyInputException;
 import git.Storage;
-import git.Ui;
+import git.GroceryUi;
 import exceptions.GitException;
 import exceptions.nosuch.NoSuchObjectException;
 import exceptions.LocalDateWrongFormatException;
@@ -52,7 +52,7 @@ public class GroceryList {
 
         try {
             groceries.add(grocery);
-            Ui.printGroceryAdded(grocery);
+            GroceryUi.printGroceryAdded(grocery);
             storage.saveFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
@@ -173,7 +173,7 @@ public class GroceryList {
         }
 
         // Verification and UI feedback
-        Ui.printExpSet(grocery);
+        GroceryUi.printExpSet(grocery);
         storage.saveFile(getGroceries());
     }
 
@@ -189,7 +189,7 @@ public class GroceryList {
         String newCategory = catParts[1].strip();
 
         grocery.setCategory(newCategory);
-        Ui.printCategorySet(grocery);
+        GroceryUi.printCategorySet(grocery);
         storage.saveFile(getGroceries());
     }
 
@@ -244,11 +244,11 @@ public class GroceryList {
         grocery.setAmount(amount);
         storage.saveFile(getGroceries());
         if (amount == 0) {
-            Ui.printAmtDepleted(grocery);
+            GroceryUi.printAmtDepleted(grocery);
         } else if (grocery.isLow()){
-            Ui.lowStockAlert(grocery);
+            GroceryUi.lowStockAlert(grocery);
         } else {
-            Ui.printAmtSet(grocery);
+            GroceryUi.printAmtSet(grocery);
         }
 
     }
@@ -270,7 +270,7 @@ public class GroceryList {
                 throw new InvalidCostException();
             }
             grocery.setCost(cost);
-            Ui.printCostSet(grocery);
+            GroceryUi.printCostSet(grocery);
             storage.saveFile(getGroceries());
         } catch (NumberFormatException e) {
             throw new InvalidCostException();
@@ -290,7 +290,7 @@ public class GroceryList {
         int threshold = checkAmount(thresholdString);
 
         grocery.setThreshold(threshold);
-        Ui.printThresholdSet(grocery);
+        GroceryUi.printThresholdSet(grocery);
         storage.saveFile(getGroceries());
     }
 
@@ -315,7 +315,7 @@ public class GroceryList {
 
         grocery.setLocation(location);
         location.addGrocery(grocery);
-        Ui.printLocationSet(grocery);
+        GroceryUi.printLocationSet(grocery);
         storage.saveFile(getGroceries());
     }
 
@@ -334,7 +334,7 @@ public class GroceryList {
             }
         }
 
-        Ui.printGroceriesFound(relevantGroceries, key);
+        GroceryUi.printGroceriesFound(relevantGroceries, key);
     }
 
     /**
@@ -348,7 +348,7 @@ public class GroceryList {
             throw new EmptyInputException("grocery");
         }
         Grocery grocery = getGrocery(details);
-        Ui.promptForRatingAndReview(grocery);
+        GroceryUi.promptForRatingAndReview(grocery);
         storage.saveFile(getGroceries());
     }
 
@@ -358,9 +358,9 @@ public class GroceryList {
     public void listGroceries() {
         int size = groceries.size();
         if (size == 0) {
-            Ui.printNoGrocery();
+            GroceryUi.printNoGrocery();
         } else {
-            Ui.printGroceryList(groceries);
+            GroceryUi.printGroceryList(groceries);
         }
     }
 
@@ -374,7 +374,7 @@ public class GroceryList {
                 lowStockGroceries.add(grocery);
             }
         }
-        Ui.printLowStocks(lowStockGroceries);
+        GroceryUi.printLowStocks(lowStockGroceries);
     }
 
     /**
@@ -383,10 +383,10 @@ public class GroceryList {
     public void sortByExpiration() {
         int size = groceries.size();
         if (size == 0) {
-            Ui.printNoGrocery();
+            GroceryUi.printNoGrocery();
         } else {
             Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
-            Ui.printGroceryList(groceries);
+            GroceryUi.printGroceryList(groceries);
         }
     }
 
@@ -413,10 +413,10 @@ public class GroceryList {
     public void displayGroceriesExpiringInNext3Days() {
         List<Grocery> groceriesExpiringInNext3Days = getGroceriesExpiringInNext3Days();
         if (groceriesExpiringInNext3Days.isEmpty()) {
-            Ui.printNoGrocery();
+            GroceryUi.printNoGrocery();
         } else {
             System.out.println("Here are the groceries expiring in the next 3 days:");
-            Ui.printGroceryList(groceriesExpiringInNext3Days);
+            GroceryUi.printGroceryList(groceriesExpiringInNext3Days);
         }
     }
 
@@ -426,12 +426,12 @@ public class GroceryList {
     public void sortByCost() {
         int size = groceries.size();
         if (size == 0) {
-            Ui.printNoGrocery();
+            GroceryUi.printNoGrocery();
         } else {
             List<Grocery> groceriesByDate = groceries;
             groceriesByDate.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
             Collections.reverse(groceriesByDate);
-            Ui.printGroceryList(groceriesByDate);
+            GroceryUi.printGroceryList(groceriesByDate);
         }
     }
     /**
@@ -440,10 +440,10 @@ public class GroceryList {
     public void sortByCategory(){
         int size = groceries.size();
         if (size == 0) {
-            Ui.printNoGrocery();
+            GroceryUi.printNoGrocery();
         } else {
             Collections.sort(groceries, Comparator.comparing(Grocery::getCategory));
-            Ui.printGroceryList(groceries);
+            GroceryUi.printGroceryList(groceries);
         }
     }
     /**
@@ -465,7 +465,7 @@ public class GroceryList {
             location.removeGrocery(grocery);
         }
 
-        Ui.printGroceryRemoved(grocery, groceries);
-        storage.saveFile(getGroceries());
+       GroceryUi.printGroceryRemoved(grocery, groceries);
+       storage.saveFile(getGroceries());
     }
 }

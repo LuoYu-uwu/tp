@@ -26,7 +26,7 @@ It allows users to track and manage their groceries around their home easily.
 > * Features requiring the `GROCERY` input are case-insensitive. 
 > <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 
-## Switch between different modes: `switch`
+## Switching between different modes: `switch`
 Switches between profile, calories, grocery or recipe mode.
 GiT comes in different modes and will prompt the user to choose their desired mode.
 
@@ -44,19 +44,68 @@ Example of usage:
 ## Grocery management mode
 
 ### Adding a new grocery: `add`
-Adds a grocery.  
+Adds a grocery and any desired additional details.
 
 Format: `add GROCERY`
 
-* `Grocery` must be a valid String.
+* `GROCERY` must be a valid String.
+* After executing `add GROCERY`, GiT will ask if the user wishes to include additional details.
+  * If so, the user has to enter the numbers corresponding to the details they wish to add.
+  * Multiple numbers can be entered in any order and spaces between numbers are ignored.
+  * Details are prompted for in the order their numbers are entered.
+  * If `8` is entered, another menu explaining what each detail means will always be displayed first.
+  * Invalid values are ignored.
+  * This step can be skipped by inputting nothing.
+* Any details not included here can be edited using other commands in the future.
+
+Example of usage :
+```
+>> add milk
+
+Before adding milk, do you want to include the following details?
+1. Category
+2. Amount
+3. Location
+4. Expiration Date
+5. Cost
+6. Threshold Amount
+7. Remark
+8. Help
+Please enter the number of the details you want to include:
+You may enter multiple numbers. (e.g. 1234)
+To skip this step, do not enter any values.
+
+>> 23
+
+Including Amount
+Please enter the amount (e.g. 3):
+
+>> 5
+
+Including Location
+Please enter the location (e.g. freezer first compartment)
+
+>> cabinet
+
+cheese added!
+- - - - -
+```
+
+
+&nbsp;
+### Deleting a grocery: `del`
+Delete a grocery.
+
+Format: `del GROCERY`
 
 Example of usage:
 
-`add milk`
+`del pork`
+
 
 &nbsp;
 ### Setting the expiration date of a grocery: `exp`
-Sets the expiration date of a grocery.  
+Sets the expiration date of a grocery.
 
 Format: `exp GROCERY d/EXPIRATION_DATE`
 
@@ -65,26 +114,6 @@ Format: `exp GROCERY d/EXPIRATION_DATE`
 Example of usage:
 
 `exp milk d/2024-07-20`
-
-&nbsp;
-### Adding Details to a Grocery: Extended Options
-After executing add GROCERY, you will see:
-```
-Do you want to include the following details?
-1. Category
-2. Amount
-3. Location
-4. Expiration Date
-5. Cost
-6. Threshold Amount
-7. Help
-8. Skip
-Please enter the number of the details you want to include:
-You may enter multiple numbers. (e.g. 1234)
-```
-Example of usage :
-
-`124`
 
 &nbsp;
 ### Setting the amount of a grocery: `amt`
@@ -118,11 +147,12 @@ Sets the cost of a grocery.
 
 Format: `cost GROCERY  $PRICE`
 
-* `PRICE` must be a valid integer.
+* `PRICE` must be a valid numerical value.
 
 Example of usage:
 
 `cost milk $1.20`
+
 
 &nbsp;
 ### Setting the threshold of a grocery: `th`
@@ -135,10 +165,11 @@ Format: `th GROCERY a/AMOUNT`
 
 Example of usage:
 
-`th milk 1`
+`th milk a/1`
+
 
 &nbsp;
-### View a list of groceries that are low in stock: `low`
+### Viewing a list of groceries that are low in stock: `low`
 Shows a list of groceries below the threshold amount.
 
 Format: `low`
@@ -147,9 +178,21 @@ Example of usage:
 
 `low`
 
+
+&nbsp;
+### Adding rating and review of a grocery: `rate`
+Adds rating and review of an existing grocery
+
+Format: `rate GROCERY`
+
+Example of usage:
+
+`rate milk`
+
+
 &nbsp;
 ### Finding groceries: `find`
-Find groceries containing a given keyword.
+Find groceries containing a given keyword in their name.
 
 Format: `find KEYWORD`
 
@@ -173,15 +216,6 @@ Example of usage:
 
 `loc freezer`
 
-&nbsp;
-### Adding rating and review of a grocery: `rate`
-Adds rating and review of an existing grocery
-
-Format: `rate GROCERY`
-
-Example of usage:
-
-`rate milk`
 
 &nbsp;
 ### Storing a grocery in a storage location: `store`
@@ -196,8 +230,49 @@ Example of usage:
 
 `store paprika l/spice rack`
 
+
 &nbsp;
-### Viewing storage locations and their groceries: `listloc`
+### Removing a storage location: `delloc`
+Remove a storage location from tracking.
+
+Format: `delloc LOCATION`
+
+Example of usage:
+
+`delloc cabinet`
+
+&nbsp;
+### Listing all groceries: `list`
+Shows a list of all groceries you have.
+
+Format: `list`
+
+Example of usage:
+
+`list`
+
+&nbsp;
+### Listing all groceries by price: `listcost`
+Shows a list of all groceries you have, sorted by price.
+
+Format: `listcost`
+
+Example of usage:
+
+`listcost`
+
+&nbsp;
+### Listing all groceries by expiration date: `listexp`
+Shows a list of all groceries you have, sorted by expiration date.
+
+Format: `listexp`
+
+Example of usage:
+
+`listexp`
+
+&nbsp;
+### Listing storage locations and their groceries: `listloc`
 View all storage locations being tracked, or the groceries stored in a given location
 
 Format: `listloc [LOCATION]`
@@ -216,45 +291,6 @@ Example of usage:
 
 ![Listl LOCATION example output](images/featureExampleOutputs/ListlLocExOut.png)
 
-&nbsp;
-### Removing a storage location: `delloc`
-Remove a storage location from tracking.
-
-Format: `delloc LOCATION`
-
-Example of usage:
-
-`delloc cabinet`
-
-&nbsp;
-### List all groceries: `list`
-Shows a list of all groceries you have.
-
-Format: `list`
-
-Example of usage:
-
-`list`
-
-&nbsp;
-### List all groceries by price: `listcost`
-Shows a list of all groceries you have, sorted by price.
-
-Format: `listcost`
-
-Example of usage:
-
-`listcost`
-
-&nbsp;
-### List all groceries by expiration date: `listexp`
-Shows a list of all groceries you have, sorted by expiration date.
-
-Format: `listexp`
-
-Example of usage:
-
-`listexp`
 
 &nbsp;
 ## Calories management mode
@@ -308,23 +344,24 @@ Adds new recipe, ingredient and steps.
 
 Format: `add`
 
-Example of usage:
-
-`add` 
+Example:
+```
+add
 
 Please enter the title of the recipe:
 
-`Fried Egg`
+Fried Egg
 
 Please enter the ingredients for this recipe in one line:
 
-`egg, salt`
+egg,salt
 
 Please enter the steps for this recipe in one line:
 
-`Fry the egg. Add salt. Serve.`
+Fry the egg. Add salt. Serve.
 
 Fried Egg added!
+```
 
 &nbsp;
 ### List all the recipes: `list`
@@ -332,35 +369,46 @@ Shows all the recipe titles.
 
 Format: `list`
 
+Example:
+```
+list
+
+Here are your recipe titles!
+
+1. fried egg
+- - - - -
+```
+
 &nbsp;
 ### View a recipe: `view`
 Shows the recipe ingredients and steps.
 
 Format: `view` `RECIPE` 
 
-Example of usage:
-
-`view`
+Example:
+```
+view
 
 Please enter the title of the recipe:
 
-`Fried Egg`
-
+Fried Egg
+```
 &nbsp;
 ### Delete a recipe: `delete`
 Shows the recipe ingredients and steps.
 
 Format: `delete` `RECIPE`
 
-Example of usage:
-
-`delete`
+Example:
+```
+delete
 
 Please enter the title of the recipe:
 
-`Fried Egg`
+Fried Egg
 
 Fried Egg is removed from the recipe list.
+```
 
 ## FAQ
 

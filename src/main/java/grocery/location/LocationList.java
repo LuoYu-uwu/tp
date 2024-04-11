@@ -57,7 +57,7 @@ public class LocationList {
      */
     public static Location findLocation(String name) throws NoSuchObjectException {
         if (locations.isEmpty()) {
-            throw new NoSuchObjectException("location");
+            throw new NoSuchObjectException("location (" + name + ")");
         }
 
         int index = -1;
@@ -71,7 +71,7 @@ public class LocationList {
         if (index != -1) {
             return locations.get(index);
         } else {
-            throw new NoSuchObjectException("location");
+            throw new NoSuchObjectException("location (" + name + ")");
         }
     }
 

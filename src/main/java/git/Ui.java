@@ -131,8 +131,6 @@ public class Ui {
         return commandParts;
     }
 
-
-
     public static String switchMode() throws GitException {
         System.out.println("What mode would you like to enter?");
         System.out.println("Please select a mode: " + "grocery, profile, calories or recipe:");

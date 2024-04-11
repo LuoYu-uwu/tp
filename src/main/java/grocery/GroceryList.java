@@ -1,6 +1,7 @@
 package grocery;
 
 import exceptions.emptyinput.EmptyInputException;
+import git.Storage;
 import git.GroceryUi;
 import exceptions.GitException;
 import exceptions.nosuch.NoSuchObjectException;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 public class GroceryList {
     private List<Grocery> groceries;
     private Logger logger;
-
+    private Storage storage;
     /**
      * Constructs GroceryList.
      */
@@ -48,9 +49,11 @@ public class GroceryList {
      * @param grocery Grocery to be added.
      */
     public void addGrocery(Grocery grocery) {
+
         try {
             groceries.add(grocery);
             GroceryUi.printGroceryAdded(grocery);
+            storage.saveFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
             System.out.println("Failed to add grocery: the grocery is null.");
@@ -59,6 +62,7 @@ public class GroceryList {
         }
 
         logger.log(Level.INFO, "Added " + grocery.printGrocery());
+
     }
 
     /**
@@ -99,7 +103,14 @@ public class GroceryList {
             throw new NoSuchObjectException("grocery (" + name + ")");
         }
     }
-
+    /**
+     * Returns the desired groceries.
+     *
+     * @return The needed groceries.
+     */
+    public List<Grocery> getGroceries(){
+        return groceries;
+    }
     /**
      * Checks whether details are valid, else throw GitException accordingly.
      *
@@ -163,6 +174,7 @@ public class GroceryList {
 
         // Verification and UI feedback
         GroceryUi.printExpSet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -178,6 +190,7 @@ public class GroceryList {
 
         grocery.setCategory(newCategory);
         GroceryUi.printCategorySet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -229,6 +242,7 @@ public class GroceryList {
         }
 
         grocery.setAmount(amount);
+        storage.saveFile(getGroceries());
         if (amount == 0) {
             GroceryUi.printAmtDepleted(grocery);
         } else if (grocery.isLow()){
@@ -257,6 +271,7 @@ public class GroceryList {
             }
             grocery.setCost(cost);
             GroceryUi.printCostSet(grocery);
+            storage.saveFile(getGroceries());
         } catch (NumberFormatException e) {
             throw new InvalidCostException();
         }
@@ -276,6 +291,7 @@ public class GroceryList {
 
         grocery.setThreshold(threshold);
         GroceryUi.printThresholdSet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -300,6 +316,7 @@ public class GroceryList {
         grocery.setLocation(location);
         location.addGrocery(grocery);
         GroceryUi.printLocationSet(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -332,6 +349,7 @@ public class GroceryList {
         }
         Grocery grocery = getGrocery(details);
         GroceryUi.promptForRatingAndReview(grocery);
+        storage.saveFile(getGroceries());
     }
 
     /**
@@ -447,6 +465,7 @@ public class GroceryList {
             location.removeGrocery(grocery);
         }
 
-        GroceryUi.printGroceryRemoved(grocery, groceries);
+       GroceryUi.printGroceryRemoved(grocery, groceries);
+       storage.saveFile(getGroceries());
     }
 }

@@ -4,17 +4,20 @@ import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import git.RecipeUi;
+import git.Storage;
 
 import java.util.ArrayList;
 
 public class RecipeList {
     private ArrayList<Recipe> recipeArr;
-
+    private Storage storage;
     /**
      * Constructs RecipeList with recipe as an empty ArrayList.
      */
     public RecipeList() {
         recipeArr = new ArrayList<>();
+        this.storage = new Storage();
+
     }
 
     /**
@@ -26,6 +29,7 @@ public class RecipeList {
         try {
             recipeArr.add(recipe);
             RecipeUi.printRecipeAdded(recipe);
+            storage.saveRecipeFile(recipeArr);
             assert recipeArr.contains(recipe) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
             System.out.println("Failed to add recipe: the recipe is null.");

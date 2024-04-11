@@ -6,6 +6,7 @@ import exceptions.PastExpirationDateException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import grocery.Grocery;
+import grocery.GroceryList;
 import grocery.location.Location;
 import grocery.location.LocationList;
 
@@ -69,6 +70,51 @@ public class GroceryUi {
         }
 
         processAddMenu(grocery, addNums.toString());
+    }
+
+    /**
+     * Prompts user for grocery name.
+     *
+     * @return the name of the grocery.
+     */
+    public Grocery[] promptAddMultipleMenu() {
+        System.out.println("\nHow many groceries would you like to add?");
+        int num = 0;
+        while (true) {
+            try {
+                num = Integer.parseInt(in.nextLine().trim());
+                if (num <= 0) {
+                    System.out.println("\nPlease enter a positive number.");
+                } else {
+                    break; // Break loop if input is a positive integer
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nInvalid input. Please enter a number.");
+            }
+        }
+        Grocery[] groceries = new Grocery[num];
+
+        for (int i = 0; i < num; i++) {
+            System.out.println("\nAdding item " + (i + 1) + " of " + num);
+            System.out.println("\nPlease enter the name of the grocery:");
+            Grocery grocery = new Grocery(in.nextLine().trim());
+        
+            while (true) {
+                System.out.println("\nDo you want to include additional details for " + grocery.getName() + "? (Y/N)");
+                String choice = in.nextLine().trim().toUpperCase();
+                if (choice.equals("Y")) {
+                    promptAddMenu(grocery);
+                    break; // Exit the loop after handling
+                } else if (choice.equals("N")) {
+                    System.out.println("\nNo additional details will be added for " + grocery.getName());
+                    break; // Exit the loop, proceed with next item
+                } else {
+                    System.out.println("\nInvalid input. Please enter 'Y' for yes or 'N' for no.");
+                }
+            }
+            groceries[i] = grocery;
+        }
+        return groceries;
     }
 
     /**

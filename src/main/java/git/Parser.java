@@ -344,6 +344,13 @@ public class Parser {
             groceryList.addGrocery(grocery);
             break;
 
+        case ADDMULTI:
+            Grocery[] groceries = groceryUi.promptAddMultipleMenu();
+            for (Grocery g : groceries) {
+                groceryList.addGrocery(g);
+            }
+            break;
+
         case DEL:
             groceryList.removeGrocery(commandParts[1]);
             break;

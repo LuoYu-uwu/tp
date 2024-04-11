@@ -22,7 +22,7 @@ public class Storage {
     private Grocery grocery;
     private List<Grocery> groceries;
     private GroceryList groceryList;
-    private static final String FILE_PATH = "./data/groceryList.txt";
+    private final static String FILE_PATH = "./data/groceryList.txt";
     /**
      * Loads groceries from the file.
      * @return groceryList loaded from the file. If file does not exist, returns an empty groceryList.

@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
  * Handles loading from and saving tasks to a file.
  */
 public class Storage {
-    private final static String FILE_PATH = "./data/groceryList.txt";
+    //private final static String FILE_PATH = "./data/groceryList.txt";
     private Grocery grocery;
     private List<Grocery> groceries;
     private GroceryList groceryList;
@@ -30,7 +30,7 @@ public class Storage {
     public GroceryList loadFile(){
         GroceryList groceryList = new GroceryList();
         try {
-            File file = new File(FILE_PATH);
+            File file = new File("./data/groceryList.txt");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -75,7 +75,7 @@ public class Storage {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-            FileWriter writer = new FileWriter(FILE_PATH);
+            FileWriter writer = new FileWriter("./data/groceryList.txt");
             for (Grocery grocery : groceries) {
                 writer.write(grocery.toSaveFormat() + "\n");
             }

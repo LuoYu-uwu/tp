@@ -39,8 +39,9 @@ public class Storage {
                 groceryList.addGrocery(grocery);
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("No saved groceries found.\n ");
+        }
+        catch (FileNotFoundException e) {
+            //System.out.println("No saved groceries found.\n ");
         }
         return groceryList;
     }

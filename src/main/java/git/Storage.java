@@ -1,7 +1,5 @@
 package git;
 
-import exceptions.PastExpirationDateException;
-import exceptions.nosuch.NoSuchObjectException;
 import grocery.Grocery;
 import grocery.GroceryList;
 
@@ -10,13 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import grocery.location.Location;
-import grocery.location.LocationList;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 

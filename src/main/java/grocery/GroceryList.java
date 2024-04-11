@@ -464,8 +464,7 @@ public class GroceryList {
         if (location != null) {
             location.removeGrocery(grocery);
         }
-
-       GroceryUi.printGroceryRemoved(grocery, groceries);
-       storage.saveFile(getGroceries());
+        GroceryUi.printGroceryRemoved(grocery, groceries);
+        storage.saveFile(getGroceries());
     }
 }

@@ -1,11 +1,6 @@
 package git;
 
 import exceptions.GitException;
-import grocery.Grocery;
-import grocery.GroceryList;
-
-import java.util.ArrayList;
-
 /**
  * Represents the Grocery in Time (GiT) program, allowing users to store and track their groceries!
  */

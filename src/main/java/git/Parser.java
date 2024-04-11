@@ -22,7 +22,6 @@ import user.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Deals with commands entered by user.

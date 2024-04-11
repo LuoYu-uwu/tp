@@ -269,7 +269,7 @@ public class Grocery {
             remarkString = ", remark not set";
         }
 
-        return this.name + " (" + this.category + ") " + amountString + unitString + exp + price +
+        return this.name + " (" + this.category + ")" + amountString + unitString + exp + price +
                 locationString + remarkString;
 
     }

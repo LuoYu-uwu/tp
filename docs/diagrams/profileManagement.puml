@@ -2,8 +2,9 @@
 
 participant ":Parser" as p
 participant "command:ProfileCommand" as prof
-participant "ui:Ui" as ui
+participant "profileUi:ProfileUi" as pui
 participant "userInfo:UserInfo" as info
+participant "ui:Ui" as ui
 participant ":System.out" as sys
 
  -> p : profileManagement(commandParts)
@@ -12,20 +13,20 @@ p -> prof : valueOf(commandParts[0].toUpperCase())
 prof --> p : command
 
 alt command == UPDATE
-    p -> ui : promptForName()
-    ui --> p : name
-    p -> ui : promptForWeight()
-    ui --> p : Weight
-    p -> ui : promptForHeight()
-    ui --> p : Height
-    p -> ui : promptForAge()
-    ui --> p : Age
-    p -> ui : promptForGender()
-    ui --> p : Gender
-    p -> ui : promptForActiveness()
-    ui --> p : Activeness
-    p -> ui : promptForAim()
-    ui --> p : Aim
+    p -> pui : promptForName()
+    pui --> p : name
+    p -> pui : promptForWeight()
+    pui --> p : Weight
+    p -> pui : promptForHeight()
+    pui --> p : Height
+    p -> pui : promptForAge()
+    pui --> p : Age
+    p -> pui : promptForGender()
+    pui --> p : Gender
+    p -> pui : promptForActiveness()
+    pui --> p : Activeness
+    p -> pui : promptForAim()
+    pui --> p : Aim
     p -> info : updateInfo(name, weight,height,age,gender,activeness,aim)
 else command == VIEW
     p -> info: viewProfile()

@@ -33,6 +33,17 @@
 ![Commands for managing grocery](./diagrams/groceryManagement.png)
 * different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
 
+#### 4.1 addOrDelGrocery
+![addOrDelGrocery](./diagrams/addOrDelGrocery.png)
+To add a new grocery or delete an existing grocery.
+
+#### 4.2 editGrocery
+![editDelGrocery](./diagrams/editGrocery.png)
+To edit the information of an existing grocery.
+
+#### 4.3 viewListOrHelp
+![viewListOrHelp](./diagrams/viewListOrHelp.png)
+
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\
      e.g., NAME, AMOUNT, EXPIRATION, PRICE.

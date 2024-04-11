@@ -56,10 +56,7 @@ public class Parser {
         groceryUi = new GroceryUi();
         profileUi = new ProfileUi();
         caloriesUi = new CaloriesUi();
-        System.out.println("beforeload");
         recipeList = storage.loadRecipeFile();
-        System.out.println("afterload");
-
         this.ui = ui;
         isRunning = true;
     }

@@ -9,11 +9,25 @@
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
 ### _Designs_
-### 1. Calories Management Mode
-![Commands for managing calories](./diagrams/CaloriesManagement.png)
+### 1. Execute different commands based on the modes
+![Execute different commands](./diagrams/executeCommand.png)
+* when 'executeCommand'  is executed in Parser, different methods in Parser will be self invoked based on the selected mode.
+* if mode is `grocery`, execute `groceryManagement`
+* if mode is `calories`, execute `caloriesManagement`
+* if mode is `profile`, execute `profileManagement`
+* if mode is `recipe`, execute `recipeManagement`
+
+### 2. Calories Management Mode
+![Commands for managing calories](./diagrams/caloriesManagement.png)
    * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
    * if `eat`, store the name and calories of the input food
    * if `view`, display all the foods consumed
+
+### 3. Profile Management Mode
+![Commands for managing profile](./diagrams/profileManagement.png)
+  * when `profileManagement` is executed in Parser, different actions will be carried out based on the commands.
+  * if `update`, store the user data required for calories calculation.
+  * if `view`, display user information
 
 ### 1. View all groceries added
    * First create a method in "Grocery" class that prints the grocery in a preferred format.\
@@ -100,19 +114,21 @@ Furthermore, the app can generate a list of items that are expiring soon, remind
 
 ## User Stories
 
-| Version | As a ...                      | I want to ...                               | So that I can ...                                      |
-|---------|-------------------------------|---------------------------------------------|--------------------------------------------------------|
-| v1.0    | new user                      | see instructions on how to use the app      | refer to them when I forget how to use the application |
-| v1.0    | user                          | add groceries to the app                    | manage all my groceries                                |
-| v1.0    | user                          | view all my groceries                       | know what I have bought                                |
-| v1.0    | user                          | delete groceries from the list              | stop tracking those groceries                          |
-| v1.0    | user                          | add the amount of a grocery                 | keep track of the amount of that item I have           |
-| v1.0    | user                          | add the expiration date of the grocery      | keep track of when my items expire easily              |
-| v2.0    | financially-aware user        | add the cost of the groceries               | know how much I am spending                            |
-| v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                    |
-| v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                          |
-| v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                              |
-| v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                    |
+| Version | As a ...                      | I want to ...                               | So that I can ...                                       |
+|---------|-------------------------------|---------------------------------------------|---------------------------------------------------------|
+| v1.0    | new user                      | see instructions on how to use the app      | refer to them when I forget how to use the application  |
+| v1.0    | user                          | add groceries to the app                    | manage all my groceries                                 |
+| v1.0    | user                          | view all my groceries                       | know what I have bought                                 |
+| v1.0    | user                          | delete groceries from the list              | stop tracking those groceries                           |
+| v1.0    | user                          | add the amount of a grocery                 | keep track of the amount of that item I have            |
+| v1.0    | user                          | add the expiration date of the grocery      | keep track of when my items expire easily               |
+| v2.0    | financially-aware user        | add the cost of the groceries               | know how much I am spending                             |
+| v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                     |
+| v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                           |
+| v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                               |
+| v2.0    | user who replenishes groceries | set threshold amount for the groceries      | know what groceries I should top up                     |
+| v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                     |
+| v2.0    |  health-conscious user   | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
 
 ## Non-Functional Requirements
 

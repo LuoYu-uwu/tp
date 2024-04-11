@@ -1,0 +1,33 @@
+@startuml
+skinparam classAttributeIconSize 0
+class UserInfo {
+    -name: String
+    -weight: Double
+    -height: Double
+    -age: Integer
+    -gender: String
+    -aim: String
+    -activeness: String
+    -BMR: Double
+    -AMR: Double
+    -caloriesCap: Integer
+    -currentCalories: Integer
+    -calBMR(): Void
+    -calAMR(): Void
+    -setCaloriesCap(): Void
+    +UserInfo()
+    +setName(name: String): Void
+    +setWeight(weight: Double): Void
+    +setHeight(height: Double): Void
+    +setAge(age: Integer): Void
+    +setGender(gender: String): Void
+    +setAim(aim: String): Void
+    +setActiveness(activeness: String): Void
+    +getCurrentCalories(): Double
+    +updateInfo(name: String, weight: Double, height: Double, age: Integer,
+                               gender: String, activeness: String, aim: String): Void
+    +viewProfile(): String
+    -consumptionOfCalories(food: Food): Void
+}
+
+@enduml

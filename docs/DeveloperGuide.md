@@ -114,19 +114,21 @@ Furthermore, the app can generate a list of items that are expiring soon, remind
 
 ## User Stories
 
-| Version | As a ...                      | I want to ...                               | So that I can ...                                      |
-|---------|-------------------------------|---------------------------------------------|--------------------------------------------------------|
-| v1.0    | new user                      | see instructions on how to use the app      | refer to them when I forget how to use the application |
-| v1.0    | user                          | add groceries to the app                    | manage all my groceries                                |
-| v1.0    | user                          | view all my groceries                       | know what I have bought                                |
-| v1.0    | user                          | delete groceries from the list              | stop tracking those groceries                          |
-| v1.0    | user                          | add the amount of a grocery                 | keep track of the amount of that item I have           |
-| v1.0    | user                          | add the expiration date of the grocery      | keep track of when my items expire easily              |
-| v2.0    | financially-aware user        | add the cost of the groceries               | know how much I am spending                            |
-| v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                    |
-| v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                          |
-| v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                              |
-| v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                    |
+| Version | As a ...                      | I want to ...                               | So that I can ...                                       |
+|---------|-------------------------------|---------------------------------------------|---------------------------------------------------------|
+| v1.0    | new user                      | see instructions on how to use the app      | refer to them when I forget how to use the application  |
+| v1.0    | user                          | add groceries to the app                    | manage all my groceries                                 |
+| v1.0    | user                          | view all my groceries                       | know what I have bought                                 |
+| v1.0    | user                          | delete groceries from the list              | stop tracking those groceries                           |
+| v1.0    | user                          | add the amount of a grocery                 | keep track of the amount of that item I have            |
+| v1.0    | user                          | add the expiration date of the grocery      | keep track of when my items expire easily               |
+| v2.0    | financially-aware user        | add the cost of the groceries               | know how much I am spending                             |
+| v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                     |
+| v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                           |
+| v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                               |
+| v2.0    | user who replenishes groceries | set threshold amount for the groceries      | know what groceries I should top up                     |
+| v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                     |
+| v2.0    |  health-conscious user   | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
 
 ## Non-Functional Requirements
 

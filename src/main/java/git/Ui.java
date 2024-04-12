@@ -176,6 +176,7 @@ public class Ui {
                         "listloc [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
                         "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
+                        "view GROCERY: view all the details of GROCERY.\n" +
                         "exit: exits the program.\n" +
                         "switch: switches the mode.\n" +
                         "help: view all the possible commands."

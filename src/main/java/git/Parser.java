@@ -411,7 +411,6 @@ public class Parser {
         case STORE:
             groceryList.editLocation(commandParts[1]);
             break;
-
         default:
             throw new InvalidCommandException();
         }
@@ -456,6 +455,11 @@ public class Parser {
      */
     private void viewListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
+
+        case VIEW:
+            groceryList.viewGrocery(commandParts[1]);
+            break;
+
         case LIST:
             groceryList.listGroceries();
             break;

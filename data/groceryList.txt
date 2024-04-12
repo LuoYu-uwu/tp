@@ -1,3 +1,0 @@
-milk | null | null | null |  | null | null 
-nuts | null | null | null |  | null | cubby 
-pasta | null | null | null |  | null | cubby 

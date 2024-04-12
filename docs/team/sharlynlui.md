@@ -10,6 +10,7 @@ The user interacts with it using a CLI. It is written in Java and has about 4 kL
   *Justification: user will be able to record their own recipes for easy viewing.
 * **New Feature:** Added View Recipe, List Recipe, Add Recipe, Delete Recipe.
   Justification: allow user to use to Recipe features in the application.
+*  **New Feature:** Added View Grocery
 * **Code Contributed:** add link here
 * **Project management:** 
   * Manged releases v1.0-v2.1 on GitHub

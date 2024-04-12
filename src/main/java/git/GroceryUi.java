@@ -528,7 +528,7 @@ public class GroceryUi {
             String input = in.nextLine().trim();
             try {
                 rating = Integer.parseInt(input);
-                if (rating >= 0 && rating <= 5){
+                if (rating > 0 && rating <= 5){
                     break;
                 } else {
                     rating = 0;
@@ -570,6 +570,63 @@ public class GroceryUi {
     //@@author lsiyi
 
     //@@author SharlynLui
+    /**
+     * Prints grocery details for view command.
+     *
+     * @param grocery The grocery that should be printed.
+     */
+    public static void printViewGrocery(Grocery grocery) {
+        assert !(grocery.getName().isEmpty()): "grocery name should not be empty";
+        System.out.println("These are the details of " + grocery.getName() + ": ");
+        if (grocery.getAmount() != 0) {
+            System.out.println("Amount: " + grocery.getAmount());
+        } else if (grocery.getIsSetAmount()){
+            System.out.println("Amount:" + grocery.getAmount());
+        } else {
+            System.out.println("Amount: not set");
+        }
+        if (grocery.getExpiration() != null) {
+            System.out.println("Expiry date: " + grocery.getExpiration());
+        } else {
+            System.out.println("Expiry date: not set");
+        }
+        if (!grocery.getCategory().isEmpty()) {
+            System.out.println("Category: " + grocery.getCategory());
+        } else {
+            System.out.println("Category: not set");
+        }
+        if (grocery.getCost() != 0) {
+            System.out.println("Cost: " + grocery.getCost());
+        } else if (grocery.getIsSetCost()) {
+            System.out.println("Cost: " + grocery.getCost());
+        } else {
+            System.out.println("Cost: not set");
+        }
+        if (grocery.getLocation() != null) {
+            System.out.println("Location: " + grocery.getLocation().getName());
+        } else {
+            System.out.println("Location: not set");
+        }
+        if (grocery.getRating() != 0) {
+            System.out.println("Rating: " + grocery.getRating());
+        } else {
+            System.out.println("Rating: not set");
+        }
+        if (!grocery.getReview().isEmpty()) {
+            System.out.println("Review: " + grocery.getReview());
+        } else {
+            System.out.println("Review: not set");
+        }
+    }
+
+    /**
+     * Inform user that Grocery does not exist.
+     *
+     */
+    public static void printGroceriesNotFound() {
+        System.out.println("Grocery not found. Please check if the name is correct or try another name.");
+    }
+
     /**
      * Prints output after setting the selected grocery's expiration date.
      *

@@ -1,7 +1,7 @@
 package git;
 
 import exceptions.GitException;
-import exceptions.InvalidCostException;
+import exceptions.invalidinput.InvalidCostException;
 import exceptions.PastExpirationDateException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;

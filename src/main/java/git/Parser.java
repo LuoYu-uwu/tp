@@ -6,7 +6,7 @@ import enumerations.GroceryCommand;
 import enumerations.Mode;
 import enumerations.ProfileCommand;
 import enumerations.RecipeCommand;
-import exceptions.DuplicateGroceryException;
+import exceptions.DuplicateException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -352,7 +352,7 @@ public class Parser {
             }
 
             if (groceryList.isGroceryExists(name)) {
-                throw new DuplicateGroceryException(name);
+                throw new DuplicateException("grocery", name);
             }
 
             Grocery grocery = new Grocery(commandParts[1]);

@@ -1,9 +1,11 @@
-package exceptions;
+package exceptions.invalidinput;
+
+import exceptions.GitException;
 
 /**
  * Represents the exception thrown when the cost inputted by the user is invalid.
  */
-public class InvalidCostException extends GitException{
+public class InvalidCostException extends GitException {
     /**
      * Constructs InvalidCostException.
      */

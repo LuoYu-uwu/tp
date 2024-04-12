@@ -1,4 +1,6 @@
-package exceptions;
+package exceptions.invalidinput;
+
+import exceptions.GitException;
 
 /**
  * Represents the exception thrown when the amount inputted by the user is invalid.

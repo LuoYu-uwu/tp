@@ -1,2 +1,0 @@
-tomato | null | null | null |  | null | fridge 
-ice | null | null | null |  | null | freezer 

@@ -1,8 +1,0 @@
-Name: zihui
-Height: 0.0
-Weight: 0.0
-Age: 0
-Gender: null
-Aim: null
-Activeness: null
-Calories: 0

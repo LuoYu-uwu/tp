@@ -105,9 +105,6 @@ public class UserInfo {
         } catch (GitException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("before save");
-
-        System.out.println("after save");
 
     }
 

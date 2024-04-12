@@ -15,7 +15,6 @@ import exceptions.commands.IncompleteParameterException;
 import exceptions.commands.CommandWrongFormatException;
 import grocery.location.Location;
 import grocery.location.LocationList;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -252,7 +251,26 @@ public class GroceryList {
         } else {
             GroceryUi.printAmtSet(grocery);
         }
+    }
 
+    /**
+     * Updates the remark of an existing grocery.
+     *
+     * @param details A string containing grocery new remark.
+     * @throws GitException is input is not valid
+     */
+    public void editRemark(String details) throws GitException {
+        // Assuming the format is "remark GROCERY r/REMARK"
+        String[] remarkParts = checkDetails(details, "remark", "r/");
+        Grocery grocery = getGrocery(remarkParts[0].strip());
+        String remark = remarkParts[1].strip();
+
+        grocery.setRemark(remark);
+        if (remark.isEmpty()) {
+            throw new EmptyInputException("remark");
+        }
+        GroceryUi.printRemarkSet(grocery);
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**

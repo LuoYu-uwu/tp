@@ -617,6 +617,11 @@ public class GroceryUi {
         } else {
             System.out.println("Review: not set");
         }
+        if (!grocery.getRemark().isEmpty()) {
+            System.out.println("Remark: " + grocery.getRemark());
+        } else {
+            System.out.println("Remark: not set");
+        }
     }
 
     /**
@@ -625,6 +630,15 @@ public class GroceryUi {
      */
     public static void printGroceriesNotFound() {
         System.out.println("Grocery not found. Please check if the name is correct or try another name.");
+    }
+
+    /**
+     * Prints output after setting the selected grocery's remark.
+     *
+     */
+    public static void printRemarkSet(Grocery grocery) {
+        assert !(grocery.getRemark().isEmpty()): "grocery remark should not be empty";
+        System.out.println("remark:" + grocery.getRemark());
     }
 
     /**

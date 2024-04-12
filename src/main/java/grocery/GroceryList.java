@@ -14,8 +14,6 @@ import exceptions.commands.IncompleteParameterException;
 import exceptions.commands.CommandWrongFormatException;
 import grocery.location.Location;
 import grocery.location.LocationList;
-
-import java.rmi.server.RemoteObjectInvocationHandler;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

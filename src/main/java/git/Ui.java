@@ -15,12 +15,12 @@ public class Ui {
     private static final double MAX_WEIGHT = 370;
     private static final double MAX_AGE = 160;
     public static final String DIVIDER = "- - - - -";
-    // ATTRIBUTES
-    private Storage storage;
-    private UserInfo userInfo;
     private static Ui singleUi = null;
     private static Scanner in;
+    // ATTRIBUTES
     private static String userName;
+    private Storage storage;
+    private UserInfo userInfo;
 
     // METHODS
     /**

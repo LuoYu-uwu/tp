@@ -1,5 +1,7 @@
 package git;
 
+import user.UserInfo;
+
 import java.util.Scanner;
 
 public class ProfileUi {
@@ -72,6 +74,7 @@ public class ProfileUi {
                 }
             }
         }
+
         return weight;
     }
 

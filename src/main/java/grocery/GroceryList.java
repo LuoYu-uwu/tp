@@ -1,15 +1,16 @@
 package grocery;
 
-import exceptions.emptyinput.EmptyInputException;
-import git.Storage;
-import git.GroceryUi;
 import exceptions.GitException;
-import exceptions.nosuch.NoSuchObjectException;
+import exceptions.invalidinput.InvalidAmountException;
 import exceptions.LocalDateWrongFormatException;
 import exceptions.PastExpirationDateException;
-import exceptions.InvalidAmountException;
-import exceptions.InvalidCostException;
+import exceptions.emptyinput.EmptyInputException;
 import exceptions.CannotUseException;
+import exceptions.invalidinput.InvalidCostException;
+import exceptions.SameLocationException;
+import git.Storage;
+import git.GroceryUi;
+import exceptions.nosuch.NoSuchObjectException;
 import exceptions.commands.IncompleteParameterException;
 import exceptions.commands.CommandWrongFormatException;
 import grocery.location.Location;
@@ -332,6 +333,12 @@ public class GroceryList {
             location = LocationList.findLocation(name);
         }
 
+        Location oldLocation = grocery.getLocation();
+        if (oldLocation == location) {
+            throw new SameLocationException(grocery.getName(), location.getName());
+        } else if (oldLocation != null) {
+            oldLocation.removeGrocery(grocery);
+        }
         grocery.setLocation(location);
         location.addGrocery(grocery);
         GroceryUi.printLocationSet(grocery);

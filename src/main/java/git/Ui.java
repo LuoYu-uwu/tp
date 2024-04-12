@@ -4,6 +4,7 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import enumerations.Mode;
+import user.UserInfo;
 
 
 /**
@@ -11,6 +12,8 @@ import enumerations.Mode;
  */
 public class Ui {
     // ATTRIBUTES
+    private Storage storage;
+    private UserInfo userInfo;
     public static final String DIVIDER = "- - - - -";
     private static Ui singleUi = null;
     private static Scanner in;
@@ -19,12 +22,15 @@ public class Ui {
     private static final double MAX_WEIGHT = 370;
     private static final double MAX_AGE = 160;
 
+
     // METHODS
     /**
      * Constructs Ui and initialises Scanner to read input.
      */
     private Ui() {
         in = new Scanner(System.in);
+        storage = new Storage();
+        userInfo = storage.loadProfileFile();
     }
 
     /**
@@ -54,17 +60,39 @@ public class Ui {
                 " `._____.'[___] |_____|";
 
         System.out.println(gitlogo + System.lineSeparator());
-        System.out.println("Hello from GiT");
-        userName = null;
-        while (userName == null) {
-            System.out.println("What is your name?");
-            printLine();
-            userName = in.nextLine();
-            if (userName.isEmpty()) {
-                System.out.println("Invalid input. Please enter a valid name.");
-                userName = null;
+
+            System.out.println("Hello from GiT");
+            userName = null;
+            while (userName == null) {
+                System.out.println("What is your name?");
+                printLine();
+                userName = in.nextLine();
+                if (userName.isEmpty()) {
+                    System.out.println("Invalid input. Please enter a valid name.");
+                    userName = null;
+                }
             }
-        }
+            printHello(userName);
+        displayHelp();
+
+        return userName;
+    }
+    /**
+     * Prints welcome message to an existing user.
+     */
+    public String printWelcomeToExistingUser() {
+        final String gitlogo =
+                "   ______   _  _________\n" +
+                        " .' ___  | (_)|  _   _  |\n" +
+                        "/ .'   \\_| __ |_/ | | \\_|\n" +
+                        "| |   ____[  |    | |\n" +
+                        "\\ `.___]  || |   _| |_\n" +
+                        " `._____.'[___] |_____|";
+
+        System.out.println(gitlogo + System.lineSeparator());
+
+        System.out.println("Hello from GiT");
+        userName = userInfo.getName();
         printHello(userName);
         displayHelp();
 

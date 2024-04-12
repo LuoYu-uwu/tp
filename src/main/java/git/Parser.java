@@ -6,7 +6,7 @@ import enumerations.GroceryCommand;
 import enumerations.Mode;
 import enumerations.ProfileCommand;
 import enumerations.RecipeCommand;
-import exceptions.DuplicateGroceryException;
+import exceptions.DuplicateException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -51,7 +51,7 @@ public class Parser {
         this.storage = new Storage();
         groceryList = storage.loadGroceryFile();
         foodList = new FoodList();
-        userInfo = new UserInfo();
+        userInfo = storage.loadProfileFile();
         recipeUi = new RecipeUi();
         groceryUi = new GroceryUi();
         profileUi = new ProfileUi();
@@ -188,6 +188,7 @@ public class Parser {
      */
     public void setUsername(String username) {
         userInfo.setName(username);
+        storage.saveProfileFile(userInfo);
     }
 
     /**
@@ -214,6 +215,7 @@ public class Parser {
             String activeness = profileUi.promptForActiveness();
             String aim = profileUi.promptForAim();
             userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
+            storage.saveProfileFile(userInfo);
             break;
 
         case VIEW:
@@ -352,7 +354,7 @@ public class Parser {
             }
 
             if (groceryList.isGroceryExists(name)) {
-                throw new DuplicateGroceryException(name);
+                throw new DuplicateException("grocery", name);
             }
 
             Grocery grocery = new Grocery(commandParts[1]);

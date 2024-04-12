@@ -4,20 +4,23 @@ import java.util.Scanner;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import enumerations.Mode;
+import user.UserInfo;
 
 
 /**
  * Deals with interactions with the user.
  */
 public class Ui {
-    // ATTRIBUTES
-    public static final String DIVIDER = "- - - - -";
-    private static Ui singleUi = null;
-    private static Scanner in;
-    private static String userName;
     private static final double MAX_HEIGHT = 280;
     private static final double MAX_WEIGHT = 370;
     private static final double MAX_AGE = 160;
+    public static final String DIVIDER = "- - - - -";
+    // ATTRIBUTES
+    private Storage storage;
+    private UserInfo userInfo;
+    private static Ui singleUi = null;
+    private static Scanner in;
+    private static String userName;
 
     // METHODS
     /**
@@ -25,6 +28,8 @@ public class Ui {
      */
     private Ui() {
         in = new Scanner(System.in);
+        storage = new Storage();
+        userInfo = storage.loadProfileFile();
     }
 
     /**
@@ -54,6 +59,7 @@ public class Ui {
                 " `._____.'[___] |_____|";
 
         System.out.println(gitlogo + System.lineSeparator());
+
         System.out.println("Hello from GiT");
         userName = null;
         while (userName == null) {
@@ -65,6 +71,27 @@ public class Ui {
                 userName = null;
             }
         }
+        printHello(userName);
+        displayHelp();
+
+        return userName;
+    }
+    /**
+     * Prints welcome message to an existing user.
+     */
+    public String printWelcomeToExistingUser() {
+        final String gitlogo =
+                "   ______   _  _________\n" +
+                        " .' ___  | (_)|  _   _  |\n" +
+                        "/ .'   \\_| __ |_/ | | \\_|\n" +
+                        "| |   ____[  |    | |\n" +
+                        "\\ `.___]  || |   _| |_\n" +
+                        " `._____.'[___] |_____|";
+
+        System.out.println(gitlogo + System.lineSeparator());
+
+        System.out.println("Hello from GiT");
+        userName = userInfo.getName();
         printHello(userName);
         displayHelp();
 

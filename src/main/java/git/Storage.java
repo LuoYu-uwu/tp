@@ -70,6 +70,7 @@ public class Storage {
         }
         return groceryList;
     }
+
     /**
      * Parses a string from the file into a grocery object.
      *

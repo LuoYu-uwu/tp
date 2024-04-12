@@ -414,6 +414,11 @@ public class Parser {
         case STORE:
             groceryList.editLocation(commandParts[1]);
             break;
+
+        case REMARK:
+            groceryList.editRemark(commandParts[1]);
+            break;
+
         default:
             throw new InvalidCommandException();
         }

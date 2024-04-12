@@ -71,6 +71,7 @@ public class Storage {
         }
         return groceryList;
     }
+
     /**
      * Parses a string from the file into a grocery object.
      * @param line The string to parse.
@@ -192,31 +193,32 @@ public class Storage {
     private void parseProfile(String line, UserInfo userInfo) throws GitException {
         String[] parts = line.split(": ");
         switch (parts[0]) {
-            case "Name":
-                userInfo.setName(parts[1]);
-                break;
-            case "Height":
-                userInfo.setHeight(Double.parseDouble(parts[1]));
-                break;
-            case "Weight":
-                userInfo.setWeight(Double.parseDouble(parts[1]));
-                break;
-            case "Age":
-                userInfo.setAge(Integer.parseInt(parts[1]));
-                break;
-            case "Gender":
-                userInfo.setGender(parts[1]);
-                break;
-            case "Aim":
-                userInfo.setAim(parts[1]);
-                break;
-            case "Activeness":
-                userInfo.setActiveness(parts[1]);
-                break;
-            case "Calories":
-                userInfo.setCaloriesCapFromLoad(Integer.parseInt(parts[1]));
-            default:
-                break;
+        case "Name":
+            userInfo.setName(parts[1]);
+            break;
+        case "Height":
+            userInfo.setHeight(Double.parseDouble(parts[1]));
+            break;
+        case "Weight":
+            userInfo.setWeight(Double.parseDouble(parts[1]));
+            break;
+        case "Age":
+            userInfo.setAge(Integer.parseInt(parts[1]));
+            break;
+        case "Gender":
+            userInfo.setGender(parts[1]);
+            break;
+        case "Aim":
+            userInfo.setAim(parts[1]);
+            break;
+        case "Activeness":
+            userInfo.setActiveness(parts[1]);
+            break;
+        case "Calories":
+            userInfo.setCaloriesCapFromLoad(Integer.parseInt(parts[1]));
+            break;
+        default:
+            break;
         }
     }
     /**

@@ -11,17 +11,16 @@ import user.UserInfo;
  * Deals with interactions with the user.
  */
 public class Ui {
-    // ATTRIBUTES
-    private Storage storage;
-    private UserInfo userInfo;
     public static final String DIVIDER = "- - - - -";
-    private static Ui singleUi = null;
-    private static Scanner in;
-    private static String userName;
     private static final double MAX_HEIGHT = 280;
     private static final double MAX_WEIGHT = 370;
     private static final double MAX_AGE = 160;
-
+    private static Ui singleUi = null;
+    private static Scanner in;
+    // ATTRIBUTES
+    private static String userName;
+    private Storage storage;
+    private UserInfo userInfo;
 
     // METHODS
     /**
@@ -61,18 +60,18 @@ public class Ui {
 
         System.out.println(gitlogo + System.lineSeparator());
 
-            System.out.println("Hello from GiT");
-            userName = null;
-            while (userName == null) {
-                System.out.println("What is your name?");
-                printLine();
-                userName = in.nextLine();
-                if (userName.isEmpty()) {
-                    System.out.println("Invalid input. Please enter a valid name.");
-                    userName = null;
-                }
+        System.out.println("Hello from GiT");
+        userName = null;
+        while (userName == null) {
+            System.out.println("What is your name?");
+            printLine();
+            userName = in.nextLine();
+            if (userName.isEmpty()) {
+                System.out.println("Invalid input. Please enter a valid name.");
+                userName = null;
             }
-            printHello(userName);
+        }
+        printHello(userName);
         displayHelp();
 
         return userName;
@@ -195,6 +194,7 @@ public class Ui {
                         "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "rate GROCERY: rates and reviews GROCERY.\n" +
+                        "remark GROCERY r/REMARK: updates the remark of the GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "delloc LOCATION: removes LOCATION from tracking.\n" +
                         "list: shows list of all groceries you have.\n" +

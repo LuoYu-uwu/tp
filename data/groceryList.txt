@@ -2,3 +2,6 @@ tomato | null | null | null | fruit | null | null
 banana | 4 | 1 | 2024-04-30 | fruit | 2.00 | pantry 
 milk | 300 | 100 | null | beverage | null | fridge 
 ma | null | null | null | as | null | null 
+lala | null | null | null |  | null | null 
+lol | null | null | null |  | null | null 
+hhh | null | null | null |  | null | null 

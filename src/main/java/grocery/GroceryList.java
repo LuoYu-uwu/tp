@@ -338,6 +338,31 @@ public class GroceryList {
         GroceryUi.printGroceriesFound(relevantGroceries, key);
     }
 
+    //@@author SharlynLui
+    /**
+     * Display all the details of the grocery.
+     */
+    public void viewGrocery(String grocery) throws EmptyInputException {
+        if (grocery.isEmpty()) {
+            throw new EmptyInputException("grocery");
+        }
+
+        int exists = 0;
+
+        for (Grocery item : groceries) {
+            if(item.getName().toLowerCase().equals(grocery.trim())) {
+                GroceryUi.printViewGrocery(item);
+                exists = 1;
+                break;
+            }
+        }
+
+        if (exists == 0) {
+            GroceryUi.printGroceriesNotFound();
+        }
+    }
+    //@@author SharlynLui
+
     /**
      * Updates the rating and review of an existing grocery.
      * 

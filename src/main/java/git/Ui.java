@@ -167,6 +167,7 @@ public class Ui {
                         "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "rate GROCERY: rates and reviews GROCERY.\n" +
+                        "remark GROCERY r/REMARK: updates the remark of the GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "delloc LOCATION: removes LOCATION from tracking.\n" +
                         "list: shows list of all groceries you have.\n" +

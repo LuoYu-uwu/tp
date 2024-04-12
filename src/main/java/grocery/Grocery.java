@@ -49,6 +49,7 @@ public class Grocery {
         this.location = location;
         this.rating = 0;
         this.review = "";
+        this.remark = "";
     }
 
     /**
@@ -67,6 +68,7 @@ public class Grocery {
         this.location = null;
         this.rating = 0;
         this.review = "";
+        this.remark = "";
     }
 
     // Getters and setters
@@ -104,6 +106,10 @@ public class Grocery {
 
     public String getReview() {
         return this.review;
+    }
+
+    public String getRemark() {
+        return remark;
     }
 
     public boolean getIsSetCost() {
@@ -263,7 +269,7 @@ public class Grocery {
         }
 
         String remarkString = "";
-        if (remark != null) {
+        if (!remark.isEmpty()) {
             remarkString = ", remark: " + remark + " ";
         }
 

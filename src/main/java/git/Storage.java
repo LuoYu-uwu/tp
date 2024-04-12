@@ -64,8 +64,7 @@ public class Storage {
                 groceryList.addGrocery(grocery);
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved groceries found.\n ");
         }
         return groceryList;
@@ -124,8 +123,7 @@ public class Storage {
                 recipeList.addRecipe(recipe);
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
         }
         return recipeList;

@@ -1,8 +1,10 @@
 package git;
 
 import exceptions.GitException;
+import exceptions.emptyinput.EmptyInputException;
 import grocery.Grocery;
 import grocery.GroceryList;
+import grocery.location.LocationList;
 import recipe.Recipe;
 import recipe.RecipeList;
 import user.UserInfo;
@@ -28,6 +30,7 @@ public class Storage {
     private Grocery grocery;
     private List<Grocery> groceries;
     private GroceryList groceryList;
+    private LocationList locationList;
     private Recipe recipe;
     private RecipeList recipeList;
     private UserInfo userInfo;
@@ -69,6 +72,8 @@ public class Storage {
         }
         catch (FileNotFoundException e) {
             //System.out.println("No saved groceries found.\n ");
+        } catch (EmptyInputException e) {
+            throw new RuntimeException(e);
         }
         return groceryList;
     }
@@ -77,7 +82,7 @@ public class Storage {
      * @param line The string to parse.
      * @return The parsed grocery object.
      */
-    private Grocery parseGrocery(String line) {
+    private Grocery parseGrocery(String line) throws EmptyInputException {
         String[] parts = line.split(" \\| ");
         String name = parts[0].trim();
         int amount = parts[1].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[1].trim());

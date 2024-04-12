@@ -216,6 +216,7 @@ public class Storage {
             break;
         case "Calories":
             userInfo.setCaloriesCapFromLoad(Integer.parseInt(parts[1]));
+            break;
         default:
             break;
         }

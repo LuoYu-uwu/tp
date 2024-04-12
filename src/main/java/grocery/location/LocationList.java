@@ -1,5 +1,6 @@
 package grocery.location;
 
+import exceptions.DuplicateException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import git.GroceryUi;
@@ -21,14 +22,19 @@ public class LocationList {
      * @param name Name of location.
      * @throws EmptyInputException Exception thrown if user does not input a location name.
      */
-    public static void addLocation(String name) throws EmptyInputException {
-        if (name == null || name.isBlank()) {
-            throw new EmptyInputException("location");
-        }
+    public static void addLocation(String name) throws EmptyInputException, DuplicateException {
+        try {
+            findLocation(name);
+            throw new DuplicateException("location", name);
+        } catch (NoSuchObjectException e) {
+            if (name == null || name.isBlank()) {
+                throw new EmptyInputException("location");
+            }
 
-        Location location = new Location(name.strip());
-        locations.add(location);
-        GroceryUi.printLocationAdded(name.strip());
+            Location location = new Location(name.strip());
+            locations.add(location);
+            GroceryUi.printLocationAdded(name.strip());
+        }
     }
 
     /**

@@ -51,7 +51,7 @@ public class Parser {
         this.storage = new Storage();
         groceryList = storage.loadGroceryFile();
         foodList = new FoodList();
-        userInfo = new UserInfo();
+        userInfo = storage.loadProfileFile();
         recipeUi = new RecipeUi();
         groceryUi = new GroceryUi();
         profileUi = new ProfileUi();
@@ -188,6 +188,7 @@ public class Parser {
      */
     public void setUsername(String username) {
         userInfo.setName(username);
+        storage.saveProfileFile(userInfo);
     }
 
     /**
@@ -214,6 +215,7 @@ public class Parser {
             String activeness = profileUi.promptForActiveness();
             String aim = profileUi.promptForAim();
             userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
+            storage.saveProfileFile(userInfo);
             break;
 
         case VIEW:

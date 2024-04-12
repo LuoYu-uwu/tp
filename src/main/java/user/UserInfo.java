@@ -4,6 +4,7 @@ import exceptions.GitException;
 import exceptions.FailToCalculateCalories;
 import exceptions.InsufficientInfoException;
 import food.Food;
+import git.Storage;
 
 public class UserInfo {
     private String name;
@@ -17,6 +18,7 @@ public class UserInfo {
     private double AMR;
     private int caloriesCap;
     private int currentCalories;
+    private Storage storage;
 
     public UserInfo() {
         this.name = null;
@@ -24,6 +26,7 @@ public class UserInfo {
         this.height = 0;
         this.age = 0;
         this.currentCalories = 0;
+        this.storage = new Storage();
     }
 
     public void setName(String name) {
@@ -102,6 +105,10 @@ public class UserInfo {
         } catch (GitException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("before save");
+
+        System.out.println("after save");
+
     }
 
     /**
@@ -154,7 +161,7 @@ public class UserInfo {
      *
      * @throws GitException When invalid aim was given.
      */
-    private void setCaloriesCap() throws GitException {
+    public void setCaloriesCap() throws GitException {
         switch (this.aim) {
         case "lose":
             this.caloriesCap = (int)(this.AMR*0.8);
@@ -204,5 +211,32 @@ public class UserInfo {
         String target = "Target calories intake: " + this.caloriesCap;
         return userName + height + weight + age + gender + target;
     }
-
+    /**
+     * Stores user details as a string in format for saving.
+     *
+     * @return A string containing all the user's details.
+     */
+    public String toProfileSaveFormat(){
+        assert !(this.name.isEmpty()) : "User does not exist!!";
+        String userName = "Name: " + this.name + "\n";
+        String height = "Height: " + this.height + "\n";
+        String weight = "Weight: " + this.weight + "\n";
+        String age = "Age: " + this.age + "\n";
+        String gender = "Gender: " + this.gender + "\n";
+        String aim = "Aim: " + this.aim + "\n";
+        String activeness = "Activeness: " + this.activeness + "\n";
+        String caloriesCap = "Calories: " + this.caloriesCap + "\n";
+        return userName + height + weight + age + gender + aim + activeness + caloriesCap;
+    }
+    /**
+     * Sets calories cap.
+     *
+     * @param caloriesCap Loaded from saved file.
+     */
+    public void setCaloriesCapFromLoad(int caloriesCap){
+        this.caloriesCap = caloriesCap;
+    }
+    public String getName (){
+        return this.name;
+    }
 }

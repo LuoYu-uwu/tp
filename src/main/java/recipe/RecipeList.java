@@ -89,5 +89,6 @@ public class RecipeList {
         Recipe currRecipe = getRecipe(title);
         recipeArr.remove(currRecipe);
         RecipeUi.printRecipeRemoved(currRecipe);
+        storage.saveRecipeFile(recipeArr);
     }
 }

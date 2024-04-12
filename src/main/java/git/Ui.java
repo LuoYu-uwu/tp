@@ -11,10 +11,10 @@ import user.UserInfo;
  * Deals with interactions with the user.
  */
 public class Ui {
+    public static final String DIVIDER = "- - - - -";
     private static final double MAX_HEIGHT = 280;
     private static final double MAX_WEIGHT = 370;
     private static final double MAX_AGE = 160;
-    public static final String DIVIDER = "- - - - -";
     private static Ui singleUi = null;
     private static Scanner in;
     // ATTRIBUTES

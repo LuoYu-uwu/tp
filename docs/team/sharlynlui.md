@@ -1,16 +1,26 @@
 # Sharlyn's Project Portfolio Page
+
 ## Project: Grocery in Time
 Grocery in Time is a desktop application used for keeping track of groceries.
 The user interacts with it using a CLI. It is written in Java and has about 4 kLoC.
+
 ## Summary of contributions
-* New Feature: Added the "Find Grocery" function.
-  *What it does: enables users to find groceries from the list of groceries.
-  *Justification: This feature aids user in finding the grocery that they are looking for quicker, and allow them to view its details.
-
-* New Feature: Add category parameter for Grocery class
-  What it does: Add the category of the grocery, and automatically assigns the unit to the item by its category (e.g. beverage is assigned ml).
-  Justification: This feature enables user to add amount later on, based on the unit that has been assigned.
-
-* New Feature: Add Save and Load file feature
-  What it does: Saves the list, with all groceries and the details into a text file, and loads it.
-  Justification: This feature enables users to leave the program, and still be able to see all their groceries stored when they return.
+* **New Class:** Added the Recipe class and RecipeList class.
+  *What it does: allow user to add recipes with title, ingredients and steps in the application.
+  *Justification: user will be able to record their own recipes for easy viewing.
+* **New Feature:** Added View Recipe, List Recipe, Add Recipe, Delete Recipe.
+  Justification: allow user to use to Recipe features in the application.
+* **Code Contributed:** add link here
+* **Project management:** 
+  * Manged releases v1.0-v2.1 on GitHub
+* **Enhancements to existing features:** 
+  * Extracted Calories Ui, GroceryUi, ProfileUi, RecipeUi from Ui
+* **Documentation:**
+  * User Guide:
+  * Developer Guide:
+* **Community:**
+  * PRs reviewed (ADDDD HERE GOOD PR)
+  * Reported bugs and suggestions for other teams in the class. (ADD IMAGE FOR PE)
+  * Fixed bugs on our team project. (ADD NUMBER)
+  * Identity bugs on our team project. (ADD NUMBER)
+  

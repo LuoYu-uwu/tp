@@ -106,6 +106,14 @@ public class Grocery {
         return this.review;
     }
 
+    public boolean getIsSetCost() {
+        return isSetCost;
+    }
+
+    public boolean getIsSetAmount() {
+        return isSetAmount;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -218,27 +226,23 @@ public class Grocery {
     }
 
     /**
-     * Returns the name, amount, expiration date and cost of the grocery.
+     * Returns details that are set in the grocery.
      *
      * @return String representation of the Grocery.
      */
     public String printGrocery() {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
-        String locationString;
+        String locationString = "";
         if (this.location != null) {
             locationString = ", location: " + this.location.getName();
-        } else {
-            locationString = ", location not set";
         }
 
-        String amountString;
+        String amountString = "";
         if (amount != 0) {
             amountString = ", amount: " + amount + " ";
         } else if (isSetAmount) {
             amountString = ", amount: 0";
-        } else {
-            amountString = ", amount not set";
         }
 
         String unitString = "";
@@ -246,27 +250,21 @@ public class Grocery {
             unitString = unit;
         }
 
-        String exp;
+        String exp = "";
         if (expiration != null) {
             exp = ", expiration: " + expiration.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        } else {
-            exp = ", expiration date not set";
         }
 
-        String price;
+        String price = "";
         if (cost != 0) {
             price = ", cost: $" + String.format("%.2f", cost);
         } else if (isSetCost) {
             price = ", cost: $0.00";
-        } else {
-            price = ", cost not set";
         }
 
-        String remarkString;
+        String remarkString = "";
         if (remark != null) {
             remarkString = ", remark: " + remark + " ";
-        } else {
-            remarkString = ", remark not set";
         }
 
         return this.name + " (" + this.category + ")" + amountString + unitString + exp + price +

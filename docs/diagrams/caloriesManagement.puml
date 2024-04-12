@@ -30,7 +30,11 @@ else command == switch
 else command == HELP
     p -> ui : displayHelpForCal()
 else command == EXIT
-    p -> sys : println("bye bye")
+    alt commandParts[1].isEmpty()
+            p -> sys : println("bye bye")
+    else else
+             p -> sys : println(GitException.getMessage())
+    end
 else else
     p -> sys : println(GitException.getMessage())
 end

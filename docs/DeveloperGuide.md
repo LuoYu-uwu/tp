@@ -17,21 +17,16 @@
 * if mode is `profile`, execute `profileManagement`
 * if mode is `recipe`, execute `recipeManagement`
 
+The following is a class diagram containing Food, FoodList and UserInfo
+![Food, FoodList, UserInfo](./diagrams/UserInfo.png)
+
 ### 2. Calories Management Mode
-This is the class diagram for Food and FoodList.
-
-![Class diagrams for Food and FoodList](./diagrams/foodClassDiagram.png)
-
-This is the sequence diagram when `caloriesManagement` is executed.
 ![Commands for managing calories](./diagrams/caloriesManagement.png)
    * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
    * if `eat`, store the name and calories of the input food
    * if `view`, display all the foods consumed
 
 ### 3. Profile Management Mode
-This is the class diagram for UserInfo
-![UserInfo](./diagrams/UserInfo.png)
-This is the sequence diagram when `profileManagement` is executed.
 ![Commands for managing profile](./diagrams/profileManagement.png)
   * when `profileManagement` is executed in Parser, different actions will be carried out based on the commands.
   * if `update`, store the user data required for calories calculation.

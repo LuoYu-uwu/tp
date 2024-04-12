@@ -41,4 +41,27 @@ public class Recipe {
             index += 1;
         }
     }
+    /**
+     * Returns the title, ingredients and steps of the recipe for saving.
+     *
+     * @return String representation of the Recipe.
+     */
+    public String toRecipeSaveFormat (){
+        assert !(this.title.isEmpty()) : "Recipe does not exist!!";
+
+        String ingredientsString;
+        if (this.ingredients != null) {
+            ingredientsString = String.join(", ", ingredients);
+        } else {
+            ingredientsString = "null";
+        }
+
+        String stepsString;
+        if (this.steps != null){
+            stepsString = String.join(". ", steps);
+        } else {
+            stepsString = "null";
+        }
+        return this.title + " | " + ingredientsString + " | " + stepsString;
+    }
 }

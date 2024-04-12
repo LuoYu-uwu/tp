@@ -6,7 +6,7 @@ import enumerations.GroceryCommand;
 import enumerations.Mode;
 import enumerations.ProfileCommand;
 import enumerations.RecipeCommand;
-import exceptions.DuplicateGroceryException;
+import exceptions.DuplicateException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
@@ -50,14 +50,14 @@ public class Parser {
      */
     public Parser(Ui ui) {
         this.storage = new Storage();
-        groceryList = storage.loadFile();
+        groceryList = storage.loadGroceryFile();
         foodList = new FoodList();
-        userInfo = new UserInfo();
+        userInfo = storage.loadProfileFile();
         recipeUi = new RecipeUi();
         groceryUi = new GroceryUi();
         profileUi = new ProfileUi();
         caloriesUi = new CaloriesUi();
-        recipeList = new RecipeList();
+        recipeList = storage.loadRecipeFile();
         this.ui = ui;
         isRunning = true;
     }
@@ -189,6 +189,7 @@ public class Parser {
      */
     public void setUsername(String username) {
         userInfo.setName(username);
+        storage.saveProfileFile(userInfo);
     }
 
     /**
@@ -215,6 +216,7 @@ public class Parser {
             String activeness = profileUi.promptForActiveness();
             String aim = profileUi.promptForAim();
             userInfo.updateInfo(name, weight,height,age,gender,activeness,aim);
+            storage.saveProfileFile(userInfo);
             break;
 
         case VIEW:
@@ -353,7 +355,7 @@ public class Parser {
             }
 
             if (groceryList.isGroceryExists(name)) {
-                throw new DuplicateGroceryException(name);
+                throw new DuplicateException("grocery", name);
             }
 
             Grocery grocery = new Grocery(commandParts[1]);
@@ -412,7 +414,6 @@ public class Parser {
         case STORE:
             groceryList.editLocation(commandParts[1]);
             break;
-
         default:
             throw new InvalidCommandException();
         }
@@ -457,6 +458,11 @@ public class Parser {
      */
     private void viewListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
+
+        case VIEW:
+            groceryList.viewGrocery(commandParts[1]);
+            break;
+
         case LIST:
             groceryList.listGroceries();
             break;

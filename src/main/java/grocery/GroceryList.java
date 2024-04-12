@@ -1,15 +1,16 @@
 package grocery;
 
-import exceptions.emptyinput.EmptyInputException;
-import git.Storage;
-import git.GroceryUi;
 import exceptions.GitException;
-import exceptions.nosuch.NoSuchObjectException;
+import exceptions.invalidinput.InvalidAmountException;
 import exceptions.LocalDateWrongFormatException;
 import exceptions.PastExpirationDateException;
-import exceptions.InvalidAmountException;
-import exceptions.InvalidCostException;
+import exceptions.emptyinput.EmptyInputException;
 import exceptions.CannotUseException;
+import exceptions.invalidinput.InvalidCostException;
+import exceptions.SameLocationException;
+import git.Storage;
+import git.GroceryUi;
+import exceptions.nosuch.NoSuchObjectException;
 import exceptions.commands.IncompleteParameterException;
 import exceptions.commands.CommandWrongFormatException;
 import grocery.location.Location;
@@ -41,6 +42,7 @@ public class GroceryList {
         groceries = new ArrayList<>();
         LoggerGroceryList.setupLogger();
         logger = Logger.getLogger(GroceryList.class.getName());
+        this.storage = new Storage();
     }
 
     /**
@@ -53,7 +55,7 @@ public class GroceryList {
         try {
             groceries.add(grocery);
             GroceryUi.printGroceryAdded(grocery);
-            storage.saveFile(getGroceries());
+            storage.saveGroceryFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
             System.out.println("Failed to add grocery: the grocery is null.");
@@ -174,7 +176,7 @@ public class GroceryList {
 
         // Verification and UI feedback
         GroceryUi.printExpSet(grocery);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**
@@ -190,7 +192,7 @@ public class GroceryList {
 
         grocery.setCategory(newCategory);
         GroceryUi.printCategorySet(grocery);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**
@@ -242,7 +244,7 @@ public class GroceryList {
         }
 
         grocery.setAmount(amount);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
         if (amount == 0) {
             GroceryUi.printAmtDepleted(grocery);
         } else if (grocery.isLow()){
@@ -271,7 +273,7 @@ public class GroceryList {
             }
             grocery.setCost(cost);
             GroceryUi.printCostSet(grocery);
-            storage.saveFile(getGroceries());
+            storage.saveGroceryFile(getGroceries());
         } catch (NumberFormatException e) {
             throw new InvalidCostException();
         }
@@ -291,7 +293,7 @@ public class GroceryList {
 
         grocery.setThreshold(threshold);
         GroceryUi.printThresholdSet(grocery);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**
@@ -313,10 +315,16 @@ public class GroceryList {
             location = LocationList.findLocation(name);
         }
 
+        Location oldLocation = grocery.getLocation();
+        if (oldLocation == location) {
+            throw new SameLocationException(grocery.getName(), location.getName());
+        } else if (oldLocation != null) {
+            oldLocation.removeGrocery(grocery);
+        }
         grocery.setLocation(location);
         location.addGrocery(grocery);
         GroceryUi.printLocationSet(grocery);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**
@@ -337,6 +345,31 @@ public class GroceryList {
         GroceryUi.printGroceriesFound(relevantGroceries, key);
     }
 
+    //@@author SharlynLui
+    /**
+     * Display all the details of the grocery.
+     */
+    public void viewGrocery(String grocery) throws EmptyInputException {
+        if (grocery.isEmpty()) {
+            throw new EmptyInputException("grocery");
+        }
+
+        int exists = 0;
+
+        for (Grocery item : groceries) {
+            if(item.getName().toLowerCase().equals(grocery.trim())) {
+                GroceryUi.printViewGrocery(item);
+                exists = 1;
+                break;
+            }
+        }
+
+        if (exists == 0) {
+            GroceryUi.printGroceriesNotFound();
+        }
+    }
+    //@@author SharlynLui
+
     /**
      * Updates the rating and review of an existing grocery.
      * 
@@ -349,7 +382,7 @@ public class GroceryList {
         }
         Grocery grocery = getGrocery(details);
         GroceryUi.promptForRatingAndReview(grocery);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**
@@ -481,6 +514,6 @@ public class GroceryList {
             location.removeGrocery(grocery);
         }
         GroceryUi.printGroceryRemoved(grocery, groceries);
-        storage.saveFile(getGroceries());
+        storage.saveGroceryFile(getGroceries());
     }
 }

@@ -1,3 +1,0 @@
-Milk | null | null | 2024-04-10 | dairy | null | null 
-Bread | null | null | 2024-04-20 | baked | null | null 
-Eggs | null | null | null |  | null | null 

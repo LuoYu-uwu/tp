@@ -189,10 +189,6 @@ public class Grocery {
             this.unit = "units";
             break;
         }
-
-        if (this.amount == 0) {
-            this.unit = "";
-        }
     }
 
     /**
@@ -239,6 +235,11 @@ public class Grocery {
     public String printGrocery() {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
+        String categoryString = "";
+        if (!category.isBlank()) {
+            categoryString = " (" + category + ")";
+        }
+
         String locationString = "";
         if (this.location != null) {
             locationString = ", location: " + this.location.getName();
@@ -246,14 +247,14 @@ public class Grocery {
 
         String amountString = "";
         if (amount != 0) {
-            amountString = ", amount: " + amount + " ";
+            amountString = ", amount: " + amount;
         } else if (isSetAmount) {
             amountString = ", amount: 0";
         }
 
         String unitString = "";
         if (unit != null) {
-            unitString = unit;
+            unitString = " " + unit;
         }
 
         String exp = "";
@@ -270,13 +271,14 @@ public class Grocery {
 
         String remarkString = "";
         if (!remark.isEmpty()) {
-            remarkString = ", remark: " + remark + " ";
+            remarkString = ", remark: " + remark;
         }
 
-        return this.name + " (" + this.category + ")" + amountString + unitString + exp + price +
+        return this.name + categoryString + amountString + unitString + exp + price +
                 locationString + remarkString;
 
     }
+
     /**
      * Returns the name, amount, threshold, expiration date, category, cost and location of the grocery for saving.
      *

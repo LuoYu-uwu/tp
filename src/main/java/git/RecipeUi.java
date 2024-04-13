@@ -1,6 +1,5 @@
 package git;
 
-import grocery.Grocery;
 import recipe.Recipe;
 
 import java.util.ArrayList;

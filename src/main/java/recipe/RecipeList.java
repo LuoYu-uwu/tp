@@ -3,10 +3,8 @@ package recipe;
 import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
-import git.GroceryUi;
 import git.RecipeUi;
 import git.Storage;
-import grocery.Grocery;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -98,7 +98,8 @@ To edit the information of an existing grocery.
    * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
    * Else, create a new array list name `groceriesByCost` with type `Grocery`.
    * Assign all the values in current grocery list `groceries` to `groceriesByCost`.
-   * Execute `sort` in `groceriesByCost` with a lamba function that compares the `getCost()` value of each Grocery in the list.
+   * Execute `sort` in `groceriesByCost` with a lambba function that compares the `getCost()` value of each Grocery in the list.
+   * Then execute `Collections.reverse(groceriesByCost)` to reverse the list so that the cost is sorted in descending order.
    * Lastly, execute `printGroceryList(groceriesByCost)` in GroceryUi.
 &nbsp;
 ### 3. Input category for each grocery added

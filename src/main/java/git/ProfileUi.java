@@ -147,13 +147,14 @@ public class ProfileUi {
      * @return The entered valid gender or empty.
      */
     public String promptForGender() {
-        System.out.println("Please enter your gender (e.g. F):");
+        System.out.println("Please enter your gender (M / F / Others):");
         String gender = "";
         for (int i = 0; i < 5; i++) {
             String input = in.nextLine().trim();
-            if (input.length() == 1 &&
-                    (input.equalsIgnoreCase("F")
-                            || input.equalsIgnoreCase("M"))) {
+            if (input.equalsIgnoreCase("F")
+                    || input.equalsIgnoreCase("M")
+                    || input.equalsIgnoreCase("Others")
+                    ) {
                 gender = input;
                 break;
             } else {
@@ -162,7 +163,7 @@ public class ProfileUi {
                     System.out.println("Failed to enter valid gender, " +
                             "gender will be stored as empty");
                 } else {
-                    System.out.println("Please enter your gender (e.g. F):");
+                    System.out.println("Please enter your gender (M / F / Others):");
                 }
             }
         }

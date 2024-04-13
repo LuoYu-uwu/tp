@@ -135,7 +135,7 @@ public class Ui {
             break;
 
         case EXIT:
-            System.out.println("Enter anything again to confirm exit");
+            // Do nothing
             break;
 
         default:

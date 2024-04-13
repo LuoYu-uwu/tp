@@ -112,6 +112,7 @@ public class GroceryList {
     public List<Grocery> getGroceries(){
         return groceries;
     }
+
     /**
      * Checks whether details are valid, else throw GitException accordingly.
      *
@@ -224,7 +225,6 @@ public class GroceryList {
      * @throws GitException Exception thrown depending on error.
      */
     public void editAmount(String details, boolean use) throws GitException {
-        // Assuming the format is "amt GROCERY a/AMOUNT"
         String [] amtParts;
         if (use) {
             amtParts = checkDetails(details, "use", "a/");
@@ -235,7 +235,6 @@ public class GroceryList {
         String amountString = amtParts[1].strip();
         int amount = checkAmount(amountString);
 
-        // "use" is not valid if an amount was not previously set
         if (use && grocery.getAmount() == 0) {
             throw new CannotUseException();
         } else if (use) {

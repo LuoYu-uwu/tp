@@ -12,6 +12,7 @@ import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
 import food.Food;
 import food.FoodList;
+import grocery.ExpirationChecker;
 import grocery.Grocery;
 import grocery.GroceryList;
 import grocery.location.Location;
@@ -484,7 +485,8 @@ public class Parser {
             break;
 
         case EXPIRING:
-            groceryList.displayGroceriesExpiringInNext3Days();
+            ExpirationChecker expirationChecker = new ExpirationChecker(groceryList);
+            expirationChecker.run();
             break;
 
         case LOW:

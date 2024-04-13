@@ -9,6 +9,7 @@ import git.Storage;
 import grocery.Grocery;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RecipeList {
@@ -39,7 +40,6 @@ public class RecipeList {
         } catch (Exception e) {
             System.out.println("An unexpected error occurred while adding the recipe: " + e.getMessage());
         }
-
     }
 
     /**
@@ -126,5 +126,29 @@ public class RecipeList {
             }
         }
         return false;
+    }
+
+    /**
+     * Updates an existing grocery.
+     *
+     * @param title The title of the recipe to be edited.
+     * @throws GitException is input is not valid
+     */
+    public void editRecipe(String title, String editPart, String editLine) throws GitException {
+        Recipe currRecipe = getRecipe(title);
+        if (editPart.equalsIgnoreCase("title")) {
+            currRecipe.editTitle(editLine);
+        } else if (editPart.equalsIgnoreCase("ingredients")) {
+            String[] ingredientsList = editLine.split("[,]");
+            ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
+            currRecipe.editIngredients(ingredientsArr);
+        } else if (editPart.equalsIgnoreCase("steps")) {
+            String[] stepsList = editLine.split("[.]");
+            ArrayList<String> stepsArr = new ArrayList<String>(Arrays.asList(stepsList));
+            currRecipe.editSteps(stepsArr);
+        }
+        System.out.println("This is the edited recipe:");
+        currRecipe.viewRecipe();
+        storage.saveRecipeFile(recipeArr);
     }
 }

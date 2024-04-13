@@ -81,6 +81,30 @@ public class RecipeUi {
     }
 
     /**
+     * Prompts user for which part of the recipe to edit.
+     *
+     * @return The part to be edited.
+     */
+    public String promptForEdit() {
+        String part = null;
+        while (part == null) {
+            System.out.println("Please edit the part of the recipe to be edited.\nOnly ONE part can be edited" +
+                    " (Title / Ingredients / Steps): ");
+            part = in.nextLine().trim();
+            if (part.isEmpty()) {
+                System.out.println("Invalid input. Steps cannot be empty.");
+                part = null;
+            }
+            if (! (part.equalsIgnoreCase("title") || part.equalsIgnoreCase("ingredients") ||
+                    part.equalsIgnoreCase("steps"))) {
+                System.out.println("Invalid parameter. Please enter Title / Ingredients / Steps.");
+                part = null;
+            }
+        }
+        return part;
+    }
+
+    /**
      * Informs the user that the recipe has been added to the recipe list.
      *
      * @param recipe Recipe added.

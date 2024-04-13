@@ -15,7 +15,6 @@ It allows users to track and manage their groceries around their home easily.
   - [Grocery management mode](#grocery-management-mode)
     - [Add / Edit / Delete Groceries](#add--edit--delete-groceries)
       - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
-      - [Adding multiple groceries: `addmulti`](#adding-a-new-grocery-add)
       - [Setting the category of a grocery: `cat`](#setting-the-category-of-a-grocery-cat)
       - [Setting the amount of a grocery: `amt`](#setting-the-amount-of-a-grocery-amt)
       - [Using a grocery: `use`](#using-a-grocery-use)
@@ -154,37 +153,59 @@ milk added!
 ```
 
 
-&nbsp;
-### Adding multiple groceries: `addmulti`
-Adds multiple groceries and any desired additional details.
+[//]: # (- [Adding multiple groceries: `addmulti`]&#40;#adding-a-new-grocery-add&#41;)
 
-Format: `addmulti`
+[//]: # (&nbsp;)
 
-* After executing `addmulti`, GiT will prompt for various details.
-  1. Number of groceries to add
-  2. If additional details are to be included
-     3. The interface is the same as the one for [add](#adding-a-new-grocery-add).
+[//]: # (### Adding multiple groceries: `addmulti`)
 
-Example of usage :
-```
->> addmulti
+[//]: # (Adds multiple groceries and any desired additional details.)
 
-How many groceries would you like to add?
+[//]: # ()
+[//]: # (Format: `addmulti`)
 
->> 2
+[//]: # ()
+[//]: # (* After executing `addmulti`, GiT will prompt for various details.)
 
-Adding item 1 of 2
-Please enter the name of the grocery:
+[//]: # (  1. Number of groceries to add)
 
->> beans
+[//]: # (  2. If additional details are to be included)
 
-Do you want to include additional details for beans? (Y/N)
+[//]: # (     3. The interface is the same as the one for [add]&#40;#adding-a-new-grocery-add&#41;.)
 
->> Y
+[//]: # ()
+[//]: # (Example of usage :)
 
-...
+[//]: # (```)
 
-```
+[//]: # (>> addmulti)
+
+[//]: # ()
+[//]: # (How many groceries would you like to add?)
+
+[//]: # ()
+[//]: # (>> 2)
+
+[//]: # ()
+[//]: # (Adding item 1 of 2)
+
+[//]: # (Please enter the name of the grocery:)
+
+[//]: # ()
+[//]: # (>> beans)
+
+[//]: # ()
+[//]: # (Do you want to include additional details for beans? &#40;Y/N&#41;)
+
+[//]: # ()
+[//]: # (>> Y)
+
+[//]: # ()
+[//]: # (...)
+
+[//]: # ()
+[//]: # (```)
+
 
 &nbsp;
 ### Setting the category of a grocery: `cat`

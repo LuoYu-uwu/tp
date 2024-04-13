@@ -31,8 +31,6 @@ public class Storage {
     private Grocery grocery;
     private List<Grocery> groceries;
     private GroceryList groceryList;
-//    private LocationList locationList;
-//    private Location location;
     private Recipe recipe;
     private RecipeList recipeList;
     private UserInfo userInfo;
@@ -59,7 +57,7 @@ public class Storage {
     /**
      * Loads groceries from the file.
      * @return groceryList loaded from the file. If file does not exist, returns an empty groceryList.
-     * If file is corrupted, wipe file.
+     *     If file is corrupted, wipe file.
      *
      */
     public GroceryList loadGroceryFile(){
@@ -96,8 +94,7 @@ public class Storage {
     /**
      * Parses a string from the file into a grocery object.
      * @param line The string to parse.
-     * @return The parsed grocery object.
-     * Returns null if file is corrupted.
+     * @return The parsed grocery object. Returns null if file is corrupted.
      */
     private Grocery parseGrocery(String line) throws EmptyInputException {
         String[] parts = line.split(" \\| ");
@@ -108,7 +105,7 @@ public class Storage {
             int amount = parts[1].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[1].trim());
             int threshold = parts[2].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[2].trim());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate expiration = parts[3].equalsIgnoreCase("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
+            LocalDate expiration = parts[3].equals("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
             String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim();
             double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
             Location location = null;
@@ -274,31 +271,31 @@ public class Storage {
             return false; // Line is corrupted
         }
         switch (parts[0]) {
-            case "Name":
-                userInfo.setName(parts[1]);
-                break;
-            case "Height":
-                userInfo.setHeight(Double.parseDouble(parts[1]));
-                break;
-            case "Weight":
-                userInfo.setWeight(Double.parseDouble(parts[1]));
-                break;
-            case "Age":
-                userInfo.setAge(Integer.parseInt(parts[1]));
-                break;
-            case "Gender":
-                userInfo.setGender(parts[1]);
-                break;
-            case "Aim":
-                userInfo.setAim(parts[1]);
-                break;
-            case "Activeness":
-                userInfo.setActiveness(parts[1]);
-                break;
-            case "Calories":
-                userInfo.setCaloriesCapFromLoad(Integer.parseInt(parts[1]));
-            default:
-                break;
+        case "Name":
+            userInfo.setName(parts[1]);
+            break;
+        case "Height":
+            userInfo.setHeight(Double.parseDouble(parts[1]));
+            break;
+        case "Weight":
+            userInfo.setWeight(Double.parseDouble(parts[1]));
+            break;
+        case "Age":
+            userInfo.setAge(Integer.parseInt(parts[1]));
+            break;
+        case "Gender":
+            userInfo.setGender(parts[1]);
+            break;
+        case "Aim":
+            userInfo.setAim(parts[1]);
+            break;
+        case "Activeness":
+            userInfo.setActiveness(parts[1]);
+            break;
+        case "Calories":
+            userInfo.setCaloriesCapFromLoad(Integer.parseInt(parts[1]));
+        default:
+            break;
         }
         return true;
     }

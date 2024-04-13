@@ -10,6 +10,16 @@ What is your name?
 - - - - -
 Hello James Gosling!
 - - - - -
+========================================================================
+Welcome to GiT - Grocery in Time!
+GiT is your reliable assistant for managing your grocery inventory efficiently.
+
+Keep track of your grocery items, monitor expiration dates, and never run out of your essentials again.
+We are here to help you manage your groceries better, save time, and reduce waste.
+
+Type 'help' anytime you need assistance with commands.
+Thank you for choosing GiT - Your groceries organized, on time, every time!
+========================================================================
 Here are some ways you can use our app!
 grocery: manages your groceries.
 calories: manages your calories intake.

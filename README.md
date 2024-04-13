@@ -1,5 +1,15 @@
 # GiT - Grocery in Time
 
+```
+   ______   _  _________
+ .' ___  | (_)|  _   _  |
+/ .'   \_| __ |_/ | | \_|
+| |   ____[  |    | |
+\ `.___]  || |   _| |_
+ `._____.'[___] |_____|
+ ```
+
+
 ## Introduction
 Welcome to GiT, Grocery in Time, a Java application designed for efficient grocery management. This tool helps users monitor their groceries, including tracking expiration dates, managing inventory quantities, and setting alerts for low stock or soon-to-expire items.
 

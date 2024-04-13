@@ -15,6 +15,7 @@ It allows users to track and manage their groceries around their home easily.
   - [Grocery management mode](#grocery-management-mode)
     - [Add / Edit / Delete Groceries](#add--edit--delete-groceries)
       - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
+      - [Adding multiple groceries: `addmulti`](#adding-multiple-groceries-addmulti)
       - [Setting the category of a grocery: `cat`](#setting-the-category-of-a-grocery-cat)
       - [Setting the amount of a grocery: `amt`](#setting-the-amount-of-a-grocery-amt)
       - [Using a grocery: `use`](#using-a-grocery-use)
@@ -153,58 +154,37 @@ milk added!
 ```
 
 
-[//]: # (- [Adding multiple groceries: `addmulti`]&#40;#adding-a-new-grocery-add&#41;)
+&nbsp;
+### Adding multiple groceries: `addmulti`
+Adds multiple groceries and any desired additional details.
 
-[//]: # (&nbsp;)
+Format: `addmulti`
 
-[//]: # (### Adding multiple groceries: `addmulti`)
+* After executing `addmulti`, GiT will prompt for various details.
+  1. Number of groceries to add
+  2. Additional details to include
+     * The interface is the same as the one for [add](#adding-a-new-grocery-add).
 
-[//]: # (Adds multiple groceries and any desired additional details.)
+Example of usage :
 
-[//]: # ()
-[//]: # (Format: `addmulti`)
+```
+>> addmulti
 
-[//]: # ()
-[//]: # (* After executing `addmulti`, GiT will prompt for various details.)
+How many groceries would you like to add?
 
-[//]: # (  1. Number of groceries to add)
+>> 2
 
-[//]: # (  2. If additional details are to be included)
+Adding item 1 of 2
+Please enter the name of the grocery:
 
-[//]: # (     3. The interface is the same as the one for [add]&#40;#adding-a-new-grocery-add&#41;.)
+>> beans
 
-[//]: # ()
-[//]: # (Example of usage :)
+Do you want to include additional details for beans? (Y/N)
 
-[//]: # (```)
+>> Y
 
-[//]: # (>> addmulti)
-
-[//]: # ()
-[//]: # (How many groceries would you like to add?)
-
-[//]: # ()
-[//]: # (>> 2)
-
-[//]: # ()
-[//]: # (Adding item 1 of 2)
-
-[//]: # (Please enter the name of the grocery:)
-
-[//]: # ()
-[//]: # (>> beans)
-
-[//]: # ()
-[//]: # (Do you want to include additional details for beans? &#40;Y/N&#41;)
-
-[//]: # ()
-[//]: # (>> Y)
-
-[//]: # ()
-[//]: # (...)
-
-[//]: # ()
-[//]: # (```)
+...
+```
 
 
 &nbsp;
@@ -781,6 +761,7 @@ For instance, grocery data is stored in `groceryList.txt`.
 | Command                                                      | Format                          |
 |--------------------------------------------------------------|---------------------------------|
 | Add grocery                                                  | `add GROCERY`                   |
+| Add multiple groceries                                       | `addmulti`                      |
 | Set grocery category                                         | `cat GROCERY c/CATEGORY`        |
 | Set grocery amount                                           | `amt GROCERY a/AMOUNT`          |
 | Use grocery                                                  | `use GROCERY a/AMOUNT`          |

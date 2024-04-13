@@ -1,0 +1,41 @@
+@startuml
+
+participant "groceryList:GroceryList" as gl
+participant "grocery:Grocery" as g
+participant "groceryUi:GroceryUi" as ui
+participant "storage:Storage" as s
+
+activate gl
+activate g
+activate ui
+activate s
+-> gl : editThreshold(details)
+gl -> gl:checkDetails(details, "th", "a/")
+activate gl
+return amtParts
+
+gl -> gl: getGrocery(costParts[0].strip())
+activate gl
+return Grocery
+
+gl -> gl: checkAmount(thresholdString)
+activate gl
+return threshold
+
+gl -> g : setThreshold(threshold)
+note right
+Ensures the input threshold is valid
+end note
+
+gl->ui:printThresholdSet(grocery
+
+gl -> gl : getGroceries()
+activate gl
+return groceries
+
+gl -> s :saveGroceryFile(groceries)
+
+
+
+
+@enduml

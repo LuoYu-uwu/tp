@@ -250,6 +250,7 @@ public class GroceryUi {
         } catch (NoSuchObjectException e1) {
             try {
                 LocationList.addLocation(name);
+                GroceryUi.printLocationAdded(name.strip());
                 location = LocationList.findLocation(name);
             } catch (GitException e2) {
                 location = null;

@@ -53,7 +53,6 @@ public class GroceryList {
 
         try {
             groceries.add(grocery);
-            GroceryUi.printGroceryAdded(grocery);
             storage.saveGroceryFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
@@ -329,6 +328,7 @@ public class GroceryList {
             location = LocationList.findLocation(name);
         } catch (NoSuchObjectException e) {
             LocationList.addLocation(name);
+            GroceryUi.printLocationAdded(name.strip());
             location = LocationList.findLocation(name);
         }
 

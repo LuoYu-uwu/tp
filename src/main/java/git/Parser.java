@@ -394,12 +394,14 @@ public class Parser {
             Grocery grocery = new Grocery(commandParts[1]);
             groceryUi.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
+            GroceryUi.printGroceryAdded(grocery);
             break;
 
         case ADDMULTI:
             Grocery[] groceries = groceryUi.promptAddMultipleMenu();
             for (Grocery g : groceries) {
                 groceryList.addGrocery(g);
+                GroceryUi.printGroceryAdded(g);
             }
             break;
 
@@ -468,6 +470,7 @@ public class Parser {
         switch (command) {
         case LOC:
             LocationList.addLocation(name);
+            GroceryUi.printLocationAdded(name);
             break;
 
         case LISTLOC:

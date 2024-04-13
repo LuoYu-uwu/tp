@@ -31,7 +31,6 @@ public class LocationList {
 
             Location location = new Location(name.strip());
             locations.add(location);
-            GroceryUi.printLocationAdded(name.strip());
         }
     }
 

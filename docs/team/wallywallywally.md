@@ -24,17 +24,19 @@ It allows users to track and manage their groceries around their home easily.
      - With `LOCATION` View groceries stored in given `LOCATION`
 3. Ability to **find** groceries by name: 
    - `find KEYWORD`
-4. Improved defensiveness through exception handling
-   - Created custom exceptions with specific error messages for unexpected inputs
+4. Improved defensiveness
+   - Created custom exceptions with helpful error messages
+   - Tested and fixed various bugs
 
     
 #### Contributions to documentation
 1. #### User Guide
-   - Documentation for my enhancements
-     - `amt`, `use`, `loc`, `delloc`, `store`, `listloc`, `find`
+   - Documentation for various enhancements
+     - `add`, `addmulti`, `cat`, `amt`, `use`, `store`, `find`, `del`, `listloc`, `loc`, `delloc`
    - General information
      - Introduction, Quick Start, Command Summary
    - Enhancements to overall formatting and readability
+     - Table of Contents
 2. #### Contributions to the Developer Guide
    - Design and implementation details
      - For features `amt` and `use`
@@ -67,11 +69,42 @@ As shown in the following PRs:
 &nbsp;
 ## Examples of documentation contributions
 [//]: # (to update)
-### Extracts from the User Guide
-![Find example](wallyimgs/find_eg.png)
-![Listloc example](wallyimgs/listloc_eg.png)
+## 1. Extracts from the User Guide
 
+### Listing storage locations and their groceries: `listloc`
+View all storage locations being tracked, or the groceries stored in a given location
 
-### Extracts from the Developer Guide
+Format: `listloc [LOCATION]`
+
+* `LOCATION` is an optional parameter.
+    * Without `LOCATION`, all storage locations will be displayed.
+    * With `LOCATION`, all groceries in the given `LOCATION` will be displayed.
+* More information on storage locations can be found [here](#manage-storage-locations).
+
+Example of usage:
+
+* `listloc`: All storage locations are displayed.
+
+```
+>> listloc
+
+Here's all the locations you are tracking:
+- spice rack
+- freezer
+- cubby
+```
+
+* `listloc cubby`: All groceries in `cubby` are displayed.
+
+```
+>> listloc cubby
+
+Viewing location: cubby
+Here are your groceries!
+- cheese (dairy), amount: 50, location: cubby
+- pasta (carbs), cost: $2.95, location: cubby
+```
+
+## 2. Extracts from the Developer Guide
 ![EditAmount example 1](wallyimgs/editAmt_1.png)
 ![EditAmount example 2](wallyimgs/editAmt_2.png)

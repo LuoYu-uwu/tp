@@ -160,6 +160,8 @@ Adds multiple groceries and any desired additional details.
 
 Format: `addmulti`
 
+* The grocery name cannot be empty.
+* Duplicate groceries will not be added.
 * After executing `addmulti`, GiT will prompt for various details.
   1. Number of groceries to add
   2. Additional details to include

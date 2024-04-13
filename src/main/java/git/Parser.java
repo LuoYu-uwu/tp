@@ -262,6 +262,12 @@ public class Parser {
         switch (command) {
         case ADD:
             String title = recipeUi.promptForTitle();
+            if (title.isEmpty()) {
+                throw new EmptyInputException("title");
+            }
+            if (recipeList.isRecipeExists(title)) {
+                throw new DuplicateException("recipe", title);
+            }
             String ingredients  = recipeUi.promptForIngredients();
             String[] ingredientsList = ingredients.split("[,]");
             ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));

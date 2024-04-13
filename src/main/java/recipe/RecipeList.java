@@ -112,4 +112,19 @@ public class RecipeList {
 
         RecipeUi.printRecipesFound(relevantRecipe, key);
     }
+
+    /**
+     * Checks if a recipe exists.
+     *
+     * @param title Title of the recipe
+     * @return True if the recipe exists, false otherwise.
+     */
+    public boolean isRecipeExists(String title) {
+        for (Recipe currRecipe : recipeArr) {
+            if (currRecipe.getTitle().equalsIgnoreCase(title)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

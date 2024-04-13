@@ -3,6 +3,45 @@
 ## Acknowledgements
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+This project makes use of several open-source software and libraries. We acknowledge and are grateful to the community for these contributions:
+
+### Libraries
+
+1. **JUnit 5 (Jupiter API and Engine)**  
+   JUnit 5 is used for writing and running repeatable tests in Java. It's a fundamental part of our testing framework, ensuring our application functions as intended.
+   - **Version**: 5.10.0
+   - [JUnit 5 Documentation](https://junit.org/junit5/docs/current/user-guide/)
+
+2. **Jakarta Mail (formerly JavaMail)**  
+   Jakarta Mail API is used for constructing and sending emails directly from our application, which is critical for notification features.
+   - **Version**: 2.0.1
+   - [Jakarta Mail Documentation](https://eclipse-ee4j.github.io/mail/)
+
+3. **JLine 3**  
+   JLine 3 is a library for handling console input, improving the user interaction experience in command-line applications by providing features like line editing, history, or tab completion.
+   - **Version**: 3.25.0
+   - [JLine 3 GitHub Repository](https://github.com/jline/jline3)
+
+### Tools
+
+4. **Gradle Shadow Plugin**  
+   The Gradle Shadow Plugin is used to create a single distributable JAR file containing all dependencies, simplifying deployment and execution.
+   - **Version**: 7.1.2
+   - [Gradle Shadow Plugin Documentation](https://imperceptiblethoughts.com/shadow/)
+
+5. **Checkstyle**  
+   Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard. It automates the process of checking Java code, which is helpful in maintaining code quality.
+   - **Version**: 10.2
+   - [Checkstyle Documentation](https://checkstyle.sourceforge.io/)
+
+### Development Environment
+
+6. **Gradle**  
+   Gradle is our chosen build automation tool which simplifies compiling, testing, and packaging the code.
+   - [Gradle Documentation](https://gradle.org/guides/)
+
+We would like to thank the developers and contributors of these projects for their efforts in maintaining such useful resources. Their hard work and dedication make software development more efficient and error-free.
+
 
 ## Design & implementation
 
@@ -114,6 +153,9 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
 &nbsp;
 ### 8. Editing expiration date after it is added
    * In GroceryList class, modified the editExpiration method to parse String into localdate.
+    * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameters:
+      1. details: String — User input read from `Scanner`.
+   * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`. 
 
 
 ## Product scope
@@ -145,9 +187,9 @@ Furthermore, the app can generate a list of items that are expiring soon, remind
 | v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                     |
 | v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                           |
 | v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                               |
-| v2.0    | user who replenishes groceries | set threshold amount for the groceries      | know what groceries I should top up                     |
+| v2.0    | user who replenishes groceries| set threshold amount for the groceries      | know what groceries I should top up                     |
 | v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                     |
-| v2.0    |  health-conscious user   | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
+| v2.0    | health-conscious user         | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
 
 ## Non-Functional Requirements
 

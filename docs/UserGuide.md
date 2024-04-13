@@ -324,6 +324,26 @@ Example of usage:
 ![Delloc example](images/featureEg/Del.png)
 
 &nbsp;
+### Presenting all expiring groceries: `expiring`
+Show all the expiring groceries and send email notification if needed.
+
+Foramt: `expiring`
+
+Example of usage:
+
+```
+expiring
+Checking for groceries nearing expiration...   
+Milk is nearing expiration on 2024-04-10       
+Do you wish to send a notification email? (y/n)
+y
+Please enter your email to receive notifications:
+example@gamil.com
+Sending notification email...
+Email sent successfully to example@gmail.com
+```
+
+&nbsp;
 ### Listing all groceries: `list`
 Shows a list of all groceries you have.
 
@@ -529,6 +549,7 @@ Fried Egg is removed from the recipe list.
 | Add storage location                                         | `loc LOCATION`                  |
 | Store grocery                                                | `store GROCERY l/LOCATION`      |
 | Remove storage location                                      | `delloc LOCATION`               |
+| Show all expiring groceries                                  | `expiring`                      |
 | List groceries                                               | `list`                          |
 | List groceries by price                                      | `listcost`                      |
 | List groceries by expiration date                            | `listexp`                       |

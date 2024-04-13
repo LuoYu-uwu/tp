@@ -29,6 +29,5 @@ exit: exits the program.
 
 What mode would you like to enter?
 Please select a mode: grocery, profile, calories or recipe:
-Enter anything again to confirm exit
 bye bye!
 - - - - -

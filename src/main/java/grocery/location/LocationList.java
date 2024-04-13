@@ -12,10 +12,8 @@ import java.util.List;
  * Stores all the user's saved locations.
  */
 public class LocationList {
-    // ATTRIBUTES
     private static List<Location> locations = new ArrayList<>();
 
-    // METHODS
     /**
      * Adds a new location.
      *

@@ -49,7 +49,12 @@ public class Git {
 
         while (isRunning) {
             try {
-                String[] commandParts = parser.processCommandParts();
+                String[] commandParts;
+                if (!mode.equals("exit")) {
+                    commandParts = parser.processCommandParts();
+                } else {
+                    commandParts = new String[]{"exit", ""};
+                }
                 parser.executeCommand(commandParts, mode);
                 isRunning = parser.getIsRunning();
                 mode = parser.getCurrentMode();

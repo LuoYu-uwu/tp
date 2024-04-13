@@ -3,6 +3,7 @@ package git;
 import recipe.Recipe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -79,6 +80,30 @@ public class RecipeUi {
     }
 
     /**
+     * Prompts user for which part of the recipe to edit.
+     *
+     * @return The part to be edited.
+     */
+    public String promptForEdit() {
+        String part = null;
+        while (part == null) {
+            System.out.println("Please edit the part of the recipe to be edited.\nOnly ONE part can be edited" +
+                    " (Title / Ingredients / Steps): ");
+            part = in.nextLine().trim();
+            if (part.isEmpty()) {
+                System.out.println("Invalid input. Steps cannot be empty.");
+                part = null;
+            }
+            if (! (part.equalsIgnoreCase("title") || part.equalsIgnoreCase("ingredients") ||
+                    part.equalsIgnoreCase("steps"))) {
+                System.out.println("Invalid parameter. Please enter Title / Ingredients / Steps.");
+                part = null;
+            }
+        }
+        return part;
+    }
+
+    /**
      * Informs the user that the recipe has been added to the recipe list.
      *
      * @param recipe Recipe added.
@@ -118,5 +143,22 @@ public class RecipeUi {
     public static void printRecipeRemoved(Recipe recipe) {
         assert recipe != null : "Recipe does not exist";
         System.out.println(recipe.getTitle() + " is removed from the recipe list.");
+    }
+
+    /**
+     * Prints the all the recipes found containing the keyword.
+     *
+     * @param relevantRecipe The list of recipe.
+     * @param key The keyword to search for.
+     */
+    public static void printRecipesFound(List<Recipe> relevantRecipe, String key) {
+        if (relevantRecipe.isEmpty()) {
+            System.out.println("There is no recipe containing: " + key);
+        } else {
+            System.out.println("Here are the recipe(s) containing: " + key);
+            for (Recipe currRecipe: relevantRecipe) {
+                System.out.println(" - " + currRecipe.getTitle());
+            }
+        }
     }
 }

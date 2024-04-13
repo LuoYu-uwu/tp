@@ -10,6 +10,7 @@ import exceptions.DuplicateException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
+import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import food.FoodList;
 import grocery.ExpirationChecker;
@@ -262,6 +263,12 @@ public class Parser {
         switch (command) {
         case ADD:
             String title = recipeUi.promptForTitle();
+            if (title.isEmpty()) {
+                throw new EmptyInputException("title");
+            }
+            if (recipeList.isRecipeExists(title)) {
+                throw new DuplicateException("recipe", title);
+            }
             String ingredients  = recipeUi.promptForIngredients();
             String[] ingredientsList = ingredients.split("[,]");
             ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
@@ -279,6 +286,32 @@ public class Parser {
             String titleView = recipeUi.promptForTitle();
             Recipe recipeToView = recipeList.getRecipe(titleView);
             recipeToView.viewRecipe();
+            break;
+
+        case FIND:
+            String recipeToFind = recipeUi.promptForTitle();
+            recipeList.findRecipe(recipeToFind);
+            break;
+
+        case EDIT:
+            String recipeToEdit = recipeUi.promptForTitle();
+            if (recipeToEdit.isEmpty()) {
+                throw new EmptyInputException("title");
+            }
+            if (!recipeList.isRecipeExists(recipeToEdit)) {
+                throw new NoSuchObjectException("recipe");
+            }
+            String editPart = recipeUi.promptForEdit();
+            if (editPart.equalsIgnoreCase("title")) {
+                String editLine = recipeUi.promptForTitle();
+                recipeList.editRecipe(recipeToEdit, editPart, editLine);
+            } else if (editPart.equalsIgnoreCase("ingredients")) {
+                String editLine = recipeUi.promptForIngredients();
+                recipeList.editRecipe(recipeToEdit, editPart, editLine);
+            } else if (editPart.equalsIgnoreCase("steps")) {
+                String editLine = recipeUi.promptForSteps();
+                recipeList.editRecipe(recipeToEdit, editPart, editLine);
+            }
             break;
 
         case DELETE:

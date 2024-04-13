@@ -47,6 +47,8 @@ It allows users to track and manage their groceries around their home easily.
     - [Adding a new recipe: `add`](#adding-a-new-recipe-add)
     - [Listing all recipes: `list`](#listing-all-recipes-list)
     - [Viewing a recipe: `view`](#viewing-a-recipe-view)
+    - [Finding recipe(s): `find`](#finding-recipes-find)
+    - [Editing a recipe: `edit`](#editing-a-recipe-edit)
     - [Deleting a recipe: `delete`](#deleting-a-recipe-delete)
 - [Data saving and loading](#data-saving-and-loading)
 - [Command summary](#command-summary)
@@ -597,6 +599,49 @@ Please enter the title of the recipe:
 ```
 
 &nbsp;
+### Finding recipes: `find`
+Find the relevant recipe(s) with given keyword
+
+Format: `find` `KEYWORD`
+
+Example:
+```
+>> find
+
+Please enter the title of the recipe:
+
+>> fried egg
+
+Here are the recipe(s) containing: fried egg
+- fried egg with chili
+- fried egg with vegetable
+```
+
+&nbsp;
+### Editing a recipe: `edit`
+Shows the recipe ingredients and steps.
+
+Format: `edit` `RECIPE` `TITLE/INGREDIENTS/STEPS`
+
+Example:
+```
+>> edit
+
+Please enter the title of the recipe:
+
+>> Fried Egg
+
+Please enter the part of the recipe to be edited.
+Only ONE part can be edited (Title / Ingredients / Steps): 
+
+>> title
+
+Please enter the title of the recipe (e.g. fried egg):
+
+>> Fried Egg with Chilli
+```
+
+&nbsp;
 ### Deleting a recipe: `delete`
 Shows the recipe ingredients and steps.
 
@@ -636,10 +681,11 @@ For instance, grocery data is stored in `groceryList.txt`.
 &nbsp;
 ## Command Summary
 
-### Switch between modes
+### For all mode
 | Command      | Format   |
 |--------------|----------|
 | Switch modes | `switch` |
+| Exit         | `exit`    |
 
 ### Grocery management mode
 | Command                                                      | Format                          |
@@ -680,9 +726,11 @@ For instance, grocery data is stored in `groceryList.txt`.
 | View user details       | `view`   |
 
 ### Recipe management mode
-| Command       | Format                              |
-|---------------|-------------------------------------|
-| Add recipe    | `add` `TITLE` `INGREDIENTS` `STEPS` |
-| List recipes  | `list`                              |
-| View recipe   | `view` `TITLE`                      |
-| Delete recipe | `delete` `TITLE`                    |
+| Command        | Format                                    |
+|----------------|-------------------------------------------|
+| Add recipe     | `add` `TITLE` `INGREDIENTS` `STEPS`       |
+| List recipes   | `list`                                    |
+| View recipe    | `view` `TITLE`                            |
+| Find recipe(s) | `find` `KEYWORD`                          |
+| Edit recipe    | `edit` `RECIPE` `TITLE/INGREDIETNS/STEPS` |
+| Delete recipe  | `delete` `TITLE`                          |

@@ -12,6 +12,7 @@ import grocery.location.LocationList;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class GroceryUi {
@@ -72,9 +73,9 @@ public class GroceryUi {
     }
 
     /**
-     * Prompts user for grocery name.
+     * Prompts user for multiple grocery names.
      *
-     * @return the name of the grocery.
+     * @return the list of the groceries.
      */
     public Grocery[] promptAddMultipleMenu() {
         System.out.println("\nHow many groceries would you like to add?");
@@ -91,28 +92,45 @@ public class GroceryUi {
                 System.out.println("\nInvalid input. Please enter a number.");
             }
         }
+
         Grocery[] groceries = new Grocery[num];
+        HashSet<String> existingGroceryNames = new HashSet<>();
 
         for (int i = 0; i < num; i++) {
-            System.out.println("\nAdding item " + (i + 1) + " of " + num);
-            System.out.println("\nPlease enter the name of the grocery:");
-            Grocery grocery = new Grocery(in.nextLine().trim());
-        
+            String name;
+            while (true) {
+                System.out.println("\nAdding item " + (i + 1) + " of " + num);
+                System.out.println("\nPlease enter the name of the grocery:");
+                name = in.nextLine().trim();
+                if (name.isEmpty()) {
+                    System.out.println("\nInvalid input. Please enter a non-empty grocery name.");
+                } else if (existingGroceryNames.contains(name)) {
+                    System.out.println("\nThis grocery has already been added. Please enter a different grocery name.");
+                } else {
+                    existingGroceryNames.add(name);
+                    break;
+                }
+            }
+
+            Grocery grocery = new Grocery(name);
+
             while (true) {
                 System.out.println("\nDo you want to include additional details for " + grocery.getName() + "? (Y/N)");
                 String choice = in.nextLine().trim().toUpperCase();
                 if (choice.equals("Y")) {
-                    promptAddMenu(grocery);
-                    break; // Exit the loop after handling
+                    promptAddMenu(grocery); // Assuming you have this method implemented elsewhere
+                    break;
                 } else if (choice.equals("N")) {
                     System.out.println("\nNo additional details will be added for " + grocery.getName());
-                    break; // Exit the loop, proceed with next item
+                    break;
                 } else {
                     System.out.println("\nInvalid input. Please enter 'Y' for yes or 'N' for no.");
                 }
             }
+
             groceries[i] = grocery;
         }
+
         return groceries;
     }
 

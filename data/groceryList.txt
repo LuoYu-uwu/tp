@@ -1,7 +1,3 @@
-Milk | 3 | null | 2024-04-10 | dairy | null | null
+Milk | null | null | 2024-04-10 | dairy | null | null 
 Bread | null | null | 2024-04-20 | baked | null | null 
 Eggs | null | null | null |  | null | null 
-bal | 2 | null | null |  | null | 3 
-cheese | 50 | null | null |  | null | cubby 
-red cheddar cheese | 4 | 5 | null |  | null | null 
-pasta | null | null | null |  | 2.95 | cubby

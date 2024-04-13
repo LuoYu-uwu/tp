@@ -189,10 +189,6 @@ public class Grocery {
             this.unit = "units";
             break;
         }
-
-        if (this.amount == 0) {
-            this.unit = "";
-        }
     }
 
     /**
@@ -258,7 +254,7 @@ public class Grocery {
 
         String unitString = "";
         if (unit != null) {
-            unitString = unit;
+            unitString = " " + unit;
         }
 
         String exp = "";

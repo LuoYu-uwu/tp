@@ -1,0 +1,37 @@
+@startuml
+
+participant "groceryList:GroceryList" as gl
+participant "grocery:Grocery" as g
+participant "groceryUi:GroceryUi" as ui
+participant "storage:Storage" as s
+
+activate gl
+activate g
+activate ui
+activate s
+-> gl : editCost(details)
+gl -> gl:checkDetails(details, "cost", "$")
+activate gl
+return costParts
+
+gl -> gl: getGrocery(costParts[0].strip())
+activate gl
+return Grocery
+
+gl -> g : setCost(cost)
+note right
+Ensures the input cost is valid
+end note
+
+gl->ui:printCostSet(grocery)
+
+gl -> gl : getGroceries()
+activate gl
+return groceries
+
+gl -> s :saveGroceryFile(groceries)
+
+
+
+
+@enduml

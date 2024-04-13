@@ -1,6 +1,5 @@
 package git;
 
-import enumerations.Mode;
 import exceptions.GitException;
 
 /**

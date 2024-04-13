@@ -154,7 +154,7 @@ public class ProfileUi {
             if (input.equalsIgnoreCase("F")
                     || input.equalsIgnoreCase("M")
                     || input.equalsIgnoreCase("Others")
-                    ) {
+                ) {
                 gender = input;
                 break;
             } else {

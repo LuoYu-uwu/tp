@@ -176,8 +176,7 @@ public class Storage {
                 parseProfile(line, userInfo);
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
         } catch (GitException e) {
             throw new RuntimeException(e);

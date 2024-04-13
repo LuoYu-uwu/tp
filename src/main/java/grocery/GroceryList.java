@@ -88,7 +88,7 @@ public class GroceryList {
      * @return The needed grocery.
      * @throws NoSuchObjectException If the selected grocery does not exist.
      */
-    private Grocery getGrocery(String name) throws NoSuchObjectException {
+    Grocery getGrocery(String name) throws NoSuchObjectException {
         int index = -1;
         for (Grocery grocery : groceries) {
             if(grocery.getName().equalsIgnoreCase(name)) {

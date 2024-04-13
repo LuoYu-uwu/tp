@@ -1,6 +1,7 @@
 package git;
 
 import exceptions.GitException;
+import user.UserInfo;
 
 /**
  * Represents the Grocery in Time (GiT) program, allowing users to store and track their groceries!

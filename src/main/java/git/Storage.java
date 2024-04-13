@@ -25,12 +25,7 @@ import java.time.format.DateTimeFormatter;
  * Handles loading from and saving tasks to a file.
  */
 public class Storage {
-    private Grocery grocery;
-    private List<Grocery> groceries;
-    private GroceryList groceryList;
-    private Recipe recipe;
-    private RecipeList recipeList;
-    private UserInfo userInfo;
+
     /**
      * Saves the current list of groceries to the file.
      * @param groceries The list of groceries to save.

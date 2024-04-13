@@ -70,6 +70,7 @@ public class Ui {
             }
         }
         printHello(userName);
+        displayWelcomeMessage();
         displayHelp();
 
         return userName;
@@ -91,6 +92,7 @@ public class Ui {
         System.out.println("Hello from GiT");
         userName = userInfo.getName();
         printHello(userName);
+        displayWelcomeMessage();
         displayHelp();
 
         return userName;
@@ -104,6 +106,18 @@ public class Ui {
     public void printHello(String userName) {
         System.out.println("Hello " + userName + "!");
         printLine();
+    }
+
+    public static void displayWelcomeMessage() {
+        System.out.println("========================================================================");
+        System.out.println("Welcome to GiT - Grocery in Time!");
+        System.out.println("GiT is your reliable assistant for managing your grocery inventory efficiently.\n");
+        System.out.println("Keep track of your grocery items, "+
+            "monitor expiration dates, and never run out of your essentials again.");
+        System.out.println("We are here to help you manage your groceries better, save time, and reduce waste.\n");
+        System.out.println("Type 'help' anytime you need assistance with commands.");
+        System.out.println("Thank you for choosing GiT - Your groceries organized, on time, every time!");
+        System.out.println("========================================================================");
     }
 
     public static void displayCommands(String selectedMode) throws GitException {

@@ -1,11 +1,13 @@
 package git;
 
+import exceptions.DuplicateException;
 import exceptions.GitException;
 import exceptions.invalidinput.InvalidCostException;
 import exceptions.PastExpirationDateException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import grocery.Grocery;
+import grocery.GroceryList;
 import grocery.location.Location;
 import grocery.location.LocationList;
 
@@ -76,8 +78,9 @@ public class GroceryUi {
      * Prompts user for multiple grocery names.
      *
      * @return the list of the groceries.
+     * @throws DuplicateException 
      */
-    public Grocery[] promptAddMultipleMenu() {
+    public Grocery[] promptAddMultipleMenu() throws DuplicateException {
         System.out.println("\nHow many groceries would you like to add?");
         int num = 0;
         while (true) {
@@ -94,6 +97,9 @@ public class GroceryUi {
         }
 
         Grocery[] groceries = new Grocery[num];
+        Storage storage = new Storage();
+        GroceryList groceryList = new GroceryList();
+        groceryList = storage.loadGroceryFile();
         HashSet<String> existingGroceryNames = new HashSet<>();
 
         for (int i = 0; i < num; i++) {
@@ -102,6 +108,9 @@ public class GroceryUi {
                 System.out.println("\nAdding item " + (i + 1) + " of " + num);
                 System.out.println("\nPlease enter the name of the grocery:");
                 name = in.nextLine().trim();
+                if (groceryList.isGroceryExists(name)){
+                    throw new DuplicateException("grocery", name);
+                }
                 if (name.isEmpty()) {
                     System.out.println("\nInvalid input. Please enter a non-empty grocery name.");
                 } else if (existingGroceryNames.contains(name)) {

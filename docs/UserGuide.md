@@ -61,7 +61,7 @@ It allows users to track and manage their groceries around their home easily.
 3. Open a command terminal, `cd` into the folder where the JAR file is
    and use `java -jar Git.jar` to run Grocery in Time.
 
-
+&nbsp;
 # Features
 
 > #### Notes about the command format
@@ -70,6 +70,7 @@ It allows users to track and manage their groceries around their home easily.
 > * Words in `UPPERCASE` are parameters to be supplied by the user.
 > <br> e.g. In `find KEYWORD`, `KEYWORD` is a parameter to be supplied: `find cheese`.
 
+&nbsp;
 ## Switching between different modes: `switch`
 Switches between profile, calories, grocery or recipe mode.
 GiT comes in different modes and will prompt the user to choose their desired mode.
@@ -715,6 +716,7 @@ Please enter the title of the recipe:
 Fried Egg is removed from the recipe list.
 ```
 
+&nbsp;
 ## Exiting the program: `exit`
 Exits GiT, regardless of which mode you are in.
 

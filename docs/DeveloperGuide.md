@@ -3,6 +3,45 @@
 ## Acknowledgements
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+This project makes use of several open-source software and libraries. We acknowledge and are grateful to the community for these contributions:
+
+### Libraries
+
+1. **JUnit 5 (Jupiter API and Engine)**  
+   JUnit 5 is used for writing and running repeatable tests in Java. It's a fundamental part of our testing framework, ensuring our application functions as intended.
+   - **Version**: 5.10.0
+   - [JUnit 5 Documentation](https://junit.org/junit5/docs/current/user-guide/)
+
+2. **Jakarta Mail (formerly JavaMail)**  
+   Jakarta Mail API is used for constructing and sending emails directly from our application, which is critical for notification features.
+   - **Version**: 2.0.1
+   - [Jakarta Mail Documentation](https://eclipse-ee4j.github.io/mail/)
+
+3. **JLine 3**  
+   JLine 3 is a library for handling console input, improving the user interaction experience in command-line applications by providing features like line editing, history, or tab completion.
+   - **Version**: 3.25.0
+   - [JLine 3 GitHub Repository](https://github.com/jline/jline3)
+
+### Tools
+
+4. **Gradle Shadow Plugin**  
+   The Gradle Shadow Plugin is used to create a single distributable JAR file containing all dependencies, simplifying deployment and execution.
+   - **Version**: 7.1.2
+   - [Gradle Shadow Plugin Documentation](https://imperceptiblethoughts.com/shadow/)
+
+5. **Checkstyle**  
+   Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard. It automates the process of checking Java code, which is helpful in maintaining code quality.
+   - **Version**: 10.2
+   - [Checkstyle Documentation](https://checkstyle.sourceforge.io/)
+
+### Development Environment
+
+6. **Gradle**  
+   Gradle is our chosen build automation tool which simplifies compiling, testing, and packaging the code.
+   - [Gradle Documentation](https://gradle.org/guides/)
+
+We would like to thank the developers and contributors of these projects for their efforts in maintaining such useful resources. Their hard work and dedication make software development more efficient and error-free.
+
 
 ## Design & implementation
 
@@ -17,6 +56,9 @@
 * if mode is `profile`, execute `profileManagement`
 * if mode is `recipe`, execute `recipeManagement`
 
+The following is a class diagram containing Food, FoodList and UserInfo
+![Food, FoodList, UserInfo](./diagrams/UserInfo.png)
+
 ### 2. Calories Management Mode
 ![Commands for managing calories](./diagrams/caloriesManagement.png)
    * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
@@ -29,21 +71,36 @@
   * if `update`, store the user data required for calories calculation.
   * if `view`, display user information
 
+### 4. Grocery Management Mode
+![Commands for managing grocery](./diagrams/groceryManagement.png)
+* different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
+
+#### 4.1 addOrDelGrocery
+![addOrDelGrocery](./diagrams/addOrDelGrocery.png)
+To add a new grocery or delete an existing grocery.
+
+#### 4.2 editGrocery
+![editDelGrocery](./diagrams/editGrocery.png)
+To edit the information of an existing grocery.
+
+#### 4.3 viewListOrHelp
+![viewListOrHelp](./diagrams/viewListOrHelp.png)
+
+
 ### 1. View all groceries added
-   * First create a method in "Grocery" class that prints the grocery in a preferred format.\
-     e.g., NAME, AMOUNT, EXPIRATION, PRICE.
-   * Then create a method in "GroceryList" class that prints all the groceries in the list.
+   * When the command entered is `list`, `listGroceries()` in GroceryList will be executed.
+   * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
+   * Else, execute `printGroceryList(groceries)` in GroceryUi.
 
 &nbsp;
 ### 2. List the groceries by price in descending order
-   * First, create a field in "Grocery" class that stores the cost of a grocery.
-   * When adding a grocery, prompt the user to enter the cost.
-   * Format the cost into 2 decimal places, remove the dollar sign and store it as a string.
-   * Second, the grocery's cost accordingly before adding it into the list.
-   * When setting the cost, convert the cost from String into Double.
-   * Third, add method in "GroceryList" class to create a copy of the current grocery list, then sort the 
-   new grocery list by price using lambda function. Reverse and print the new list.
-
+   * When the command entered is `listcost`, `sortByCost()` in GroceryList will be executed.
+   * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
+   * Else, create a new array list name `groceriesByCost` with type `Grocery`.
+   * Assign all the values in current grocery list `groceries` to `groceriesByCost`.
+   * Execute `sort` in `groceriesByCost` with a lambba function that compares the `getCost()` value of each Grocery in the list.
+   * Then execute `Collections.reverse(groceriesByCost)` to reverse the list so that the cost is sorted in descending order.
+   * Lastly, execute `printGroceryList(groceriesByCost)` in GroceryUi.
 &nbsp;
 ### 3. Input category for each grocery added
    * In Grocery class, modified the Grocery constructor to accept the 'category' parameter.
@@ -86,15 +143,39 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
   * Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
 
 &nbsp;
-### 7. Input expiration date of each grocery when added
+### 7. Edit the cost of a grocery after adding.
+* when the command entered is `cost`, `editCost` in GroceryList will be executed.
+  ![editCost sequence diagram](./diagrams/editCost.png)
+* Additional checks ensure that the user only inputs a valid `positive numeric` value.
+* Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
+
+&nbsp;
+### 8. Edit the threshold amount of a grocery after adding.
+* when the command entered is `th`, `editThreshold` in GroceryList will be executed.
+  ![editThreshold sequence diagram](./diagrams/editThreshold.png)
+* Additional checks ensure that the user only inputs a valid `positive integer`.
+* Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
+
+&nbsp;
+### 9. View a list of groceries low in stock
+* When the command entered is `low`, `listLowStocks` in GroceryList will be executed.
+* This will create a new array list called `lowStockGroceries` with type `Grocery`
+* For each grocery in the current grocery list, `groceries`, execute `grocery.isLow()`. Add the grocery into `lowStockGroceries` if the return value is true.
+* Execute `printLowStocks(lowStockGroceries)` in GroceryUi to print out the list.
+
+&nbsp;
+### 10. Input expiration date of each grocery when added
    * In Grocery class, the expiration field in the Grocery class was changed from a String to a LocalDate to standardize date handling.
    * In Grocery class, the setExpiration method was updated to accept a String input, convert it to a LocalDate using a specified format ("yyyy-MM-dd"), and then store this date.
    * In UI class, the UI now includes a multi-step process to prompt the user for the year, month, and day of the grocery item's expiration date. This process ensures that the date is captured in a user-friendly manner and stored accurately.
    * In GroceryList class, a new method, sortByExpiration, was added to allow sorting the list of groceries by their expiration dates in ascending order. This method utilizes the Collections.sort method with a lambda expression comparing the expiration dates of Grocery items.
 
 &nbsp;
-### 8. Editing expiration date after it is added
+### 11. Editing expiration date after it is added
    * In GroceryList class, modified the editExpiration method to parse String into localdate.
+    * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameters:
+      1. details: String — User input read from `Scanner`.
+   * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`. 
 
 
 ## Product scope
@@ -126,9 +207,9 @@ Furthermore, the app can generate a list of items that are expiring soon, remind
 | v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                     |
 | v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                           |
 | v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                               |
-| v2.0    | user who replenishes groceries | set threshold amount for the groceries      | know what groceries I should top up                     |
+| v2.0    | user who replenishes groceries| set threshold amount for the groceries      | know what groceries I should top up                     |
 | v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                     |
-| v2.0    |  health-conscious user   | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
+| v2.0    | health-conscious user         | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
 
 ## Non-Functional Requirements
 

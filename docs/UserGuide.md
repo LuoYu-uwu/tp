@@ -8,23 +8,67 @@
 Grocery in Time (GiT) is a **grocery tracker app**, optimised for use via a Command Line Interface (CLI).
 It allows users to track and manage their groceries around their home easily.
 
-&nbsp;
+
+- [Quick start](#quick-start)
+- [Features](#features)
+  - [Switching between different modes: `switch`](#switching-between-different-modes-switch)
+  - [Grocery management mode](#grocery-management-mode)
+    - [Add / Edit / Delete Groceries](#add--edit--delete-groceries)
+      - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
+      - [Adding multiple groceries: `addmulti`](#adding-multiple-groceries-addmulti)
+      - [Setting the category of a grocery: `cat`](#setting-the-category-of-a-grocery-cat)
+      - [Setting the amount of a grocery: `amt`](#setting-the-amount-of-a-grocery-amt)
+      - [Using a grocery: `use`](#using-a-grocery-use)
+      - [Storing a grocery in a storage location: `store`](#storing-a-grocery-in-a-storage-location-store)
+      - [Setting the expiration date of a grocery: `exp`](#setting-the-expiration-date-of-a-grocery-exp)
+      - [Setting the cost of a grocery: `cost`](#setting-the-cost-of-a-grocery-cost)
+      - [Setting the threshold of a grocery: `th`](#setting-the-threshold-of-a-grocery-th)
+      - [Adding a remark for a grocery: `remark`](#adding-a-remark-for-a-grocery-remark)
+      - [Adding rating and review of a grocery: `rate`](#adding-rating-and-review-of-a-grocery-rate)
+      - [Deleting a grocery: `del`](#deleting-a-grocery-del)
+    - [Find / View / List Groceries](#find--view--list-groceries)
+      - [Finding groceries: `find`](#finding-groceries-find)
+      - [Viewing a grocery: `view`](#viewing-a-grocery-view)
+      - [Viewing groceries that are low in stock: `low`](#viewing-groceries-that-are-low-in-stock-low)
+      - [Viewing groceries expiring in the next 3 days: `expiring`](#viewing-groceries-expiring-in-the-next-3-days-expiring)
+      - [Listing all groceries: `list`](#listing-all-groceries-list)
+      - [Listing all groceries by price: `listcost`](#listing-all-groceries-by-price-listcost)
+      - [Listing all groceries by expiration date: `listexp`](#listing-all-groceries-by-expiration-date-listexp)
+      - [Listing storage locations and their groceries: `listloc`](#listing-storage-locations-and-their-groceries-listloc)
+    - [Manage Storage Locations](#manage-storage-locations)
+      - [Adding a storage location: `loc`](#adding-a-storage-location-loc)
+      - [Removing a storage location: `delloc`](#removing-a-storage-location-delloc)
+  - [Calories management mode](#calories-management-mode)
+    - [Adding eaten food: `eat`](#adding-eaten-food-eat)
+    - [Viewing all food and calories intake: `view`](#viewing-all-food-and-calories-intake-view)
+  - [Profile management mode](#profile-management-mode)
+    - [Updating user information: `update`](#updating-user-information-update)
+    - [Viewing user details: `view`](#viewing-user-details-view)  
+  - [Recipe management mode](#recipe-management-mode)
+    - [Adding a new recipe: `add`](#adding-a-new-recipe-add)
+    - [Listing all recipes: `list`](#listing-all-recipes-list)
+    - [Viewing a recipe: `view`](#viewing-a-recipe-view)
+    - [Finding recipe(s): `find`](#finding-recipes-find)
+    - [Editing a recipe: `edit`](#editing-a-recipe-edit)
+    - [Deleting a recipe: `delete`](#deleting-a-recipe-delete)
+  - [Exiting the program: `exit`](#exiting-the-program-exit)
+- [Data saving and loading](#data-saving-and-loading)
+- [Command summary](#command-summary)
+
 ## Quick Start
 1. Ensure that you have Java 11 or above installed.
 2. Down the latest version of `Grocery in Time` from [here](https://github.com/AY2324S2-CS2113-T12-2/tp/releases).
 3. Open a command terminal, `cd` into the folder where the JAR file is
    and use `java -jar Git.jar` to run Grocery in Time.
 
-&nbsp;
-## Features 
+
+# Features
 
 > #### Notes about the command format
+> * **Do not use command words / tag to name grocery / recipe etc.**
+> <br> e.g. Do not name grocery "a/".
 > * Words in `UPPERCASE` are parameters to be supplied by the user.
 > <br> e.g. In `find KEYWORD`, `KEYWORD` is a parameter to be supplied: `find cheese`.
-> 
-> 
-> * Features requiring the `GROCERY` input are case-insensitive. 
-> <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 
 ## Switching between different modes: `switch`
 Switches between profile, calories, grocery or recipe mode.
@@ -36,12 +80,29 @@ Format: `switch`
 
 Example of usage:
 
-`switch`
+```
+>> switch
 
-![Switch example output](images/featureExampleOutputs/SwitchExOut.png)
+What mode would you like to enter?
+Please select a mode: grocery, profile, calories or recipe:
+
+>> grocery
+
+Here are some ways you can maange your groceries!
+...
+```
+
 
 &nbsp;
 ## Grocery management mode
+
+> #### Notes about this mode
+> * Features requiring the `GROCERY` or `LOCATION` inputs are case-insensitive.
+> <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
+> <br> e.g. `store GROCERY l/LOCATION` works the same using `freezer` or `FREEZER`.
+> * The actual output may differ slightly from the examples due to the addition of lines for better user readability.
+
+### Add / Edit / Delete Groceries
 
 ### Adding a new grocery: `add`
 Adds a grocery and any desired additional details.
@@ -49,6 +110,7 @@ Adds a grocery and any desired additional details.
 Format: `add GROCERY`
 
 * `GROCERY` must be a valid String.
+* Duplicate groceries will not be added.
 * After executing `add GROCERY`, GiT will ask if the user wishes to include additional details.
   * If so, the user has to enter the numbers corresponding to the details they wish to add.
   * Multiple numbers can be entered in any order and spaces between numbers are ignored.
@@ -56,7 +118,8 @@ Format: `add GROCERY`
   * If `8` is entered, another menu explaining what each detail means will always be displayed first.
   * Invalid values are ignored.
   * This step can be skipped by inputting nothing.
-* Any details not included here can be edited using other commands in the future.
+* Any details not included here can be edited using other commands.
+  * The only detail can cannot be included here is the rating, which is edited using [rate](#adding-rating-and-review-of-a-grocery-rate).
 
 Example of usage :
 ```
@@ -87,33 +150,60 @@ Please enter the location (e.g. freezer first compartment)
 
 >> cabinet
 
-cheese added!
-- - - - -
+milk added!
 ```
 
 
 &nbsp;
-### Deleting a grocery: `del`
-Delete a grocery.
+### Adding multiple groceries: `addmulti`
+Adds multiple groceries and any desired additional details.
 
-Format: `del GROCERY`
+Format: `addmulti`
 
-Example of usage:
+* The grocery name cannot be empty.
+* Duplicate groceries will not be added.
+* After executing `addmulti`, GiT will prompt for various details.
+  1. Number of groceries to add
+  2. Additional details to include
+     * The interface is the same as the one for [add](#adding-a-new-grocery-add).
 
-`del pork`
+Example of usage :
+
+```
+>> addmulti
+
+How many groceries would you like to add?
+
+>> 2
+
+Adding item 1 of 2
+Please enter the name of the grocery:
+
+>> beans
+
+Do you want to include additional details for beans? (Y/N)
+
+>> Y
+
+...
+```
 
 
 &nbsp;
-### Setting the expiration date of a grocery: `exp`
-Sets the expiration date of a grocery.
+### Setting the category of a grocery: `cat`
+Sets the category of a grocery.
 
-Format: `exp GROCERY d/EXPIRATION_DATE`
+Format: `cat GROCERY c/CATEGORY`
 
-* `EXPIRATION_DATE` must be a in yyyy-MM-dd format.
+* `CATEGORY` must be a valid String.
 
 Example of usage:
+```
+>> cat milk c/dairy
 
-`exp milk d/2024-07-20`
+milk is now a dairy
+```
+
 
 &nbsp;
 ### Setting the amount of a grocery: `amt`
@@ -124,8 +214,12 @@ Format: `amt GROCERY a/AMOUNT`
 * `AMOUNT` must be a valid integer.
 
 Example of usage:
+```
+>> amt milk a/5
 
-`amt milk a/5`
+milk: 5
+```
+
 
 &nbsp;
 ### Using a grocery: `use`
@@ -139,7 +233,64 @@ Format: `use GROCERY a/AMOUNT`
 
 Example of usage:
 
-`use meat a/4`
+* Amount used is less than amount stored.
+
+```
+>> use meat a/4
+
+meat: 56
+```
+
+* Amount used is greater than amount stored.
+
+```
+>> use meat a/60
+
+meat is now out of stock!
+```
+
+
+&nbsp;
+### Storing a grocery in a storage location: `store`
+Store a grocery in a given storage location.
+
+Format: `store GROCERY l/LOCATION`
+
+* If `LOCATION` does not exist, GiT will create the storage location and store the `GROCERY` there automatically.
+* More information on storage locations can be found [here](#manage-storage-locations).
+
+Example of usage:
+
+* `LOCATION` exists
+
+```
+>> store paprika l/spice rack
+
+paprika stored in spice rack
+```
+
+* `LOCATION` does not exist
+
+```
+>> store onion l/cabinet
+
+New location added: cabinet
+onion stored in cabinet
+```
+
+
+&nbsp;
+### Setting the expiration date of a grocery: `exp`
+Sets the expiration date of a grocery.
+
+Format: `exp GROCERY d/EXPIRATION_DATE`
+
+* `EXPIRATION_DATE` must be in yyyy-MM-dd format.
+
+Example of usage:
+
+`exp milk d/2024-07-20`
+
 
 &nbsp;
 ### Setting the cost of a grocery: `cost`
@@ -169,14 +320,14 @@ Example of usage:
 
 
 &nbsp;
-### Viewing a list of groceries that are low in stock: `low`
-Shows a list of groceries below the threshold amount.
+### Adding a remark for a grocery: `remark`
+Adds a remark for existing grocery.  
+The remark for the grocery will be displayed in `list` and `view`.
 
-Format: `low`
+Format: `remark GROCERY r/REMARK`
 
 Example of usage:
-
-`low`
+`remark milk r/save some for next week`
 
 
 &nbsp;
@@ -191,6 +342,26 @@ Example of usage:
 
 
 &nbsp;
+### Deleting a grocery: `del`
+Delete a grocery.
+
+Format: `del GROCERY`
+
+* If the `GROCERY` was stored in a location, it would be removed from that location.
+
+Example of usage:
+
+```
+>> del milk
+
+This grocery is removed:
+milk (dairy), amount: 0, expiration: 2024-04-10, cost: $0.00, location: fridge
+You now have 2 groceries left
+```
+
+&nbsp;
+## Find / View / List Groceries
+
 ### Finding groceries: `find`
 Find groceries containing a given keyword in their name.
 
@@ -201,45 +372,79 @@ Format: `find KEYWORD`
 
 Example of usage:
 
-`find cheese`
+```
+>> find cheese
 
-![Find example output](images/featureExampleOutputs/FindExOut.png)
-
-
-&nbsp;
-### Adding a storage location: `loc`
-Add a storage location to be tracked.
-
-Format: `loc LOCATION`
-
-Example of usage:
-
-`loc freezer`
+Here are the groceries containg: cheese
+- cheese (dairy), amount: 50
+- red cheddar cheese (dairy), amount: 4
+```
 
 
 &nbsp;
-### Storing a grocery in a storage location: `store`
-Store a grocery in a given storage location.
+### Viewing a grocery: `view`
+Shows all the details of the grocery.
 
-Format: `store GROCERY l/LOCATION`
-
-* `LOCATION` is case-insensitive. e.g. `freezer` matches `FREEZER`.
-* If `LOCATION` does not exist, GiT will create the storage location and store the `GROCERY` there automatically.
+Format: `view GROCERY`
 
 Example of usage:
 
-`store paprika l/spice rack`
+```
+>> view apple
+
+These are the details of fuji apple:
+Amount: 5
+Expiry date: not set
+Category: Fruit
+Cost: not set
+Location: Fridge
+Rating: 4
+Review: buy the same brand next time
+Remark: not set
+```
 
 
 &nbsp;
-### Removing a storage location: `delloc`
-Remove a storage location from tracking.
+### Viewing groceries that are low in stock: `low`
+Shows a list of groceries below the threshold amount.
 
-Format: `delloc LOCATION`
+Format: `low`
 
 Example of usage:
 
-`delloc cabinet`
+`low`
+
+
+&nbsp;
+### Viewing groceries expiring in the next 3 days: `expiring`
+Shows a list of groceries that are expiring in the next 3 days.
+
+Format: `expiring`
+
+Example of usage:
+
+`expiring`
+
+
+&nbsp;
+### Presenting all expiring groceries: `expiring`
+Show all the expiring groceries and send email notification if needed.
+
+Format: `expiring`
+
+Example of usage:
+
+```
+expiring
+Checking for groceries nearing expiration...   
+Milk is nearing expiration on 2024-04-10       
+Do you wish to send a notification email? (y/n)
+y
+Please enter your email to receive notifications:
+example@gamil.com
+Sending notification email...
+Email sent successfully to example@gmail.com
+```
 
 &nbsp;
 ### Listing all groceries: `list`
@@ -251,6 +456,7 @@ Example of usage:
 
 `list`
 
+
 &nbsp;
 ### Listing all groceries by price: `listcost`
 Shows a list of all groceries you have, sorted by price.
@@ -260,6 +466,7 @@ Format: `listcost`
 Example of usage:
 
 `listcost`
+
 
 &nbsp;
 ### Listing all groceries by expiration date: `listexp`
@@ -271,6 +478,7 @@ Example of usage:
 
 `listexp`
 
+
 &nbsp;
 ### Listing storage locations and their groceries: `listloc`
 View all storage locations being tracked, or the groceries stored in a given location
@@ -278,24 +486,73 @@ View all storage locations being tracked, or the groceries stored in a given loc
 Format: `listloc [LOCATION]`
 
 * `LOCATION` is an optional parameter.
-* Without `LOCATION`, all storage locations will be displayed.
-* With `LOCATION`, all groceries in the given `LOCATION` will be displayed
+  * Without `LOCATION`, all storage locations will be displayed.
+  * With `LOCATION`, all groceries in the given `LOCATION` will be displayed.
+* More information on storage locations can be found [here](#manage-storage-locations).
 
 Example of usage:
 
-* `listloc`
+* `listloc`: All storage locations are displayed.
 
-![Listl example output](images/featureExampleOutputs/ListlExOut.png)
+```
+>> listloc
 
-* `listloc cubby`
+Here's all the locations you are tracking:
+- spice rack
+- freezer
+- cubby
+```
 
-![Listl LOCATION example output](images/featureExampleOutputs/ListlLocExOut.png)
+* `listloc cubby`: All groceries in `cubby` are displayed.
+
+```
+>> listloc cubby
+
+Viewing location: cubby
+Here are your groceries!
+- cheese (dairy), amount: 50, location: cubby
+- pasta (carbs), cost: $2.95, location: cubby
+```
+
+
+&nbsp;
+## Manage Storage Locations
+
+### Adding a storage location: `loc`
+Add a storage location to be tracked.
+
+Format: `loc LOCATION`
+
+* Duplicate locations will not be added.
+
+Example of usage:
+
+```
+>> loc freezer
+
+New location added: freezer
+```
+
+
+&nbsp;
+### Removing a storage location: `delloc`
+Remove a storage location from tracking.
+
+Format: `delloc LOCATION`
+
+Example of usage:
+
+```
+>> delloc cabinet
+
+Location: freezer has been removed from tracking!
+```
 
 
 &nbsp;
 ## Calories management mode
 
-### Add eaten food: `eat`
+### Adding eaten food: `eat`
 Adds the food eaten and store its calories.
 
 Format: `eat FOOD`
@@ -305,7 +562,7 @@ Example of usage:
 `eat burger`
 
 &nbsp;
-### View all food and calories intake: `view`
+### Viewing all food and calories intake: `view`
 Shows all the food consumed so far and their calories.
 
 Format: `view`
@@ -314,10 +571,12 @@ Example of usage:
 
 `view`
 
+
+
 &nbsp;
 ## Profile management mode
 
-### Update user information: `update`
+### Updating user information: `update`
 Stores information needed to calculate and manage calories intake.
 
 Format: `update`
@@ -327,7 +586,7 @@ Example of usage:
 `update`
 
 &nbsp;
-### View user details: `view`
+### Viewing user details: `view`
 Shows the user profile details.
 
 Format: `view`
@@ -336,42 +595,44 @@ Example of usage:
 
 `view`
 
+
+
 &nbsp;
 ## Recipe management mode
 
-### Add new recipe: `add`
+### Adding a new recipe: `add`
 Adds new recipe, ingredient and steps.
 
 Format: `add`
 
 Example:
 ```
-add
+>> add
 
 Please enter the title of the recipe:
 
-Fried Egg
+>> Fried Egg
 
 Please enter the ingredients for this recipe in one line:
 
-egg, salt
+>> egg, salt
 
 Please enter the steps for this recipe in one line:
 
-Fry the egg. Add salt. Serve.
+>> Fry the egg. Add salt. Serve.
 
 Fried Egg added!
 ```
 
 &nbsp;
-### List all the recipes: `list`
+### Listing all recipes: `list`
 Shows all the recipe titles.
 
 Format: `list`
 
 Example:
 ```
-list
+>> list
 
 Here are your recipe titles!
 
@@ -380,70 +641,171 @@ Here are your recipe titles!
 ```
 
 &nbsp;
-### View a recipe: `view`
+### Viewing a recipe: `view`
 Shows the recipe ingredients and steps.
 
 Format: `view` `RECIPE` 
 
 Example:
 ```
-view
+>> view
 
 Please enter the title of the recipe:
 
-Fried Egg
+>> Fried Egg
 ```
+
 &nbsp;
-### Delete a recipe: `delete`
+### Finding recipes: `find`
+Find the relevant recipe(s) with given keyword
+
+Format: `find` `KEYWORD`
+
+Example:
+```
+>> find
+
+Please enter the title of the recipe:
+
+>> fried egg
+
+Here are the recipe(s) containing: fried egg
+- fried egg with chili
+- fried egg with vegetable
+```
+
+&nbsp;
+### Editing a recipe: `edit`
+Shows the recipe ingredients and steps.
+
+Format: `edit` `RECIPE` `TITLE/INGREDIENTS/STEPS`
+
+Example:
+```
+>> edit
+
+Please enter the title of the recipe:
+
+>> Fried Egg
+
+Please enter the part of the recipe to be edited.
+Only ONE part can be edited (Title / Ingredients / Steps): 
+
+>> title
+
+Please enter the title of the recipe (e.g. fried egg):
+
+>> Fried Egg with Chilli
+```
+
+&nbsp;
+### Deleting a recipe: `delete`
 Shows the recipe ingredients and steps.
 
 Format: `delete` `RECIPE`
 
 Example:
 ```
-delete
+>> delete
 
 Please enter the title of the recipe:
 
-Fried Egg
+>> Fried Egg
 
 Fried Egg is removed from the recipe list.
 ```
 
-## FAQ
+## Exiting the program: `exit`
+Exits GiT, regardless of which mode you are in.
 
-**Q**: How do I transfer my data to another computer? 
+Format: `exit`
 
-**A**: {your answer here}
+Example of usage:
 
+```
+>> exit
+
+bye bye!
+```
+
+
+&nbsp;
+## Data saving and loading
+
+GiT's data is automatically saved in `/data` in the same directory as `Git.jar`.
+When GiT starts up, it will automatically load the data.
+
+### Editing data
+
+Data for different modes is saved in different files.
+For instance, grocery data is stored in `groceryList.txt`.
+
+> #### CAUTION
+> Any changes that invalidate the data format will corrupt the entire data file.
+> In this case, GiT will **wipe** all previously stored data.
+> <br>
+> It is recommended to make a backup
+> before editing.
+
+
+&nbsp;
 ## Command Summary
 
+### For all modes
 
-| Command                                                        | Format and example                  |
-|----------------------------------------------------------------|-------------------------------------|
-| Add grocery                                                    | `add GROCERY`                       |
-| Set grocery expiration date                                    | `exp GROCERY d/EXPIRATION_DATE`     |
-| Set grocery amount                                             | `amt GROCERY a/AMOUNT`              |
-| Set grocery cost                                               | `cost GROCERY $PRICE`               |
-| Set grocery threshold amount                                   | `th GROCERY a/AMOUNT`               |
-| View groceries that are low in stock                           | `low`                               |
-| Use grocery                                                    | `use GROCERY a/AMOUNT`              | 
-| Find groceries                                                 | `find KEYWORD`                      |
-| Add storage location                                           | `loc LOCATION`                      |
-| Rate and review groceries                                      | `rate GROCERY`                      |
-| Store grocery                                                  | `store GROCERY l/LOCATION`          |
-| View storage locations <br> View groceries in a given location | `listloc [LOCATION]`                |
-| Remove storage location                                        | `delloc LOCATION`                   |
-| List all groceries                                             | `list`                              |
-| List all groceries by price                                    | `listcost`                          |
-| List all groceries by expiration date                          | `listexp`                           |
-| View all groceries expiring in the next 3 days                 | `expiring`                          |
-| Switch between modes                                           | `switch`                            |
-| Add food consumed                                              | `eat FOOD`                          |
-| View consumed food and their calories                          | `view`                              |
-| Update user information                                        | `update`                            |
-| View user details                                              | `view`                              |
-| Add recipe                                                     | `add` `TITLE` `INGREDIENTS` `STEPS` |
-| List all recipes                                               | `list`                              |
-| View recipe details                                            | `view` `TITLE`                      |
-| Delete recipe                                                  | `delete` `TITLE`                    |
+| Command      | Format   |
+|--------------|----------|
+| Switch modes | `switch` |
+| Exit         | `exit`   |
+
+### Grocery management mode
+
+| Command                                                      | Format                          |
+|--------------------------------------------------------------|---------------------------------|
+| Add grocery                                                  | `add GROCERY`                   |
+| Add multiple groceries                                       | `addmulti`                      |
+| Set grocery category                                         | `cat GROCERY c/CATEGORY`        |
+| Set grocery amount                                           | `amt GROCERY a/AMOUNT`          |
+| Use grocery                                                  | `use GROCERY a/AMOUNT`          |
+| Store grocery                                                | `store GROCERY l/LOCATION`      |
+| Set grocery expiration date                                  | `exp GROCERY d/EXPIRATION_DATE` |
+| Set grocery cost                                             | `cost GROCERY $PRICE`           |
+| Set grocery threshold amount                                 | `th GROCERY a/AMOUNT`           |
+| Add or edit remark                                           | `remark GROCERY r/REMARK`       |
+| Add grocery rating and review                                | `rate GROCERY`                  |
+| Delete grocery                                               | `del GROCERY`                   |
+| Find groceries                                               | `find KEYWORD`                  |
+| View grocery details                                         | `view GROCERY`                  |
+| View groceries that are low in stock                         | `low`                           |
+| View groceries expiring in the next 3 days                   | `expiring`                      |
+| List groceries                                               | `list`                          |
+| List groceries by price                                      | `listcost`                      |
+| List groceries by expiration date                            | `listexp`                       |
+| List storage locations <br> List groceries in given location | `listloc [LOCATION]`            |
+| Add storage location                                         | `loc LOCATION`                  |
+| Remove storage location                                      | `delloc LOCATION`               |
+
+### Calorie management mode
+
+| Command                       | Format     |
+|-------------------------------|------------|
+| Add eaten food                | `eat FOOD` |
+| View food and calories intake | `view`     |
+
+### Profile management mode
+
+| Command                 | Format   |
+|-------------------------|----------|
+| Update user information | `update` |
+| View user details       | `view`   |
+
+### Recipe management mode
+
+| Command        | Format                                    |
+|----------------|-------------------------------------------|
+| Add recipe     | `add` `TITLE` `INGREDIENTS` `STEPS`       |
+| List recipes   | `list`                                    |
+| View recipe    | `view` `TITLE`                            |
+| Find recipe(s) | `find` `KEYWORD`                          |
+| Edit recipe    | `edit` `RECIPE` `TITLE/INGREDIETNS/STEPS` |
+| Delete recipe  | `delete` `TITLE`                          |

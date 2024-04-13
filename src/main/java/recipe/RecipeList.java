@@ -7,6 +7,8 @@ import git.RecipeUi;
 import git.Storage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RecipeList {
     private ArrayList<Recipe> recipeArr;
@@ -36,7 +38,6 @@ public class RecipeList {
         } catch (Exception e) {
             System.out.println("An unexpected error occurred while adding the recipe: " + e.getMessage());
         }
-
     }
 
     /**
@@ -89,6 +90,63 @@ public class RecipeList {
         Recipe currRecipe = getRecipe(title);
         recipeArr.remove(currRecipe);
         RecipeUi.printRecipeRemoved(currRecipe);
+        storage.saveRecipeFile(recipeArr);
+    }
+
+    /**
+     * Searches for recipes containing the given keyword.
+     */
+    public void findRecipe(String key) throws EmptyInputException {
+        if (key.isEmpty()) {
+            throw new EmptyInputException("keyword");
+        }
+
+        List<Recipe> relevantRecipe = new ArrayList<>();
+        for (Recipe currRecipe : recipeArr) {
+            if(currRecipe.getTitle().toLowerCase().contains(key.toLowerCase())) {
+                relevantRecipe.add(currRecipe);
+            }
+        }
+
+        RecipeUi.printRecipesFound(relevantRecipe, key);
+    }
+
+    /**
+     * Checks if a recipe exists.
+     *
+     * @param title Title of the recipe
+     * @return True if the recipe exists, false otherwise.
+     */
+    public boolean isRecipeExists(String title) {
+        for (Recipe currRecipe : recipeArr) {
+            if (currRecipe.getTitle().equalsIgnoreCase(title)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Updates an existing grocery.
+     *
+     * @param title The title of the recipe to be edited.
+     * @throws GitException is input is not valid
+     */
+    public void editRecipe(String title, String editPart, String editLine) throws GitException {
+        Recipe currRecipe = getRecipe(title);
+        if (editPart.equalsIgnoreCase("title")) {
+            currRecipe.editTitle(editLine);
+        } else if (editPart.equalsIgnoreCase("ingredients")) {
+            String[] ingredientsList = editLine.split("[,]");
+            ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
+            currRecipe.editIngredients(ingredientsArr);
+        } else if (editPart.equalsIgnoreCase("steps")) {
+            String[] stepsList = editLine.split("[.]");
+            ArrayList<String> stepsArr = new ArrayList<String>(Arrays.asList(stepsList));
+            currRecipe.editSteps(stepsArr);
+        }
+        System.out.println("This is the edited recipe:");
+        currRecipe.viewRecipe();
         storage.saveRecipeFile(recipeArr);
     }
 }

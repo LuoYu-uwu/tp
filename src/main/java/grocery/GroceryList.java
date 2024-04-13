@@ -1,20 +1,20 @@
 package grocery;
 
-import exceptions.emptyinput.EmptyInputException;
-import git.Storage;
-import git.GroceryUi;
 import exceptions.GitException;
-import exceptions.nosuch.NoSuchObjectException;
+import exceptions.invalidinput.InvalidAmountException;
 import exceptions.LocalDateWrongFormatException;
 import exceptions.PastExpirationDateException;
-import exceptions.InvalidAmountException;
-import exceptions.InvalidCostException;
+import exceptions.emptyinput.EmptyInputException;
 import exceptions.CannotUseException;
+import exceptions.invalidinput.InvalidCostException;
+import exceptions.SameLocationException;
+import git.Storage;
+import git.GroceryUi;
+import exceptions.nosuch.NoSuchObjectException;
 import exceptions.commands.IncompleteParameterException;
 import exceptions.commands.CommandWrongFormatException;
 import grocery.location.Location;
 import grocery.location.LocationList;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -53,7 +53,6 @@ public class GroceryList {
 
         try {
             groceries.add(grocery);
-            GroceryUi.printGroceryAdded(grocery);
             storage.saveGroceryFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
@@ -88,7 +87,7 @@ public class GroceryList {
      * @return The needed grocery.
      * @throws NoSuchObjectException If the selected grocery does not exist.
      */
-    private Grocery getGrocery(String name) throws NoSuchObjectException {
+    Grocery getGrocery(String name) throws NoSuchObjectException {
         int index = -1;
         for (Grocery grocery : groceries) {
             if(grocery.getName().equalsIgnoreCase(name)) {
@@ -112,6 +111,7 @@ public class GroceryList {
     public List<Grocery> getGroceries(){
         return groceries;
     }
+
     /**
      * Checks whether details are valid, else throw GitException accordingly.
      *
@@ -224,7 +224,6 @@ public class GroceryList {
      * @throws GitException Exception thrown depending on error.
      */
     public void editAmount(String details, boolean use) throws GitException {
-        // Assuming the format is "amt GROCERY a/AMOUNT"
         String [] amtParts;
         if (use) {
             amtParts = checkDetails(details, "use", "a/");
@@ -235,7 +234,6 @@ public class GroceryList {
         String amountString = amtParts[1].strip();
         int amount = checkAmount(amountString);
 
-        // "use" is not valid if an amount was not previously set
         if (use && grocery.getAmount() == 0) {
             throw new CannotUseException();
         } else if (use) {
@@ -251,7 +249,26 @@ public class GroceryList {
         } else {
             GroceryUi.printAmtSet(grocery);
         }
+    }
 
+    /**
+     * Updates the remark of an existing grocery.
+     *
+     * @param details A string containing grocery new remark.
+     * @throws GitException is input is not valid
+     */
+    public void editRemark(String details) throws GitException {
+        // Assuming the format is "remark GROCERY r/REMARK"
+        String[] remarkParts = checkDetails(details, "remark", "r/");
+        Grocery grocery = getGrocery(remarkParts[0].strip());
+        String remark = remarkParts[1].strip();
+
+        grocery.setRemark(remark);
+        if (remark.isEmpty()) {
+            throw new EmptyInputException("remark");
+        }
+        GroceryUi.printRemarkSet(grocery);
+        storage.saveGroceryFile(getGroceries());
     }
 
     /**
@@ -311,9 +328,16 @@ public class GroceryList {
             location = LocationList.findLocation(name);
         } catch (NoSuchObjectException e) {
             LocationList.addLocation(name);
+            GroceryUi.printLocationAdded(name.strip());
             location = LocationList.findLocation(name);
         }
 
+        Location oldLocation = grocery.getLocation();
+        if (oldLocation == location) {
+            throw new SameLocationException(grocery.getName(), location.getName());
+        } else if (oldLocation != null) {
+            oldLocation.removeGrocery(grocery);
+        }
         grocery.setLocation(location);
         location.addGrocery(grocery);
         GroceryUi.printLocationSet(grocery);
@@ -337,6 +361,31 @@ public class GroceryList {
 
         GroceryUi.printGroceriesFound(relevantGroceries, key);
     }
+
+    //@@author SharlynLui
+    /**
+     * Display all the details of the grocery.
+     */
+    public void viewGrocery(String grocery) throws EmptyInputException {
+        if (grocery.isEmpty()) {
+            throw new EmptyInputException("grocery");
+        }
+
+        int exists = 0;
+
+        for (Grocery item : groceries) {
+            if(item.getName().toLowerCase().equals(grocery.trim())) {
+                GroceryUi.printViewGrocery(item);
+                exists = 1;
+                break;
+            }
+        }
+
+        if (exists == 0) {
+            GroceryUi.printGroceriesNotFound();
+        }
+    }
+    //@@author SharlynLui
 
     /**
      * Updates the rating and review of an existing grocery.
@@ -379,14 +428,30 @@ public class GroceryList {
     }
 
     /**
-     * Sorts the groceries by expiration date.
+     * Sorts the groceries by expiration date. Groceries without an expiration date are sorted to the end.
      */
     public void sortByExpiration() {
         int size = groceries.size();
         if (size == 0) {
             GroceryUi.printNoGrocery();
         } else {
-            Collections.sort(groceries, (g1, g2) -> g1.getExpiration().compareTo(g2.getExpiration()));
+            Collections.sort(groceries, (g1, g2) -> {
+                LocalDate exp1 = g1.getExpiration();
+                LocalDate exp2 = g2.getExpiration();
+                if (exp1 == null && exp2 == null) {
+                    // If both groceries have no expiration date, they are equal
+                    return 0; 
+                } 
+                if (exp1 == null) {
+                    // If only the first grocery has no expiration date, it is greater
+                    return 1; 
+                } 
+                if (exp2 == null) {
+                    // If only the second grocery has no expiration date, it is greater
+                    return -1; 
+                } 
+                return exp1.compareTo(exp2);
+            });
             GroceryUi.printGroceryList(groceries);
         }
     }
@@ -429,10 +494,10 @@ public class GroceryList {
         if (size == 0) {
             GroceryUi.printNoGrocery();
         } else {
-            List<Grocery> groceriesByDate = groceries;
-            groceriesByDate.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
-            Collections.reverse(groceriesByDate);
-            GroceryUi.printGroceryList(groceriesByDate);
+            List<Grocery> groceriesByCost = groceries;
+            groceriesByCost.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
+            Collections.reverse(groceriesByCost);
+            GroceryUi.printGroceryList(groceriesByCost);
         }
     }
     /**

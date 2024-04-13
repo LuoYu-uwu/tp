@@ -10,11 +10,9 @@ import java.util.List;
  * Represents a location to store groceries.
  */
 public class Location {
-    // ATTRIBUTES
     private String name;
     private List<Grocery> groceries;
 
-    // METHODS
     /**
      * Constructs Location.
      */
@@ -58,8 +56,10 @@ public class Location {
         }
     }
 
+    /**
+     * Gets name of the location.
+     */
     public String getName() {
         return name;
     }
-
 }

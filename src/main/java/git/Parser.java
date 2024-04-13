@@ -6,12 +6,14 @@ import enumerations.GroceryCommand;
 import enumerations.Mode;
 import enumerations.ProfileCommand;
 import enumerations.RecipeCommand;
-import exceptions.DuplicateGroceryException;
+import exceptions.DuplicateException;
 import exceptions.GitException;
 import exceptions.InvalidCommandException;
 import exceptions.emptyinput.EmptyInputException;
+import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import food.FoodList;
+import grocery.ExpirationChecker;
 import grocery.Grocery;
 import grocery.GroceryList;
 import grocery.location.Location;
@@ -117,8 +119,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -166,8 +172,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("Bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -223,8 +233,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:
@@ -249,6 +263,12 @@ public class Parser {
         switch (command) {
         case ADD:
             String title = recipeUi.promptForTitle();
+            if (title.isEmpty()) {
+                throw new EmptyInputException("title");
+            }
+            if (recipeList.isRecipeExists(title)) {
+                throw new DuplicateException("recipe", title);
+            }
             String ingredients  = recipeUi.promptForIngredients();
             String[] ingredientsList = ingredients.split("[,]");
             ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
@@ -268,6 +288,32 @@ public class Parser {
             recipeToView.viewRecipe();
             break;
 
+        case FIND:
+            String recipeToFind = recipeUi.promptForTitle();
+            recipeList.findRecipe(recipeToFind);
+            break;
+
+        case EDIT:
+            String recipeToEdit = recipeUi.promptForTitle();
+            if (recipeToEdit.isEmpty()) {
+                throw new EmptyInputException("title");
+            }
+            if (!recipeList.isRecipeExists(recipeToEdit)) {
+                throw new NoSuchObjectException("recipe");
+            }
+            String editPart = recipeUi.promptForEdit();
+            if (editPart.equalsIgnoreCase("title")) {
+                String editLine = recipeUi.promptForTitle();
+                recipeList.editRecipe(recipeToEdit, editPart, editLine);
+            } else if (editPart.equalsIgnoreCase("ingredients")) {
+                String editLine = recipeUi.promptForIngredients();
+                recipeList.editRecipe(recipeToEdit, editPart, editLine);
+            } else if (editPart.equalsIgnoreCase("steps")) {
+                String editLine = recipeUi.promptForSteps();
+                recipeList.editRecipe(recipeToEdit, editPart, editLine);
+            }
+            break;
+
         case DELETE:
             String recipeTitle = recipeUi.promptForTitle();
             recipeList.removeRecipe(recipeTitle);
@@ -279,8 +325,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         case HELP:
@@ -318,7 +368,7 @@ public class Parser {
         } else if (index == GroceryCommand.FIND.ordinal()) {
             groceryList.findGroceries(commandParts[1]);
         } else {
-            viewListOrHelp(command);
+            viewListOrHelp(command, commandParts);
         }
     }
 
@@ -338,12 +388,21 @@ public class Parser {
             }
 
             if (groceryList.isGroceryExists(name)) {
-                throw new DuplicateGroceryException(name);
+                throw new DuplicateException("grocery", name);
             }
 
             Grocery grocery = new Grocery(commandParts[1]);
             groceryUi.promptAddMenu(grocery);
             groceryList.addGrocery(grocery);
+            GroceryUi.printGroceryAdded(grocery);
+            break;
+
+        case ADDMULTI:
+            Grocery[] groceries = groceryUi.promptAddMultipleMenu();
+            for (Grocery g : groceries) {
+                groceryList.addGrocery(g);
+                GroceryUi.printGroceryAdded(g);
+            }
             break;
 
         case DEL:
@@ -391,6 +450,10 @@ public class Parser {
             groceryList.editLocation(commandParts[1]);
             break;
 
+        case REMARK:
+            groceryList.editRemark(commandParts[1]);
+            break;
+
         default:
             throw new InvalidCommandException();
         }
@@ -407,6 +470,7 @@ public class Parser {
         switch (command) {
         case LOC:
             LocationList.addLocation(name);
+            GroceryUi.printLocationAdded(name);
             break;
 
         case LISTLOC:
@@ -433,8 +497,13 @@ public class Parser {
      * @param command Command keyword of data type Enum.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void viewListOrHelp(GroceryCommand command) throws GitException {
+    private void viewListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
         switch (command) {
+
+        case VIEW:
+            groceryList.viewGrocery(commandParts[1]);
+            break;
+
         case LIST:
             groceryList.listGroceries();
             break;
@@ -452,7 +521,8 @@ public class Parser {
             break;
 
         case EXPIRING:
-            groceryList.displayGroceriesExpiringInNext3Days();
+            ExpirationChecker expirationChecker = new ExpirationChecker(groceryList);
+            expirationChecker.run();
             break;
 
         case LOW:
@@ -468,8 +538,12 @@ public class Parser {
             break;
 
         case EXIT:
-            System.out.println("bye bye!");
-            isRunning = false;
+            if (commandParts[1].isEmpty()) {
+                System.out.println("bye bye!");
+                isRunning = false;
+            } else {
+                throw new InvalidCommandException();
+            }
             break;
 
         default:

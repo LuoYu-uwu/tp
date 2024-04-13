@@ -11,19 +11,16 @@ import user.UserInfo;
  * Deals with interactions with the user.
  */
 public class Ui {
-    // ATTRIBUTES
-    private Storage storage;
-    private UserInfo userInfo;
     public static final String DIVIDER = "- - - - -";
-    private static Ui singleUi = null;
-    private static Scanner in;
-    private static String userName;
     private static final double MAX_HEIGHT = 280;
     private static final double MAX_WEIGHT = 370;
     private static final double MAX_AGE = 160;
+    private static Ui singleUi = null;
+    private static Scanner in;
+    private static String userName;
+    private Storage storage;
+    private UserInfo userInfo;
 
-
-    // METHODS
     /**
      * Constructs Ui and initialises Scanner to read input.
      */
@@ -61,18 +58,19 @@ public class Ui {
 
         System.out.println(gitlogo + System.lineSeparator());
 
-            System.out.println("Hello from GiT");
-            userName = null;
-            while (userName == null) {
-                System.out.println("What is your name?");
-                printLine();
-                userName = in.nextLine();
-                if (userName.isEmpty()) {
-                    System.out.println("Invalid input. Please enter a valid name.");
-                    userName = null;
-                }
+        System.out.println("Hello from GiT");
+        userName = null;
+        while (userName == null) {
+            System.out.println("What is your name?");
+            printLine();
+            userName = in.nextLine();
+            if (userName.isEmpty()) {
+                System.out.println("Invalid input. Please enter a valid name.");
+                userName = null;
             }
-            printHello(userName);
+        }
+        printHello(userName);
+        displayWelcomeMessage();
         displayHelp();
 
         return userName;
@@ -94,6 +92,7 @@ public class Ui {
         System.out.println("Hello from GiT");
         userName = userInfo.getName();
         printHello(userName);
+        displayWelcomeMessage();
         displayHelp();
 
         return userName;
@@ -107,6 +106,18 @@ public class Ui {
     public void printHello(String userName) {
         System.out.println("Hello " + userName + "!");
         printLine();
+    }
+
+    public static void displayWelcomeMessage() {
+        System.out.println("========================================================================");
+        System.out.println("Welcome to GiT - Grocery in Time!");
+        System.out.println("GiT is your reliable assistant for managing your grocery inventory efficiently.\n");
+        System.out.println("Keep track of your grocery items, "+
+            "monitor expiration dates, and never run out of your essentials again.");
+        System.out.println("We are here to help you manage your groceries better, save time, and reduce waste.\n");
+        System.out.println("Type 'help' anytime you need assistance with commands.");
+        System.out.println("Thank you for choosing GiT - Your groceries organized, on time, every time!");
+        System.out.println("========================================================================");
     }
 
     public static void displayCommands(String selectedMode) throws GitException {
@@ -138,7 +149,7 @@ public class Ui {
             break;
 
         case EXIT:
-            System.out.println("Enter anything again to confirm exit");
+            // Do nothing
             break;
 
         default:
@@ -184,6 +195,7 @@ public class Ui {
         System.out.println(
                 "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
+                        "addmulti: adds multiple items GROCERIES.\n" +
                         "find KEYWORD: finds all groceries containing the KEYWORD.\n" +
                         "loc LOCATION: adds a LOCATION to track.\n" +
                         "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
@@ -194,6 +206,7 @@ public class Ui {
                         "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
                         "rate GROCERY: rates and reviews GROCERY.\n" +
+                        "remark GROCERY r/REMARK: updates the remark of the GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
                         "delloc LOCATION: removes LOCATION from tracking.\n" +
                         "list: shows list of all groceries you have.\n" +
@@ -203,6 +216,7 @@ public class Ui {
                         "listloc [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
                         "expiring: shows a list of groceries that are expiring soon.\n" +
                         "low: shows a list of groceries that are low in stock.\n" +
+                        "view GROCERY: view all the details of GROCERY.\n" +
                         "exit: exits the program.\n" +
                         "switch: switches the mode.\n" +
                         "help: view all the possible commands."
@@ -243,6 +257,7 @@ public class Ui {
                         "add: add a new recipe. \n" +
                         "list: list all your recipes. \n" +
                         "view: view your recipes details.\n" +
+                        "find: list the recipe(s) with given word.\n" +
                         "delete: delete the recipe. \n" +
                         "switch: switches the mode.\n" +
                         "exit: exits the program.\n" +

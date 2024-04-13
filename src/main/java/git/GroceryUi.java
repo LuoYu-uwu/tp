@@ -1,17 +1,20 @@
 package git;
 
+import exceptions.DuplicateException;
 import exceptions.GitException;
-import exceptions.InvalidCostException;
+import exceptions.invalidinput.InvalidCostException;
 import exceptions.PastExpirationDateException;
 import exceptions.nosuch.NoSuchObjectException;
 import food.Food;
 import grocery.Grocery;
+import grocery.GroceryList;
 import grocery.location.Location;
 import grocery.location.LocationList;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class GroceryUi {
@@ -72,6 +75,75 @@ public class GroceryUi {
     }
 
     /**
+     * Prompts user for multiple grocery names.
+     *
+     * @return the list of the groceries.
+     * @throws DuplicateException 
+     */
+    public Grocery[] promptAddMultipleMenu() throws DuplicateException {
+        System.out.println("\nHow many groceries would you like to add?");
+        int num = 0;
+        while (true) {
+            try {
+                num = Integer.parseInt(in.nextLine().trim());
+                if (num <= 0) {
+                    System.out.println("\nPlease enter a positive number.");
+                } else {
+                    break; // Break loop if input is a positive integer
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nInvalid input. Please enter a number.");
+            }
+        }
+
+        Grocery[] groceries = new Grocery[num];
+        Storage storage = new Storage();
+        GroceryList groceryList = new GroceryList();
+        groceryList = storage.loadGroceryFile();
+        HashSet<String> existingGroceryNames = new HashSet<>();
+
+        for (int i = 0; i < num; i++) {
+            String name;
+            while (true) {
+                System.out.println("\nAdding item " + (i + 1) + " of " + num);
+                System.out.println("\nPlease enter the name of the grocery:");
+                name = in.nextLine().trim();
+                if (groceryList.isGroceryExists(name)){
+                    throw new DuplicateException("grocery", name);
+                }
+                if (name.isEmpty()) {
+                    System.out.println("\nInvalid input. Please enter a non-empty grocery name.");
+                } else if (existingGroceryNames.contains(name)) {
+                    System.out.println("\nThis grocery has already been added. Please enter a different grocery name.");
+                } else {
+                    existingGroceryNames.add(name);
+                    break;
+                }
+            }
+
+            Grocery grocery = new Grocery(name);
+
+            while (true) {
+                System.out.println("\nDo you want to include additional details for " + grocery.getName() + "? (Y/N)");
+                String choice = in.nextLine().trim().toUpperCase();
+                if (choice.equals("Y")) {
+                    promptAddMenu(grocery); // Assuming you have this method implemented elsewhere
+                    break;
+                } else if (choice.equals("N")) {
+                    System.out.println("\nNo additional details will be added for " + grocery.getName());
+                    break;
+                } else {
+                    System.out.println("\nInvalid input. Please enter 'Y' for yes or 'N' for no.");
+                }
+            }
+
+            groceries[i] = grocery;
+        }
+
+        return groceries;
+    }
+
+    /**
      * Prints output when a location is added to LocationList.
      *
      * @param name Location name.
@@ -115,6 +187,12 @@ public class GroceryUi {
         System.out.println(grocery.getName() + " stored in " + grocery.getLocation().getName());
     }
 
+    /**
+     * Prints the all the grocery found containing the keyword.
+     *
+     * @param groceries The list of groceries.
+     * @param key The keyword to search for.
+     */
     public static void printGroceriesFound(List<Grocery> groceries, String key) {
         if (groceries.isEmpty()) {
             System.out.println("No groceries contain: " + key);
@@ -172,6 +250,7 @@ public class GroceryUi {
         } catch (NoSuchObjectException e1) {
             try {
                 LocationList.addLocation(name);
+                GroceryUi.printLocationAdded(name.strip());
                 location = LocationList.findLocation(name);
             } catch (GitException e2) {
                 location = null;
@@ -483,7 +562,7 @@ public class GroceryUi {
             String input = in.nextLine().trim();
             try {
                 rating = Integer.parseInt(input);
-                if (rating >= 0 && rating <= 5){
+                if (rating > 0 && rating <= 5){
                     break;
                 } else {
                     rating = 0;
@@ -525,6 +604,77 @@ public class GroceryUi {
     //@@author lsiyi
 
     //@@author SharlynLui
+    /**
+     * Prints grocery details for view command.
+     *
+     * @param grocery The grocery that should be printed.
+     */
+    public static void printViewGrocery(Grocery grocery) {
+        assert !(grocery.getName().isEmpty()): "grocery name should not be empty";
+        System.out.println("These are the details of " + grocery.getName() + ": ");
+        if (grocery.getAmount() != 0) {
+            System.out.println("Amount: " + grocery.getAmount());
+        } else if (grocery.getIsSetAmount()){
+            System.out.println("Amount:" + grocery.getAmount());
+        } else {
+            System.out.println("Amount: not set");
+        }
+        if (grocery.getExpiration() != null) {
+            System.out.println("Expiry date: " + grocery.getExpiration());
+        } else {
+            System.out.println("Expiry date: not set");
+        }
+        if (!grocery.getCategory().isEmpty()) {
+            System.out.println("Category: " + grocery.getCategory());
+        } else {
+            System.out.println("Category: not set");
+        }
+        if (grocery.getCost() != 0) {
+            System.out.println("Cost: " + grocery.getCost());
+        } else if (grocery.getIsSetCost()) {
+            System.out.println("Cost: " + grocery.getCost());
+        } else {
+            System.out.println("Cost: not set");
+        }
+        if (grocery.getLocation() != null) {
+            System.out.println("Location: " + grocery.getLocation().getName());
+        } else {
+            System.out.println("Location: not set");
+        }
+        if (grocery.getRating() != 0) {
+            System.out.println("Rating: " + grocery.getRating());
+        } else {
+            System.out.println("Rating: not set");
+        }
+        if (!grocery.getReview().isEmpty()) {
+            System.out.println("Review: " + grocery.getReview());
+        } else {
+            System.out.println("Review: not set");
+        }
+        if (!grocery.getRemark().isEmpty()) {
+            System.out.println("Remark: " + grocery.getRemark());
+        } else {
+            System.out.println("Remark: not set");
+        }
+    }
+
+    /**
+     * Inform user that Grocery does not exist.
+     *
+     */
+    public static void printGroceriesNotFound() {
+        System.out.println("Grocery not found. Please check if the name is correct or try another name.");
+    }
+
+    /**
+     * Prints output after setting the selected grocery's remark.
+     *
+     */
+    public static void printRemarkSet(Grocery grocery) {
+        assert !(grocery.getRemark().isEmpty()): "grocery remark should not be empty";
+        System.out.println("remark:" + grocery.getRemark());
+    }
+
     /**
      * Prints output after setting the selected grocery's expiration date.
      *

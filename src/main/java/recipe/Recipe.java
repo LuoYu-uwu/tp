@@ -26,6 +26,27 @@ public class Recipe {
     }
 
     /**
+     * Edits the existing title with new title.
+     */
+    public void editTitle(String newTitle) {
+        title = newTitle;
+    }
+
+    /**
+     * Edits the existing title with new title.
+     */
+    public void editIngredients(ArrayList<String> newIngredients) {
+        ingredients = newIngredients;
+    }
+
+    /**
+     * Edits the existing title with new title.
+     */
+    public void editSteps(ArrayList<String> newSteps) {
+        steps = newSteps;
+    }
+
+    /**
      * Prints the title, ingredients and steps of the recipe.
      */
     public void viewRecipe() {

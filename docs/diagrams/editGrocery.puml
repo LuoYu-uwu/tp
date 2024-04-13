@@ -1,0 +1,28 @@
+@startuml
+
+participant ":Parser" as p
+participant "groceryList:GroceryList" as gl
+participant ":System.out" as sys
+
+ -> p : addOrDelGrocery(command, commandParts)
+
+ alt command == EXP
+    p -> gl : editExpiration(commandParts[1])
+ else command == CAT
+    p -> gl : editCategory(commandParts[1])
+ else command == AMT or command == USE
+    p -> gl : editAmount(commandParts[1], commandParts[0].equals("use"))
+
+ else command == TH
+    p -> gl : editThreshold(commandParts[1])
+ else command == COST
+    p -> gl : editCost(commandParts[1])
+ else command == RATE
+    p -> gl : editRatingAndReview(commandParts[1])
+ else command == STORE
+    p -> gl : editLocation(commandParts[1])
+ else else
+    p -> sys : println(GitException.getMessage())
+ end
+
+@enduml

@@ -2,6 +2,7 @@
 
 participant ":Parser" as p
 participant "command:CalCommand" as cal
+participant "caloriesUi:CaloriesUi" as cui
 participant "ui:Ui" as ui
 participant "food:Food" as f
 participant "userInfo:UserInfo" as info
@@ -14,7 +15,7 @@ p -> cal : valueOf(commandParts[0].toUpperCase())
 cal --> p : command
 
 alt command == EAT
-    p -> ui : promptForCalories()
+    p -> cui : promptForCalories()
     ui --> p : calories
     create f
     p -> f : Food(commandParts[1],calories)
@@ -29,7 +30,11 @@ else command == switch
 else command == HELP
     p -> ui : displayHelpForCal()
 else command == EXIT
-    p -> sys : println("bye bye")
+    alt commandParts[1].isEmpty()
+            p -> sys : println("bye bye")
+    else else
+             p -> sys : println(GitException.getMessage())
+    end
 else else
     p -> sys : println(GitException.getMessage())
 end

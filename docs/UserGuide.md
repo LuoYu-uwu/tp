@@ -13,24 +13,28 @@ It allows users to track and manage their groceries around their home easily.
 - [Features](#features)
   - [Switching between different modes: `switch`](#switching-between-different-modes-switch)
   - [Grocery management mode](#grocery-management-mode)
-    - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
-    - [Deleting a grocery: `del`](#deleting-a-grocery-del)
-    - [Setting the expiration date of a grocery: `exp`](#setting-the-expiration-date-of-a-grocery-exp)
-    - [Viewing groceries expiring in the next 3 days](#viewing-groceries-expiring-in-the-next-3-days-expiring)
-    - [Setting the amount of a grocery: `amt`](#setting-the-amount-of-a-grocery-amt)
-    - [Using a grocery: `use`](#using-a-grocery-use)
-    - [Setting the cost of a grocery: `cost`](#setting-the-cost-of-a-grocery-cost)
-    - [Setting the threshold of a grocery: `th`](#setting-the-threshold-of-a-grocery-th)
-    - [View groceries that are low in stock: `low`](#viewing-groceries-that-are-low-in-stock-low)
-    - [Adding rating and review of a grocery: `rate`](#adding-rating-and-review-of-a-grocery-rate)
-    - [Finding groceries: `find`](#finding-groceries-find)
-    - [Adding a storage location: `loc`](#adding-a-storage-location-loc)
-    - [Storing a grocery in a storage location: `store`](#storing-a-grocery-in-a-storage-location-store)
-    - [Removing a storage location: `delloc`](#removing-a-storage-location-delloc)
-    - [Listing all groceries: `list`](#listing-all-groceries-list)
-    - [Listing all groceries by price: `listcost`](#listing-all-groceries-by-price-listcost)
-    - [Listing all groceries by expiration date: `listexp`](#listing-all-groceries-by-expiration-date-listexp)
-    - [Listing storage locations and their groceries: `listloc`](#listing-storage-locations-and-their-groceries-listloc)
+    - [Add / Edit Grocery Commands](#add--edit-groceries)
+      - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
+      - [Deleting a grocery: `del`](#deleting-a-grocery-del)
+      - [Setting the expiration date of a grocery: `exp`](#setting-the-expiration-date-of-a-grocery-exp)
+      - [Viewing groceries expiring in the next 3 days](#viewing-groceries-expiring-in-the-next-3-days-expiring)
+      - [Setting the amount of a grocery: `amt`](#setting-the-amount-of-a-grocery-amt)
+      - [Using a grocery: `use`](#using-a-grocery-use)
+      - [Setting the cost of a grocery: `cost`](#setting-the-cost-of-a-grocery-cost)
+      - [Setting the threshold of a grocery: `th`](#setting-the-threshold-of-a-grocery-th)
+      - [Adding remark for a grocery: `remark`](#adding-a-remark-for-a-grocery-remark)
+      - [Adding rating and review of a grocery: `rate`](#adding-rating-and-review-of-a-grocery-rate)
+    - [View / List / Find grocery Commands](#view--list--find-groceries)
+      - [View groceries that are low in stock: `low`](#viewing-groceries-that-are-low-in-stock-low)
+      - [Finding groceries: `find`](#finding-groceries-find)
+      - [Listing all groceries: `list`](#listing-all-groceries-list)
+      - [Listing all groceries by price: `listcost`](#listing-all-groceries-by-price-listcost)
+      - [Listing all groceries by expiration date: `listexp`](#listing-all-groceries-by-expiration-date-listexp)
+      - [Listing storage locations and their groceries: `listloc`](#listing-storage-locations-and-their-groceries-listloc)
+    - [Add / Edit Grocery Location Commands](#add--edit-grocery-location)
+      - [Adding a storage location: `loc`](#adding-a-storage-location-loc)
+      - [Storing a grocery in a storage location: `store`](#storing-a-grocery-in-a-storage-location-store)
+      - [Removing a storage location: `delloc`](#removing-a-storage-location-delloc)
   - [Calories management mode](#calories-management-mode)
     - [Adding eaten food: `eat`](#adding-eaten-food-eat)
     - [Viewing all food and calories intake: `view`](#viewing-all-food-and-calories-intake-view)
@@ -57,6 +61,8 @@ It allows users to track and manage their groceries around their home easily.
 > #### Notes about the command format
 > * Words in `UPPERCASE` are parameters to be supplied by the user.
 > <br> e.g. In `find KEYWORD`, `KEYWORD` is a parameter to be supplied: `find cheese`.
+> * Do not use command words / tag to name grocery / recipe etc. 
+> <br> e.g. Do not name grocery "a/". 
 
 ## Switching between different modes: `switch`
 Switches between profile, calories, grocery or recipe mode.
@@ -75,11 +81,12 @@ Example of usage:
 &nbsp;
 ## Grocery management mode
 
-
 > #### Notes about this mode
 > * Features requiring the `GROCERY` or `LOCATION` inputs are case-insensitive.
 > <br> e.g. `amt GROCERY a/AMOUNT` will set the amount of `milk` or `MILK`.
 > <br> e.g. `store GROCERY l/LOCATION` works the same using `freezer` or `FREEZER`.
+
+## Add / Edit Groceries Commands
 
 ### Adding a new grocery: `add`
 Adds a grocery and any desired additional details.
@@ -238,17 +245,15 @@ Example of usage:
 
 `th milk a/1`
 
-
 &nbsp;
-### Viewing groceries that are low in stock: `low`
-Shows a list of groceries below the threshold amount.
+### Adding a remark for a grocery: `remark`
+Adds a remark for existing grocery.  
+The remark for the grocery will be displayed in `list` and `view`.
 
-Format: `low`
+Format: `remark GROCERY r/REMARK`
 
 Example of usage:
-
-`low`
-
+`remark milk r/save some for next week`
 
 &nbsp;
 ### Adding rating and review of a grocery: `rate`
@@ -260,6 +265,37 @@ Example of usage:
 
 `rate milk`
 
+## View / List / Find Grocery Commands
+
+&nbsp;
+### Viewing a grocery: `view`
+Shows all the details of the grocery.
+
+Format: `view GROCERY`
+
+Example of usage:
+```
+view apple
+These are the details of fuji apple:
+Amount: 5
+Expiry date: not set
+Category: Fruit
+Cost: not set
+Location: Fridge
+Rating: 4
+Review: buy the same brand next time
+Remark: not set
+```
+
+&nbsp;
+### Viewing groceries that are low in stock: `low`
+Shows a list of groceries below the threshold amount.
+
+Format: `low`
+
+Example of usage:
+
+`low`
 
 &nbsp;
 ### Finding groceries: `find`
@@ -275,53 +311,6 @@ Example of usage:
 `find cheese`
 
 ![Find example](images/featureEg/Find.png)
-
-
-&nbsp;
-### Adding a storage location: `loc`
-Add a storage location to be tracked.
-
-Format: `loc LOCATION`
-
-* Duplicate locations will not be added.
-
-Example of usage:
-
-`loc freezer`
-
-![Loc example](/images/featureEg/Loc.png)
-
-&nbsp;
-### Storing a grocery in a storage location: `store`
-Store a grocery in a given storage location.
-
-Format: `store GROCERY l/LOCATION`
-
-* If `LOCATION` does not exist, GiT will create the storage location and store the `GROCERY` there automatically.
-
-Example of usage:
-
-`store paprika l/spice rack`
-
-* Location exists
-
-  ![Store example](/images/featureEg/Store.png)
-
-* Location does not exist
-
-  ![Store in new location example](/images/featureEg/StoreNEW.png)
-
-&nbsp;
-### Removing a storage location: `delloc`
-Remove a storage location from tracking.
-
-Format: `delloc LOCATION`
-
-Example of usage:
-
-`delloc cabinet`
-
-![Delloc example](images/featureEg/Del.png)
 
 &nbsp;
 ### Listing all groceries: `list`
@@ -373,7 +362,53 @@ Example of usage:
 
   ![Listloc LOCATION example](images/featureEg/ListlocLOC.png)
 
+## Add / Edit Grocery Location Commands
 
+&nbsp;
+### Adding a storage location: `loc`
+Add a storage location to be tracked.
+
+Format: `loc LOCATION`
+
+* Duplicate locations will not be added.
+
+Example of usage:
+
+`loc freezer`
+
+![Loc example](/images/featureEg/Loc.png)
+
+&nbsp;
+### Storing a grocery in a storage location: `store`
+Store a grocery in a given storage location.
+
+Format: `store GROCERY l/LOCATION`
+
+* If `LOCATION` does not exist, GiT will create the storage location and store the `GROCERY` there automatically.
+
+Example of usage:
+
+`store paprika l/spice rack`
+
+* Location exists
+
+  ![Store example](/images/featureEg/Store.png)
+
+* Location does not exist
+
+  ![Store in new location example](/images/featureEg/StoreNEW.png)
+
+&nbsp;
+### Removing a storage location: `delloc`
+Remove a storage location from tracking.
+
+Format: `delloc LOCATION`
+
+Example of usage:
+
+`delloc cabinet`
+
+![Delloc example](images/featureEg/Del.png)
 
 &nbsp;
 ## Calories management mode
@@ -523,16 +558,19 @@ Fried Egg is removed from the recipe list.
 | Use grocery                                                  | `use GROCERY a/AMOUNT`          |
 | Set grocery cost                                             | `cost GROCERY $PRICE`           |
 | Set grocery threshold amount                                 | `th GROCERY a/AMOUNT`           |
-| View groceries that are low in stock                         | `low`                           |
+| Add or edit remark                                           | `remark GROCERY r/REMARK`       |
 | Add grocery rating and review                                | `rate GROCERY`                  |
+| View grocery details                                         | `view GROCERY`                   |
 | Find groceries                                               | `find KEYWORD`                  |
-| Add storage location                                         | `loc LOCATION`                  |
-| Store grocery                                                | `store GROCERY l/LOCATION`      |
-| Remove storage location                                      | `delloc LOCATION`               |
+| View groceries that are low in stock                         | `low`                           |
 | List groceries                                               | `list`                          |
 | List groceries by price                                      | `listcost`                      |
 | List groceries by expiration date                            | `listexp`                       |
 | List storage locations <br> List groceries in given location | `listloc [LOCATION]`            |
+| Add storage location                                         | `loc LOCATION`                  |
+| Store grocery                                                | `store GROCERY l/LOCATION`      |
+| Remove storage location                                      | `delloc LOCATION`               |
+
 
 
 ### Calorie management mode

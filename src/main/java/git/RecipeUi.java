@@ -1,8 +1,10 @@
 package git;
 
+import grocery.Grocery;
 import recipe.Recipe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -118,5 +120,22 @@ public class RecipeUi {
     public static void printRecipeRemoved(Recipe recipe) {
         assert recipe != null : "Recipe does not exist";
         System.out.println(recipe.getTitle() + " is removed from the recipe list.");
+    }
+
+    /**
+     * Prints the all the recipes found containing the keyword.
+     *
+     * @param relevantRecipe The list of recipe.
+     * @param key The keyword to search for.
+     */
+    public static void printRecipesFound(List<Recipe> relevantRecipe, String key) {
+        if (relevantRecipe.isEmpty()) {
+            System.out.println("There is no recipe containing: " + key);
+        } else {
+            System.out.println("Here are the recipe(s) containing: " + key);
+            for (Recipe currRecipe: relevantRecipe) {
+                System.out.println(" - " + currRecipe.getTitle());
+            }
+        }
     }
 }

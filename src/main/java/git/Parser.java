@@ -281,6 +281,11 @@ public class Parser {
             recipeToView.viewRecipe();
             break;
 
+        case FIND:
+            String recipeToFind = recipeUi.promptForTitle();
+            recipeList.findRecipe(recipeToFind);
+            break;
+
         case DELETE:
             String recipeTitle = recipeUi.promptForTitle();
             recipeList.removeRecipe(recipeTitle);

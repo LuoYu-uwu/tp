@@ -160,6 +160,12 @@ public class GroceryUi {
         System.out.println(grocery.getName() + " stored in " + grocery.getLocation().getName());
     }
 
+    /**
+     * Prints the all the grocery found containing the keyword.
+     *
+     * @param groceries The list of groceries.
+     * @param key The keyword to search for.
+     */
     public static void printGroceriesFound(List<Grocery> groceries, String key) {
         if (groceries.isEmpty()) {
             System.out.println("No groceries contain: " + key);

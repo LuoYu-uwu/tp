@@ -3,10 +3,13 @@ package recipe;
 import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
+import git.GroceryUi;
 import git.RecipeUi;
 import git.Storage;
+import grocery.Grocery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeList {
     private ArrayList<Recipe> recipeArr;
@@ -90,5 +93,23 @@ public class RecipeList {
         recipeArr.remove(currRecipe);
         RecipeUi.printRecipeRemoved(currRecipe);
         storage.saveRecipeFile(recipeArr);
+    }
+
+    /**
+     * Searches for recipes containing the given keyword.
+     */
+    public void findRecipe(String key) throws EmptyInputException {
+        if (key.isEmpty()) {
+            throw new EmptyInputException("keyword");
+        }
+
+        List<Recipe> relevantRecipe = new ArrayList<>();
+        for (Recipe currRecipe : recipeArr) {
+            if(currRecipe.getTitle().toLowerCase().contains(key.toLowerCase())) {
+                relevantRecipe.add(currRecipe);
+            }
+        }
+
+        RecipeUi.printRecipesFound(relevantRecipe, key);
     }
 }

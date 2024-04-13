@@ -245,6 +245,7 @@ public class Ui {
                         "add: add a new recipe. \n" +
                         "list: list all your recipes. \n" +
                         "view: view your recipes details.\n" +
+                        "find: list the recipe(s) with given word.\n" +
                         "delete: delete the recipe. \n" +
                         "switch: switches the mode.\n" +
                         "exit: exits the program.\n" +

@@ -34,6 +34,35 @@ Upon launching GiT, you will be greeted with a simple text-based user interface.
 - `list`: Lists all the items in your inventory.
 - `help`: Displays help information about all the commands.
 
+## Build automation using Gradle
+
+* This project uses Gradle for build automation and dependency management. It includes a basic build script as well (i.e. the `build.gradle` file).
+* If you are new to Gradle, refer to the [Gradle Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/gradle.html).
+
+## Testing
+
+### I/O redirection tests
+
+* To run _I/O redirection_ tests (aka _Text UI tests_), navigate to the `text-ui-test` and run the `runtest(.bat/.sh)` script.
+
+### JUnit tests
+
+* A skeleton JUnit test (`src/test/java/seedu/duke/DukeTest.java`) is provided with this project template. 
+* If you are new to JUnit, refer to the [JUnit Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/junit.html).
+
+## Checkstyle
+
+* A sample CheckStyle rule configuration is provided in this project.
+* If you are new to Checkstyle, refer to the [Checkstyle Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/checkstyle.html).
+
+## CI using GitHub Actions
+
+The project uses [GitHub actions](https://github.com/features/actions) for CI. When you push a commit to this repo or PR against it, GitHub actions will run automatically to build and verify the code as updated by the commit/PR.
+
+## Documentation
+
+`/docs` folder contains a skeleton version of the project documentation.
+
 ## Contributing
 Interested in contributing? Great! Please fork the project and submit a pull request with your proposed changes. Detailed instructions on setting up your development environment and the contribution guidelines can be found in the CONTRIBUTING.md file.
 

@@ -2,6 +2,7 @@ package git;
 
 import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
+import exceptions.nosuch.NoSuchObjectException;
 import grocery.Grocery;
 import grocery.GroceryList;
 import grocery.location.LocationList;
@@ -30,7 +31,8 @@ public class Storage {
     private Grocery grocery;
     private List<Grocery> groceries;
     private GroceryList groceryList;
-    private LocationList locationList;
+//    private LocationList locationList;
+//    private Location location;
     private Recipe recipe;
     private RecipeList recipeList;
     private UserInfo userInfo;
@@ -57,6 +59,8 @@ public class Storage {
     /**
      * Loads groceries from the file.
      * @return groceryList loaded from the file. If file does not exist, returns an empty groceryList.
+     * If file is corrupted, wipe file.
+     *
      */
     public GroceryList loadGroceryFile(){
         GroceryList groceryList = new GroceryList();
@@ -65,15 +69,23 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                Grocery grocery = parseGrocery(line);
-                groceryList.addGrocery(grocery);
+                try {
+                    Grocery grocery = parseGrocery(line);
+                    if (grocery != null) {
+                        groceryList.addGrocery(grocery);
+                    } else {
+                        wipeFile(file);
+                        return new GroceryList();
+                    }
+                } catch (Exception e) {
+                    wipeFile(file);
+                    return new GroceryList();
+                }
             }
             scanner.close();
         }
         catch (FileNotFoundException e) {
             //System.out.println("No saved groceries found.\n ");
-        } catch (EmptyInputException e) {
-            throw new RuntimeException(e);
         }
         return groceryList;
     }
@@ -81,18 +93,38 @@ public class Storage {
      * Parses a string from the file into a grocery object.
      * @param line The string to parse.
      * @return The parsed grocery object.
+     * Returns null if file is corrupted.
      */
     private Grocery parseGrocery(String line) throws EmptyInputException {
         String[] parts = line.split(" \\| ");
-        String name = parts[0].trim();
-        int amount = parts[1].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[1].trim());
-        int threshold = parts[2].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[2].trim());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate expiration = parts[3].equalsIgnoreCase("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
-        String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim();
-        double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
-        Location location = parts[6].equalsIgnoreCase("null") ? null : new Location(parts[6].trim());
-        return new Grocery(name, amount, threshold, expiration, category, cost, location);
+        if (parts.length != 7) {
+            return null;
+        } else {
+            String name = parts[0].trim();
+            int amount = parts[1].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[1].trim());
+            int threshold = parts[2].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[2].trim());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate expiration = parts[3].equalsIgnoreCase("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
+            String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim();
+            double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
+            Location location = parts[6].equalsIgnoreCase("null") ? null : new Location(parts[6].trim());
+            return new Grocery(name, amount, threshold, expiration, category, cost, location);
+        }
+    }
+    /**
+     * Wipes the contents of the specified file.
+     *
+     * @param file The file to wipe.
+     */
+    private void wipeFile(File file) {
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write("");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while wiping the file: " + file.getName());
+            e.printStackTrace();
+        }
     }
     /**
      * Saves the current list of recipes to the file.
@@ -125,8 +157,18 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                Recipe recipe = parseRecipe(line);
-                recipeList.addRecipe(recipe);
+                try {
+                    Recipe recipe = parseRecipe(line);
+                    if (recipe != null) {
+                        recipeList.addRecipe(recipe);
+                    } else {
+                        wipeFile(file);
+                        return new RecipeList();
+                    }
+                } catch (Exception e) {
+                    wipeFile(file);
+                    return new RecipeList();
+                }
             }
             scanner.close();
         }
@@ -143,12 +185,16 @@ public class Storage {
      */
     private Recipe parseRecipe(String line) {
         String[] parts = line.split(" \\| ");
-        String title = parts[0].trim();
-        String[] ingredientsArray = parts[1].equalsIgnoreCase("null") ? null : parts[1].split(", ");
-        ArrayList<String> ingredientsList = new ArrayList<>(Arrays.asList(ingredientsArray));
-        String[] stepsArray = parts[2].equalsIgnoreCase("null") ? null : parts[2].split(". ");
-        ArrayList<String> stepsList = new ArrayList<>(Arrays.asList(stepsArray));
-        return new Recipe(title, ingredientsList, stepsList);
+        if (parts.length != 3) {
+            return null;
+        } else {
+            String title = parts[0].trim();
+            String[] ingredientsArray = parts[1].equalsIgnoreCase("null") ? null : parts[1].split(", ");
+            ArrayList<String> ingredientsList = new ArrayList<>(Arrays.asList(ingredientsArray));
+            String[] stepsArray = parts[2].equalsIgnoreCase("null") ? null : parts[2].split(". ");
+            ArrayList<String> stepsList = new ArrayList<>(Arrays.asList(stepsArray));
+            return new Recipe(title, ingredientsList, stepsList);
+        }
     }
     /**
      * Saves the current user profile to the file.
@@ -177,11 +223,20 @@ public class Storage {
         try {
             File file = new File("./data/userProfile.txt");
             Scanner scanner = new Scanner(file);
+            int lineCount = 0;
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                parseProfile(line, userInfo);
+                lineCount ++;
+                if (!parseProfile(line, userInfo)) { //if corrupted
+                    wipeFile(file);
+                    return new UserInfo();
+                }
             }
             scanner.close();
+            if (lineCount != 8){
+                wipeFile(file);
+                return new UserInfo();
+            }
         }
         catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
@@ -196,8 +251,11 @@ public class Storage {
      * @param line The string to parse.
      * @param userInfo The UserInfo object to store the parsed information.
      */
-    private void parseProfile(String line, UserInfo userInfo) throws GitException {
+    private boolean parseProfile(String line, UserInfo userInfo) throws GitException {
         String[] parts = line.split(": ");
+        if (parts.length != 2) {
+            return false; // Line is corrupted
+        }
         switch (parts[0]) {
             case "Name":
                 userInfo.setName(parts[1]);
@@ -225,6 +283,7 @@ public class Storage {
             default:
                 break;
         }
+        return true;
     }
     /**
      * Checks if the user's profile file exists.

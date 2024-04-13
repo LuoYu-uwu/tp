@@ -233,7 +233,7 @@ public class UserInfo {
     public void setCaloriesCapFromLoad(int caloriesCap){
         this.caloriesCap = caloriesCap;
     }
-    public String getName (){
+    public String getName(){
         return this.name;
     }
 }

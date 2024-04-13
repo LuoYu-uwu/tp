@@ -13,6 +13,7 @@ public class Git {
     private boolean isRunning;
     private Parser parser;
     private Storage storage;
+    private UserInfo userInfo;
     // METHODS
     /**
      * Constructs Git.
@@ -23,6 +24,7 @@ public class Git {
         parser = new Parser(ui);
         isRunning = true;
         storage = new Storage();
+        userInfo = storage.loadProfileFile();
     }
 
     /**
@@ -30,7 +32,7 @@ public class Git {
      */
     private void run() {
         String username;
-        if (storage.isProfileSaved()){
+        if (storage.isProfileSaved() && userInfo.getName() != null){
             username = ui.printWelcomeToExistingUser();
         } else {
             username = ui.printWelcome();

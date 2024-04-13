@@ -71,7 +71,11 @@ public class Storage {
                 String line = scanner.nextLine();
                 try {
                     Grocery grocery = parseGrocery(line);
-                    if (grocery != null) {
+                    Location location = grocery.getLocation();
+                    if (grocery != null) { //if not corrupted
+                        if (location != null){
+                            location.addGrocery(grocery);
+                        }
                         groceryList.addGrocery(grocery);
                     } else {
                         wipeFile(file);
@@ -107,7 +111,20 @@ public class Storage {
             LocalDate expiration = parts[3].equalsIgnoreCase("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
             String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim();
             double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
-            Location location = parts[6].equalsIgnoreCase("null") ? null : new Location(parts[6].trim());
+            Location location = null;
+            String locString = parts[6].strip();
+            if (!locString.equalsIgnoreCase("null")) {
+                try {
+                    location = LocationList.findLocation(locString);
+                } catch (NoSuchObjectException e) {
+                    try {
+                        LocationList.addLocation(locString);
+                        location = LocationList.findLocation(locString);
+                    } catch (GitException ignore) {
+                        assert !locString.isBlank() : "No empty strings at this point.";
+                    }
+                }
+            }
             return new Grocery(name, amount, threshold, expiration, category, cost, location);
         }
     }

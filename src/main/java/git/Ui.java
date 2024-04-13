@@ -17,12 +17,10 @@ public class Ui {
     private static final double MAX_AGE = 160;
     private static Ui singleUi = null;
     private static Scanner in;
-    // ATTRIBUTES
     private static String userName;
     private Storage storage;
     private UserInfo userInfo;
 
-    // METHODS
     /**
      * Constructs Ui and initialises Scanner to read input.
      */

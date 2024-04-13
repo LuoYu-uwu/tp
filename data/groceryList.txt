@@ -1,5 +1,0 @@
-Milk | null | null | 2024-04-10 | dairy | null | null 
-Bread | null | null | 2024-04-20 | baked | null | null 
-Eggs | null | null | null |  | null | null 
-apple | null | null | 2024-04-14 |  | null | null 
-pear | null | null | 2024-04-15 |  | null | null 

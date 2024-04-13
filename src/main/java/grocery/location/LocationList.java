@@ -1,7 +1,6 @@
 package grocery.location;
 
 import exceptions.DuplicateException;
-import exceptions.GitException;
 import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import git.GroceryUi;
@@ -32,7 +31,6 @@ public class LocationList {
 
             Location location = new Location(name.strip());
             locations.add(location);
-//            GroceryUi.printLocationAdded(name.strip());
         }
     }
 

@@ -13,8 +13,8 @@ public class LocationListTest {
     @Test
     public void addLocation_findLocation_success() {
         try {
-            LocationList.addLocation("freezer");
-            LocationList.findLocation("freezer");
+            LocationList.addLocation("back of freezer");
+            LocationList.findLocation("back of freezer");
         } catch (GitException e) {
             fail("findLocation should be successful.");
         }
@@ -27,7 +27,7 @@ public class LocationListTest {
 
     @Test
     public void addLocation_duplicate_exceptionThrown() {
-        assertThrows(DuplicateException.class, () -> LocationList.addLocation("FREEZER"));
+        assertThrows(DuplicateException.class, () -> LocationList.addLocation("BACK of freezer"));
     }
 
     @Test
@@ -38,8 +38,8 @@ public class LocationListTest {
     @Test
     public void removeLocation_success() {
         try {
-            LocationList.addLocation("freezer");
-            LocationList.removeLocation("freezer");
+            LocationList.addLocation("front of freezer");
+            LocationList.removeLocation("front of freezer");
         } catch (GitException e) {
             fail("removeLocation should be successful.");
         }

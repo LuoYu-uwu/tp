@@ -77,12 +77,12 @@ public class GroceryUi {
     /**
      * Prompts user for multiple grocery names.
      *
-     * @return the list of the groceries.
-     * @throws DuplicateException 
+     * @return the array of the groceries.
+     * @throws DuplicateException Thrown when the grocery to add already exists.
      */
     public Grocery[] promptAddMultipleMenu() throws DuplicateException {
         System.out.println("\nHow many groceries would you like to add?");
-        int num = 0;
+        int num;
         while (true) {
             try {
                 num = Integer.parseInt(in.nextLine().trim());
@@ -98,8 +98,7 @@ public class GroceryUi {
 
         Grocery[] groceries = new Grocery[num];
         Storage storage = new Storage();
-        GroceryList groceryList = new GroceryList();
-        groceryList = storage.loadGroceryFile();
+        GroceryList groceryList = storage.loadGroceryFile();
         HashSet<String> existingGroceryNames = new HashSet<>();
 
         for (int i = 0; i < num; i++) {
@@ -488,7 +487,7 @@ public class GroceryUi {
 
             case '5':
                 System.out.println("Including Cost");
-                Double cost = singleGroceryUi.promptForCost();
+                double cost = singleGroceryUi.promptForCost();
                 grocery.setCost(cost);
                 break;
 

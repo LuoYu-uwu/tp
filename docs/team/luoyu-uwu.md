@@ -2,7 +2,7 @@
 
 ## Project: Grocery in Time
 Grocery in Time is a desktop application used for keeping track of groceries.
-The user interacts with it using a CLI. It is written in Java and has about 4 kLoC.
+The user interacts with it using a CLI. It is written in Java and has nearly 7 kLoC.
 
 Given below are my contributions to the project.
 * New Feature: Added the ability to store grocery prices.

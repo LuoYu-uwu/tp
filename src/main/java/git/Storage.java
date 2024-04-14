@@ -71,8 +71,7 @@ public class Storage {
                 }
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved groceries found.\n ");
         }
         return groceryList;
@@ -190,8 +189,7 @@ public class Storage {
                 }
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
         }
         return recipeList;
@@ -256,8 +254,7 @@ public class Storage {
                 wipeFile(file);
                 return new UserInfo();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
         } catch (GitException e) {
             throw new RuntimeException(e);

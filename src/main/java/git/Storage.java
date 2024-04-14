@@ -1,7 +1,6 @@
 package git;
 
 import exceptions.GitException;
-import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import grocery.Grocery;
 import grocery.GroceryList;
@@ -14,26 +13,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import grocery.location.Location;
-import java.time.format.DateTimeFormatter;
 
 
 /**
  * Handles loading from and saving tasks to a file.
  */
 public class Storage {
-    private Grocery grocery;
-    private List<Grocery> groceries;
-    private GroceryList groceryList;
-    private Recipe recipe;
-    private RecipeList recipeList;
-    private UserInfo userInfo;
     /**
      * Saves the current list of groceries to the file.
      * @param groceries The list of groceries to save.
@@ -54,6 +45,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads groceries from the file.
      * @return groceryList loaded from the file. If file does not exist, returns an empty groceryList.
@@ -70,61 +62,87 @@ public class Storage {
                 try {
                     Grocery grocery = parseGrocery(line);
                     Location location = grocery.getLocation();
-                    if (grocery != null) { //if not corrupted
-                        if (location != null){
-                            location.addGrocery(grocery);
-                        }
-                        groceryList.addGrocery(grocery);
-                    } else {
-                        wipeFile(file);
-                        return new GroceryList();
+                    if (location != null){
+                        location.addGrocery(grocery);
                     }
+                    groceryList.addGrocery(grocery);
                 } catch (Exception e) {
                     wipeFile(file);
                     return new GroceryList();
                 }
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved groceries found.\n ");
         }
         return groceryList;
     }
+
     /**
      * Parses a string from the file into a grocery object.
+     *
      * @param line The string to parse.
      * @return The parsed grocery object. Returns null if file is corrupted.
      */
-    private Grocery parseGrocery(String line) throws EmptyInputException {
+    public Grocery parseGrocery(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length != 7) {
             return null;
         } else {
             String name = parts[0].trim();
-            int amount = parts[1].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[1].trim());
-            int threshold = parts[2].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[2].trim());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate expiration = parts[3].equals("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
-            String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim();
-            double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
-            Location location = null;
-            String locString = parts[6].strip();
-            if (!locString.equalsIgnoreCase("null")) {
-                try {
-                    location = LocationList.findLocation(locString);
-                } catch (NoSuchObjectException e) {
-                    try {
-                        LocationList.addLocation(locString);
-                        location = LocationList.findLocation(locString);
-                    } catch (GitException ignore) {
-                        assert !locString.isBlank() : "No empty strings at this point.";
-                    }
-                }
+            int amount = parts[1].equalsIgnoreCase("null") ? -1 : Integer.parseInt(parts[1].trim());
+            int threshold = parts[2].equalsIgnoreCase("null") ? -1 : Integer.parseInt(parts[2].trim());
+            String expiration = parts[3].equals("null") ? "" : parts[3].trim();
+            String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim().toUpperCase();
+            double cost = parts[5].equalsIgnoreCase("null") ? -1 : Double.parseDouble(parts[5].trim());
+            Location location = parseGroceryLocation(parts[6].strip());
+
+            Grocery grocery = new Grocery(name);
+            if (amount != -1) {
+                grocery.setAmount(amount);
+                grocery.setIsSetAmount(true);
             }
-            return new Grocery(name, amount, threshold, expiration, category, cost, location);
+            if (threshold != -1) {
+                grocery.setThreshold(threshold);
+            }
+            if (cost != -1) {
+                grocery.setCost(cost);
+                grocery.setIsSetCost(true);
+            }
+            if (!expiration.isBlank()) {
+                grocery.setExpirationOnLoad(expiration);
+            }
+            grocery.setCategory(category);
+            grocery.setLocation(location);
+
+            return grocery;
         }
     }
+
+    /**
+     * Parses the String containing location information into the location, if there is one.
+     *
+     * @param locString String containing information about a location.
+     * @return Location object.
+     */
+    public Location parseGroceryLocation(String locString) {
+        Location location = null;
+        if (!locString.equalsIgnoreCase("null")) {
+            try {
+                location = LocationList.findLocation(locString);
+            } catch (NoSuchObjectException e) {
+                try {
+                    LocationList.addLocation(locString);
+                    location = LocationList.findLocation(locString);
+                } catch (GitException ignore) {
+                    assert !locString.isBlank() : "No empty strings at this point.";
+                }
+            }
+        }
+
+        return location;
+    }
+
     /**
      * Wipes the contents of the specified file.
      *
@@ -140,6 +158,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Saves the current list of recipes to the file.
      * @param recipeArr The list of recipes to save.
@@ -160,6 +179,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads recipes from the file.
      * @return recipeList loaded from the file. If file does not exist, returns an empty recipeList.
@@ -185,12 +205,12 @@ public class Storage {
                 }
             }
             scanner.close();
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
         }
         return recipeList;
     }
+
     /**
      * Parses a string from the file into a Recipe object.
      *
@@ -210,6 +230,7 @@ public class Storage {
             return new Recipe(title, ingredientsList, stepsList);
         }
     }
+
     /**
      * Saves the current user profile to the file.
      * @param userInfo The user profile to save.
@@ -228,6 +249,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads the user profile from the file.
      * @return userInfo loaded from the file. If file does not exist, returns an empty userInfo.
@@ -251,14 +273,14 @@ public class Storage {
                 wipeFile(file);
                 return new UserInfo();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //System.out.println("No saved recipes found.\n ");
         } catch (GitException e) {
             throw new RuntimeException(e);
         }
         return userInfo;
     }
+
     /**
      * Parses a string from the file into a userInfo object.
      *
@@ -300,6 +322,7 @@ public class Storage {
         }
         return true;
     }
+
     /**
      * Checks if the user's profile file exists.
      *

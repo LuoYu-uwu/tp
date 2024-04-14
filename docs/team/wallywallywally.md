@@ -22,6 +22,7 @@ It allows users to track and manage their groceries around their home easily.
    - `listloc [LOCATION]`
      - Without `LOCATION`: View all tracked locations
      - With `LOCATION` View groceries stored in given `LOCATION`
+   - Loading storage location data
 3. Ability to **find** groceries by name: 
    - `find KEYWORD`
 4. Improved defensiveness

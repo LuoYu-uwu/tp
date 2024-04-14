@@ -127,9 +127,14 @@ public class GroceryList {
         }
 
         // Split the input into the grocery name and the detail part.
-        String[] detailParts = details.split(parameter, 2);
+        String[] detailParts;
+        if (command.equals("cost")) {
+            detailParts = details.split("\\$", 2);
+        } else {
+            detailParts = details.split(parameter, 2);
+        }
 
-        // Check if the grocery exists
+        // Check iin the grocery exists
         if (!isGroceryExists(detailParts[0].strip())) {
             throw new NoSuchObjectException("grocery (" + detailParts[0].strip() + ")");
         }
@@ -189,7 +194,7 @@ public class GroceryList {
         Grocery grocery = getGrocery(catParts[0].strip());
         String newCategory = catParts[1].strip();
 
-        grocery.setCategory(newCategory);
+        grocery.setCategory(newCategory.toUpperCase());
         GroceryUi.printCategorySet(grocery);
         storage.saveGroceryFile(getGroceries());
     }
@@ -220,12 +225,12 @@ public class GroceryList {
      * Sets the amount of an existing grocery.
      *
      * @param details User input.
-     * @param use True to reduce the amount of a grocery, false to set a new amount.
+     * @param isUse True to reduce the amount of a grocery, false to set a new amount.
      * @throws GitException Exception thrown depending on error.
      */
-    public void editAmount(String details, boolean use) throws GitException {
+    public void editAmount(String details, boolean isUse) throws GitException {
         String [] amtParts;
-        if (use) {
+        if (isUse) {
             amtParts = checkDetails(details, "use", "a/");
         } else {
             amtParts = checkDetails(details, "amt", "a/");
@@ -234,9 +239,9 @@ public class GroceryList {
         String amountString = amtParts[1].strip();
         int amount = checkAmount(amountString);
 
-        if (use && grocery.getAmount() == 0) {
+        if (isUse && grocery.getAmount() == 0) {
             throw new CannotUseException();
-        } else if (use) {
+        } else if (isUse) {
             amount = Math.max(0, grocery.getAmount() - amount);
         }
 
@@ -278,7 +283,7 @@ public class GroceryList {
      * @throws GitException If the input new cost is not numeric.
      */
     public void editCost(String details) throws GitException {
-        String[] costParts = checkDetails(details, "cost", "\\$");
+        String[] costParts = checkDetails(details, "cost", "$");
         Grocery grocery = getGrocery(costParts[0].strip());
         String price = costParts[1].strip();
 

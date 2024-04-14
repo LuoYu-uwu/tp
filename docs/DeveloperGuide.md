@@ -173,7 +173,7 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
 &nbsp;
 ### 11. Editing expiration date after it is added
    * In GroceryList class, modified the editExpiration method to parse String into localdate.
-    * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameters:
+    * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameter:
       1. details: String — User input read from `Scanner`.
    * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`. 
 

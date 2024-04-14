@@ -196,30 +196,30 @@ public class Ui {
                 "Here are some ways you can manage your groceries!\n" +
                         "add GROCERY: adds the item GROCERY.\n" +
                         "addmulti: adds multiple items GROCERIES.\n" +
-                        "find KEYWORD: finds all groceries containing the KEYWORD.\n" +
-                        "loc LOCATION: adds a LOCATION to track.\n" +
-                        "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
                         "cat GROCERY c/CATEGORY: edits the category for GROCERY.\n" +
                         "amt GROCERY a/AMOUNT: sets the amount of GROCERY.\n" +
                         "use GROCERY a/AMOUNT: updates the total amount after using a GROCERY.\n" +
-                        "th GROCERY a/AMOUNT: edits the threshold amount of GROCERY.\n" +
-                        "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
                         "store GROCERY l/LOCATION: sets the location of GROCERY.\n" +
-                        "rate GROCERY: rates and reviews GROCERY.\n" +
+                        "exp GROCERY d/EXPIRATION_DATE: edits the expiration date for GROCERY.\n" +
+                        "cost GROCERY $PRICE: edits the price of GROCERY.\n" +
+                        "th GROCERY a/AMOUNT: edits the threshold amount of GROCERY.\n" +
                         "remark GROCERY r/REMARK: updates the remark of the GROCERY.\n" +
+                        "rate GROCERY: rates and reviews GROCERY.\n" +
                         "del GROCERY: deletes GROCERY.\n" +
-                        "delloc LOCATION: removes LOCATION from tracking.\n" +
+                        "find KEYWORD: finds all groceries containing the KEYWORD.\n" +
+                        "view GROCERY: view all the details of GROCERY.\n" +
+                        "low: shows a list of groceries that are low in stock.\n" +
+                        "expiring: shows a list of groceries that are expiring soon.\n" +
                         "list: shows list of all groceries you have.\n" +
                         "listcat: shows the list sorted by category.\n" +
                         "listcost: shows the list sorted by price.\n" +
                         "listexp: shows the list sorted by expiration date.\n" +
                         "listloc [LOCATION]: shows all locations, or all groceries stored in [LOCATION].\n" +
-                        "expiring: shows a list of groceries that are expiring soon.\n" +
-                        "low: shows a list of groceries that are low in stock.\n" +
-                        "view GROCERY: view all the details of GROCERY.\n" +
-                        "exit: exits the program.\n" +
+                        "loc LOCATION: adds a LOCATION to track.\n" +
+                        "delloc LOCATION: removes LOCATION from tracking.\n" +
                         "switch: switches the mode.\n" +
-                        "help: view all the possible commands."
+                        "help: view all the possible commands.\n" +
+                        "exit: exits the program."
         );
     }
 

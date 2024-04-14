@@ -1,32 +1,48 @@
-# GiT
+# GiT - Grocery in Time
 
-Grocery in Time !
+```
+   ______   _  _________
+ .' ___  | (_)|  _   _  |
+/ .'   \_| __ |_/ | | \_|
+| |   ____[  |    | |
+\ `.___]  || |   _| |_
+ `._____.'[___] |_____|
+ ```
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
 
-## Setting up in Intellij
+## Introduction
+Welcome to GiT, Grocery in Time, a Java application designed for efficient grocery management. This tool helps users monitor their groceries, including tracking expiration dates, managing inventory quantities, and setting alerts for low stock or soon-to-expire items.
 
-Prerequisites: JDK 11 (use the exact version), update Intellij to the most recent version.
+## Getting Started
 
-1. **Ensure Intellij JDK 11 is defined as an SDK**, as described [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) -- this step is not needed if you have used JDK 11 in a previous Intellij project.
-1. **Import the project _as a Gradle project_**, as described [here](https://se-education.org/guides/tutorials/intellijImportGradleProject.html).
-1. **Verify the set up**: After the importing is complete, locate the `src/main/java/seedu/duke/Duke.java` file, right-click it, and choose `Run Duke.main()`. If the setup is correct, you should see something like the below:
-   ```
-   > Task :compileJava
-   > Task :processResources NO-SOURCE
-   > Task :classes
-   
-   > Task :Duke.main()
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   
-   What is your name?
-   ```
-   Type some word and press enter to let the execution proceed to the end.
+### Prerequisites
+- Java JDK 11: Ensure you have Java Development Kit (JDK) 11 installed on your system. It is essential for running the application. You can download it from [Oracle's JDK download page](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+
+### Installation
+1. **Download the latest release**
+   - Download the `GiT.jar` file from the Releases section on the project's GitHub page or from the distribution email/website.
+
+2. **Run the application**
+   - Open a terminal or command prompt.
+   - Navigate to the directory where `GiT.jar` is located.
+   - Execute the following command to run the application:
+     ```bash
+     java -jar GiT.jar
+     ```
+
+## Features
+- **Track Groceries**: Add, edit, and delete grocery items. Record details such as cost, category, expiration date, and quantity.
+- **Alerts and Notifications**: Receive timely alerts for groceries that are about to expire and items that are running low on stock.
+- **Search and Filter**: Use keywords to search through the inventory or filter items based on category or expiration date.
+- **Reporting**: Generate reports on grocery usage, expenditure, and stock levels over time.
+
+## How to Use
+Upon launching GiT, you will be greeted with a simple text-based user interface. Here are some commands you can use:
+- `add [item]`: Adds a new item to your inventory.
+- `remove [item]`: Removes an item from the inventory.
+- `update [item]`: Updates the details of an existing item.
+- `list`: Lists all the items in your inventory.
+- `help`: Displays help information about all the commands.
 
 ## Build automation using Gradle
 
@@ -57,10 +73,8 @@ The project uses [GitHub actions](https://github.com/features/actions) for CI. W
 
 `/docs` folder contains a skeleton version of the project documentation.
 
-Steps for publishing documentation to the public: 
-1. If you are using this project template for an individual project, go your fork on GitHub.<br>
-   If you are using this project template for a team project, go to the team fork on GitHub.
-1. Click on the `settings` tab.
-1. Scroll down to the `GitHub Pages` section.
-1. Set the `source` as `master branch /docs folder`.
-1. Optionally, use the `choose a theme` button to choose a theme for your documentation.
+## Contributing
+Interested in contributing? Great! Please fork the project and submit a pull request with your proposed changes. Detailed instructions on setting up your development environment and the contribution guidelines can be found in the CONTRIBUTING.md file.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

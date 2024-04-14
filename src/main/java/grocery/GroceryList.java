@@ -53,7 +53,6 @@ public class GroceryList {
 
         try {
             groceries.add(grocery);
-            GroceryUi.printGroceryAdded(grocery);
             storage.saveGroceryFile(getGroceries());
             assert groceries.contains(grocery) : "Grocery should be added to the list";
         } catch (NullPointerException e) {
@@ -88,7 +87,7 @@ public class GroceryList {
      * @return The needed grocery.
      * @throws NoSuchObjectException If the selected grocery does not exist.
      */
-    Grocery getGrocery(String name) throws NoSuchObjectException {
+    public Grocery getGrocery(String name) throws NoSuchObjectException {
         int index = -1;
         for (Grocery grocery : groceries) {
             if(grocery.getName().equalsIgnoreCase(name)) {
@@ -112,6 +111,7 @@ public class GroceryList {
     public List<Grocery> getGroceries(){
         return groceries;
     }
+
     /**
      * Checks whether details are valid, else throw GitException accordingly.
      *
@@ -224,7 +224,6 @@ public class GroceryList {
      * @throws GitException Exception thrown depending on error.
      */
     public void editAmount(String details, boolean use) throws GitException {
-        // Assuming the format is "amt GROCERY a/AMOUNT"
         String [] amtParts;
         if (use) {
             amtParts = checkDetails(details, "use", "a/");
@@ -235,7 +234,6 @@ public class GroceryList {
         String amountString = amtParts[1].strip();
         int amount = checkAmount(amountString);
 
-        // "use" is not valid if an amount was not previously set
         if (use && grocery.getAmount() == 0) {
             throw new CannotUseException();
         } else if (use) {
@@ -307,8 +305,12 @@ public class GroceryList {
         String [] amtParts = checkDetails(details, "th", "a/");
         Grocery grocery = getGrocery(amtParts[0].strip());
         String thresholdString = amtParts[1].strip();
-        int threshold = checkAmount(thresholdString);
-
+        int threshold;
+        try {
+            threshold = Integer.parseInt(thresholdString);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
+        }
         grocery.setThreshold(threshold);
         GroceryUi.printThresholdSet(grocery);
         storage.saveGroceryFile(getGroceries());
@@ -330,6 +332,7 @@ public class GroceryList {
             location = LocationList.findLocation(name);
         } catch (NoSuchObjectException e) {
             LocationList.addLocation(name);
+            GroceryUi.printLocationAdded(name.strip());
             location = LocationList.findLocation(name);
         }
 
@@ -495,10 +498,10 @@ public class GroceryList {
         if (size == 0) {
             GroceryUi.printNoGrocery();
         } else {
-            List<Grocery> groceriesByDate = groceries;
-            groceriesByDate.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
-            Collections.reverse(groceriesByDate);
-            GroceryUi.printGroceryList(groceriesByDate);
+            List<Grocery> groceriesByCost = groceries;
+            groceriesByCost.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
+            Collections.reverse(groceriesByCost);
+            GroceryUi.printGroceryList(groceriesByCost);
         }
     }
     /**

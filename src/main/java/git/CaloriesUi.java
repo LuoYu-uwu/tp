@@ -34,10 +34,14 @@ public class CaloriesUi {
                 } else {
                     calories = 0;
                     System.out.println("Calories entered is invalid!");
-                    System.out.println("Please enter the calories of the food in kcal:");
                 }
             } catch (NumberFormatException nfe) {
                 System.out.println("Calories entered is invalid!");
+            }
+            if(i == 4) {
+                System.out.println("Failed to enter valid calories, " +
+                        "food will not be stored");
+            } else {
                 System.out.println("Please enter the calories of the food in kcal:");
             }
         }

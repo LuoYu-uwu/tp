@@ -1,18 +1,19 @@
 package git;
 
 import exceptions.GitException;
+import user.UserInfo;
 
 /**
  * Represents the Grocery in Time (GiT) program, allowing users to store and track their groceries!
  */
 public class Git {
-    // ATTRIBUTES
     private Ui ui;
     private GroceryUi groceryUi;
     private boolean isRunning;
     private Parser parser;
     private Storage storage;
-    // METHODS
+    private UserInfo userInfo;
+
     /**
      * Constructs Git.
      */
@@ -22,6 +23,7 @@ public class Git {
         parser = new Parser(ui);
         isRunning = true;
         storage = new Storage();
+        userInfo = storage.loadProfileFile();
     }
 
     /**
@@ -29,7 +31,7 @@ public class Git {
      */
     private void run() {
         String username;
-        if (storage.isProfileSaved()){
+        if (storage.isProfileSaved() && userInfo.getName() != null){
             username = ui.printWelcomeToExistingUser();
         } else {
             username = ui.printWelcome();
@@ -49,7 +51,12 @@ public class Git {
 
         while (isRunning) {
             try {
-                String[] commandParts = parser.processCommandParts();
+                String[] commandParts;
+                if (!mode.equals("exit")) {
+                    commandParts = parser.processCommandParts();
+                } else {
+                    commandParts = new String[]{"exit", ""};
+                }
                 parser.executeCommand(commandParts, mode);
                 isRunning = parser.getIsRunning();
                 mode = parser.getCurrentMode();

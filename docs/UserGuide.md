@@ -15,6 +15,7 @@ It allows users to track and manage their groceries around their home easily.
   - [Grocery management mode](#grocery-management-mode)
     - [Add / Edit / Delete Groceries](#add--edit--delete-groceries)
       - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
+      - [Adding multiple groceries: `addmulti`](#adding-multiple-groceries-addmulti)
       - [Setting the category of a grocery: `cat`](#setting-the-category-of-a-grocery-cat)
       - [Setting the amount of a grocery: `amt`](#setting-the-amount-of-a-grocery-amt)
       - [Using a grocery: `use`](#using-a-grocery-use)
@@ -50,6 +51,7 @@ It allows users to track and manage their groceries around their home easily.
     - [Finding recipe(s): `find`](#finding-recipes-find)
     - [Editing a recipe: `edit`](#editing-a-recipe-edit)
     - [Deleting a recipe: `delete`](#deleting-a-recipe-delete)
+  - [Exiting the program: `exit`](#exiting-the-program-exit)
 - [Data saving and loading](#data-saving-and-loading)
 - [Command summary](#command-summary)
 
@@ -63,7 +65,7 @@ It allows users to track and manage their groceries around their home easily.
 # Features
 
 > #### Notes about the command format
-> * **Do not use command words / tag to name grocery / recipe etc**.
+> * **Do not use command words / tag to name grocery / recipe etc.**
 > <br> e.g. Do not name grocery "a/".
 > * Words in `UPPERCASE` are parameters to be supplied by the user.
 > <br> e.g. In `find KEYWORD`, `KEYWORD` is a parameter to be supplied: `find cheese`.
@@ -77,12 +79,19 @@ Format: `switch`
 * Enter the desired mode to switch to after inputting `switch`.
 
 Example of usage:
+
 ```
 >> switch
 
 What mode would you like to enter?
 Please select a mode: grocery, profile, calories or recipe:
+
+>> grocery
+
+Here are some ways you can maange your groceries!
+...
 ```
+
 
 &nbsp;
 ## Grocery management mode
@@ -109,7 +118,7 @@ Format: `add GROCERY`
   * If `8` is entered, another menu explaining what each detail means will always be displayed first.
   * Invalid values are ignored.
   * This step can be skipped by inputting nothing.
-* Apart from `category`, any details not included here can be edited using other commands.
+* Any details not included here can be edited using other commands.
   * The only detail can cannot be included here is the rating, which is edited using [rate](#adding-rating-and-review-of-a-grocery-rate).
 
 Example of usage :
@@ -142,6 +151,41 @@ Please enter the location (e.g. freezer first compartment)
 >> cabinet
 
 milk added!
+```
+
+
+&nbsp;
+### Adding multiple groceries: `addmulti`
+Adds multiple groceries and any desired additional details.
+
+Format: `addmulti`
+
+* The grocery name cannot be empty.
+* Duplicate groceries will not be added.
+* After executing `addmulti`, GiT will prompt for various details.
+  1. Number of groceries to add
+  2. Additional details to include
+     * The interface is the same as the one for [add](#adding-a-new-grocery-add).
+
+Example of usage :
+
+```
+>> addmulti
+
+How many groceries would you like to add?
+
+>> 2
+
+Adding item 1 of 2
+Please enter the name of the grocery:
+
+>> beans
+
+Do you want to include additional details for beans? (Y/N)
+
+>> Y
+
+...
 ```
 
 
@@ -188,7 +232,9 @@ Format: `use GROCERY a/AMOUNT`
 * If the amount of the `GROCERY` is already 0, GiT will let the user know and the amount stays at 0.
 
 Example of usage:
+
 * Amount used is less than amount stored.
+
 ```
 >> use meat a/4
 
@@ -196,6 +242,7 @@ meat: 56
 ```
 
 * Amount used is greater than amount stored.
+
 ```
 >> use meat a/60
 
@@ -213,7 +260,9 @@ Format: `store GROCERY l/LOCATION`
 * More information on storage locations can be found [here](#manage-storage-locations).
 
 Example of usage:
+
 * `LOCATION` exists
+
 ```
 >> store paprika l/spice rack
 
@@ -221,6 +270,7 @@ paprika stored in spice rack
 ```
 
 * `LOCATION` does not exist
+
 ```
 >> store onion l/cabinet
 
@@ -252,7 +302,10 @@ Format: `cost GROCERY  $PRICE`
 
 Example of usage:
 
-`cost milk $1.20`
+```
+>> cost milk $1.20
+milk is now $1.20
+```
 
 
 &nbsp;
@@ -266,7 +319,10 @@ Format: `th GROCERY a/AMOUNT`
 
 Example of usage:
 
-`th milk a/1`
+```
+>> th milk a/1
+milk's threshold is now 1
+```
 
 
 &nbsp;
@@ -300,6 +356,7 @@ Format: `del GROCERY`
 * If the `GROCERY` was stored in a location, it would be removed from that location.
 
 Example of usage:
+
 ```
 >> del milk
 
@@ -320,6 +377,7 @@ Format: `find KEYWORD`
 * If a phrase is passed, the entire phrase is searched for.
 
 Example of usage:
+
 ```
 >> find cheese
 
@@ -336,6 +394,7 @@ Shows all the details of the grocery.
 Format: `view GROCERY`
 
 Example of usage:
+
 ```
 >> view apple
 
@@ -359,7 +418,12 @@ Format: `low`
 
 Example of usage:
 
-`low`
+```
+>> low
+Time to top up these groceries!
+ - milk only left: 0
+ - apple only left: 0
+```
 
 
 &nbsp;
@@ -377,7 +441,7 @@ Example of usage:
 ### Presenting all expiring groceries: `expiring`
 Show all the expiring groceries and send email notification if needed.
 
-Foramt: `expiring`
+Format: `expiring`
 
 Example of usage:
 
@@ -401,8 +465,13 @@ Format: `list`
 
 Example of usage:
 
-`list`
-
+```
+>> list
+Here are your groceries!
+ - milk, amount: 0 units, cost: $1.20
+ - apple, amount: 0 units, cost: $2.00
+ - coke, cost: $1.00
+```
 
 &nbsp;
 ### Listing all groceries by price: `listcost`
@@ -412,7 +481,13 @@ Format: `listcost`
 
 Example of usage:
 
-`listcost`
+```
+>> listcost
+Here are your groceries!
+ - apple, amount: 0 units, cost: $2.00
+ - milk, amount: 0 units, cost: $1.20
+ - coke, cost: $1.00
+```
 
 
 &nbsp;
@@ -440,6 +515,7 @@ Format: `listloc [LOCATION]`
 Example of usage:
 
 * `listloc`: All storage locations are displayed.
+
 ```
 >> listloc
 
@@ -450,6 +526,7 @@ Here's all the locations you are tracking:
 ```
 
 * `listloc cubby`: All groceries in `cubby` are displayed.
+
 ```
 >> listloc cubby
 
@@ -471,6 +548,7 @@ Format: `loc LOCATION`
 * Duplicate locations will not be added.
 
 Example of usage:
+
 ```
 >> loc freezer
 
@@ -485,6 +563,7 @@ Remove a storage location from tracking.
 Format: `delloc LOCATION`
 
 Example of usage:
+
 ```
 >> delloc cabinet
 
@@ -501,8 +580,12 @@ Adds the food eaten and store its calories.
 Format: `eat FOOD`
 
 Example of usage:
-
-`eat burger`
+```
+>> eat burger
+Please enter the calories of the food in kcal:
+>> 400
+burger, with 400.0 calories was consumed!
+```
 
 &nbsp;
 ### Viewing all food and calories intake: `view`
@@ -512,7 +595,13 @@ Format: `view`
 
 Example of usage:
 
-`view`
+```
+>> view
+Here are the food you have consumed today:
+ - burger, with 400.0 calories
+ - apple, with 52.0 calories
+You have consumed 452.0 calories for today
+```
 
 
 
@@ -524,9 +613,43 @@ Stores information needed to calculate and manage calories intake.
 
 Format: `update`
 
-Example of usage:
+User will be prompt for the following details:
+  * `name`: A non-empty string is expected
+  * `weight`: A positive numeric value is expected
+  * `height`: A positive numeric value is expected
+  * `age`: A positive integer is expected
+  * `gender`: F / M / others
+    * Input is case-insensitive
+    * If `other` is entered, calculations done will be based on `M`
+  * `activeness`: inactive/light/moderate/active/very
+    * Input must be one of these options to be valid.
+    * Inactive - little or no exercise
+    * Light - light exercise 1-3 days per week
+    * Moderate - moderate exercise 3-5 days per week
+    * Active - hard exercise 6-7 days a week
+    * Very - very hard exercise 6-7 days a week
+  * `aim`: lose/maintain/gain
+    * Input must be one of these options to be valid.
 
-`update`
+Example of usage:
+```
+>> update
+Please enter your name
+>> Alice
+Please enter your weight in KG:
+>> 50
+Please enter your height in cm:
+>> 165
+Please enter your age in years (nearest whole number):
+>> 22
+Please enter your gender (M / F / Others):
+>> f
+Please enter your activeness (e.g. inactive/light/moderate/active/very):
+>> moderate
+Please enter your weight aim (e.g. lose/maintain/gain):
+>> lose
+Your target calories intake a day should be 1655
+```
 
 &nbsp;
 ### Viewing user details: `view`
@@ -535,9 +658,15 @@ Shows the user profile details.
 Format: `view`
 
 Example of usage:
-
-`view`
-
+```
+>> view
+Name: Alice
+Height: 165.0
+Weight: 50.0
+Age: 22
+Gender: f
+Target calories intake: 1655
+```
 
 
 &nbsp;
@@ -658,6 +787,19 @@ Please enter the title of the recipe:
 Fried Egg is removed from the recipe list.
 ```
 
+## Exiting the program: `exit`
+Exits GiT, regardless of which mode you are in.
+
+Format: `exit`
+
+Example of usage:
+
+```
+>> exit
+
+bye bye!
+```
+
 
 &nbsp;
 ## Data saving and loading
@@ -681,16 +823,19 @@ For instance, grocery data is stored in `groceryList.txt`.
 &nbsp;
 ## Command Summary
 
-### For all mode
+### For all modes
+
 | Command      | Format   |
 |--------------|----------|
 | Switch modes | `switch` |
-| Exit         | `exit`    |
+| Exit         | `exit`   |
 
 ### Grocery management mode
+
 | Command                                                      | Format                          |
 |--------------------------------------------------------------|---------------------------------|
 | Add grocery                                                  | `add GROCERY`                   |
+| Add multiple groceries                                       | `addmulti`                      |
 | Set grocery category                                         | `cat GROCERY c/CATEGORY`        |
 | Set grocery amount                                           | `amt GROCERY a/AMOUNT`          |
 | Use grocery                                                  | `use GROCERY a/AMOUNT`          |
@@ -720,12 +865,14 @@ For instance, grocery data is stored in `groceryList.txt`.
 | View food and calories intake | `view`     |
 
 ### Profile management mode
+
 | Command                 | Format   |
 |-------------------------|----------|
 | Update user information | `update` |
 | View user details       | `view`   |
 
 ### Recipe management mode
+
 | Command        | Format                                    |
 |----------------|-------------------------------------------|
 | Add recipe     | `add` `TITLE` `INGREDIENTS` `STEPS`       |

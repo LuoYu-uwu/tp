@@ -28,6 +28,7 @@ public class Food {
      * @return A string containing the food's name and calories.
      */
     public String print() {
+        assert !(this.name.isEmpty()) : "Name should not be empty. Food constructed wrongly.";
         return this.name + ", with " + this.calories + " calories";
     }
 }

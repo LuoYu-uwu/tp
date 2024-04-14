@@ -88,20 +88,19 @@ To edit the information of an existing grocery.
 
 
 ### 1. View all groceries added
-   * First create a method in "Grocery" class that prints the grocery in a preferred format.\
-     e.g., NAME, AMOUNT, EXPIRATION, PRICE.
-   * Then create a method in "GroceryList" class that prints all the groceries in the list.
+   * When the command entered is `list`, `listGroceries()` in GroceryList will be executed.
+   * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
+   * Else, execute `printGroceryList(groceries)` in GroceryUi.
 
 &nbsp;
 ### 2. List the groceries by price in descending order
-   * First, create a field in "Grocery" class that stores the cost of a grocery.
-   * When adding a grocery, prompt the user to enter the cost.
-   * Format the cost into 2 decimal places, remove the dollar sign and store it as a string.
-   * Second, the grocery's cost accordingly before adding it into the list.
-   * When setting the cost, convert the cost from String into Double.
-   * Third, add method in "GroceryList" class to create a copy of the current grocery list, then sort the 
-   new grocery list by price using lambda function. Reverse and print the new list.
-
+   * When the command entered is `listcost`, `sortByCost()` in GroceryList will be executed.
+   * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
+   * Else, create a new array list name `groceriesByCost` with type `Grocery`.
+   * Assign all the values in current grocery list `groceries` to `groceriesByCost`.
+   * Execute `sort` in `groceriesByCost` with a lambba function that compares the `getCost()` value of each Grocery in the list.
+   * Then execute `Collections.reverse(groceriesByCost)` to reverse the list so that the cost is sorted in descending order.
+   * Lastly, execute `printGroceryList(groceriesByCost)` in GroceryUi.
 &nbsp;
 ### 3. Input category for each grocery added
    * In Grocery class, modified the Grocery constructor to accept the 'category' parameter.
@@ -144,14 +143,35 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
   * Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
 
 &nbsp;
-### 7. Input expiration date of each grocery when added
+### 7. Edit the cost of a grocery after adding.
+* when the command entered is `cost`, `editCost` in GroceryList will be executed.
+  ![editCost sequence diagram](./diagrams/editCost.png)
+* Additional checks ensure that the user only inputs a valid `positive numeric` value.
+* Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
+
+&nbsp;
+### 8. Edit the threshold amount of a grocery after adding.
+* when the command entered is `th`, `editThreshold` in GroceryList will be executed.
+  ![editThreshold sequence diagram](./diagrams/editThreshold.png)
+* Additional checks ensure that the user only inputs a valid `positive integer`.
+* Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
+
+&nbsp;
+### 9. View a list of groceries low in stock
+* When the command entered is `low`, `listLowStocks` in GroceryList will be executed.
+* This will create a new array list called `lowStockGroceries` with type `Grocery`
+* For each grocery in the current grocery list, `groceries`, execute `grocery.isLow()`. Add the grocery into `lowStockGroceries` if the return value is true.
+* Execute `printLowStocks(lowStockGroceries)` in GroceryUi to print out the list.
+
+&nbsp;
+### 10. Input expiration date of each grocery when added
    * In Grocery class, the expiration field in the Grocery class was changed from a String to a LocalDate to standardize date handling.
    * In Grocery class, the setExpiration method was updated to accept a String input, convert it to a LocalDate using a specified format ("yyyy-MM-dd"), and then store this date.
    * In UI class, the UI now includes a multi-step process to prompt the user for the year, month, and day of the grocery item's expiration date. This process ensures that the date is captured in a user-friendly manner and stored accurately.
    * In GroceryList class, a new method, sortByExpiration, was added to allow sorting the list of groceries by their expiration dates in ascending order. This method utilizes the Collections.sort method with a lambda expression comparing the expiration dates of Grocery items.
 
 &nbsp;
-### 8. Editing expiration date after it is added
+### 11. Editing expiration date after it is added
    * In GroceryList class, modified the editExpiration method to parse String into localdate.
     * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameters:
       1. details: String — User input read from `Scanner`.

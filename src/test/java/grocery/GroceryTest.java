@@ -92,5 +92,4 @@ class GroceryTest {
                 + LocalDate.now().plusDays(1) + ", cost: $1.20, location: Pantry";
         assertEquals(message, grocery.printGrocery());
     }
-
 }

@@ -12,12 +12,12 @@
       - [4.3 handleLocationCommands](#43-handlelocationcommands)
       - [4.4 handleListOrHelp](#44-handlelistorhelp)
   - [Implementation](#_implementation_)
-    - [1. View all groceries add](#1-view-all-groceries-added)
+    - [1. View all groceries added](#1-view-all-groceries-added)
     - [2. List the groceries by price in descending order](#2-list-the-groceries-by-price-in-descending-order)
     - [3. Input category for each grocery added](#3-input-category-for-each-grocery-added)
     - [4. Input amount for each grocery added](#4-input-amount-for-each-grocery-added)
     - [5. Input the location of where each grocery is stored](#5-input-the-location-of-where-each-grocery-is-stored)
-    - [6. Edit grocery amount after using a grocery](#6-edit-grocery-amount-after-using-a-grocery)
+    - [6. Edit grocery amount](#6-edit-grocery-amount)
     - [7. Edit the cost of a grocery after adding](#7-edit-the-cost-of-a-grocery-after-adding)
     - [8. Edit the threshold amount of a grocery after adding](#8-edit-the-threshold-amount-of-a-grocery-after-adding)
     - [9. View a list of groceries low in stock](#9-view-a-list-of-groceries-low-in-stock)
@@ -174,16 +174,17 @@ To list groceries according to different parameters, view help, switch modes, or
    * In Ui class, modified the printGrocery method to print the 'location' of the grocery alongside the grocery name.
    * Alternative considered: Can possibly add location as enumeration however different people might store groceries in different places thus better to set as String so that user is free to input location details however specific they want.
 
-### 6. Edit grocery amount after using a grocery
+### 6. Edit grocery amount
    * A `Grocery` stores its `amount` as an attribute. All `Grocery` objects are then stored in an ArrayList in `GroceryList`, which entirely handles the editing of the `amount`.
 
 ![Grocery (showing amount) and GroceryList class diagram](./diagrams/GroceryAmt.png)
 
    * `GroceryList+editAmount()` is used to either decrease or directly set the `amount` of a `Grocery`. It takes in 2 parameters:
       1. details: String — User input read from `Scanner`.
-      2. use: boolean — `true` decreases the `amount`, while `false` directly sets it.
-   * To edit the `amount` after using a `Grocery`, the user inputs `use GROCERY a/AMOUNT`. 
-Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as illustrated by the following sequence diagram.
+      2. isUse: boolean — `false` directly sets the `amount`, while `true` decreases it
+   * To set the `amount` of a `Grocery`, the user inputs `amt GROCERY a/AMOUNT`.
+   * To edit the `amount` after using a `Grocery`, the user inputs `use GROCERY a/AMOUNT`.
+   * Our app then executes `GroceryList+editAmount()` with parameter `use = false` or `true` respectively, as illustrated by the following sequence diagram.
 
 ![useAmt sequence diagram](./diagrams/useAmt.png)
 

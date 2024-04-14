@@ -21,7 +21,7 @@ alt command == EAT
     p -> f : Food(commandParts[1],calories)
     f --> p : food
     p -> fl : addFood(food)
-    p -> info : consumptionOfCalories(food)
+    p -> info : consumptionOfCalories(foodList.getFoods())
 else command == VIEW
     p -> fl: printFoods()
 else command == switch

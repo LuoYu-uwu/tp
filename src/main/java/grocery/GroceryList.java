@@ -305,8 +305,12 @@ public class GroceryList {
         String [] amtParts = checkDetails(details, "th", "a/");
         Grocery grocery = getGrocery(amtParts[0].strip());
         String thresholdString = amtParts[1].strip();
-        int threshold = checkAmount(thresholdString);
-
+        int threshold;
+        try {
+            threshold = Integer.parseInt(thresholdString);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
+        }
         grocery.setThreshold(threshold);
         GroceryUi.printThresholdSet(grocery);
         storage.saveGroceryFile(getGroceries());

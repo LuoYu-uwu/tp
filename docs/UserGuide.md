@@ -302,7 +302,10 @@ Format: `cost GROCERY  $PRICE`
 
 Example of usage:
 
-`cost milk $1.20`
+```
+>> cost milk $1.20
+milk is now $1.20
+```
 
 
 &nbsp;
@@ -316,7 +319,10 @@ Format: `th GROCERY a/AMOUNT`
 
 Example of usage:
 
-`th milk a/1`
+```
+>> th milk a/1
+milk's threshold is now 1
+```
 
 
 &nbsp;
@@ -412,7 +418,12 @@ Format: `low`
 
 Example of usage:
 
-`low`
+```
+>> low
+Time to top up these groceries!
+ - milk only left: 0
+ - apple only left: 0
+```
 
 
 &nbsp;
@@ -454,8 +465,13 @@ Format: `list`
 
 Example of usage:
 
-`list`
-
+```
+>> list
+Here are your groceries!
+ - milk, amount: 0 units, cost: $1.20
+ - apple, amount: 0 units, cost: $2.00
+ - coke, cost: $1.00
+```
 
 &nbsp;
 ### Listing all groceries by price: `listcost`
@@ -465,7 +481,13 @@ Format: `listcost`
 
 Example of usage:
 
-`listcost`
+```
+>> listcost
+Here are your groceries!
+ - apple, amount: 0 units, cost: $2.00
+ - milk, amount: 0 units, cost: $1.20
+ - coke, cost: $1.00
+```
 
 
 &nbsp;
@@ -558,8 +580,12 @@ Adds the food eaten and store its calories.
 Format: `eat FOOD`
 
 Example of usage:
-
-`eat burger`
+```
+>> eat burger
+Please enter the calories of the food in kcal:
+>> 400
+burger, with 400.0 calories was consumed!
+```
 
 &nbsp;
 ### Viewing all food and calories intake: `view`
@@ -569,7 +595,13 @@ Format: `view`
 
 Example of usage:
 
-`view`
+```
+>> view
+Here are the food you have consumed today:
+ - burger, with 400.0 calories
+ - apple, with 52.0 calories
+You have consumed 452.0 calories for today
+```
 
 
 
@@ -581,9 +613,43 @@ Stores information needed to calculate and manage calories intake.
 
 Format: `update`
 
-Example of usage:
+User will be prompt for the following details:
+  * `name`: A non-empty string is expected
+  * `weight`: A positive numeric value is expected
+  * `height`: A positive numeric value is expected
+  * `age`: A positive integer is expected
+  * `gender`: F / M / others
+    * Input is case-insensitive
+    * If `other` is entered, calculations done will be based on `M`
+  * `activeness`: inactive/light/moderate/active/very
+    * Input must be one of these options to be valid.
+    * Inactive - little or no exercise
+    * Light - light exercise 1-3 days per week
+    * Moderate - moderate exercise 3-5 days per week
+    * Active - hard exercise 6-7 days a week
+    * Very - very hard exercise 6-7 days a week
+  * `aim`: lose/maintain/gain
+    * Input must be one of these options to be valid.
 
-`update`
+Example of usage:
+```
+>> update
+Please enter your name
+>> Alice
+Please enter your weight in KG:
+>> 50
+Please enter your height in cm:
+>> 165
+Please enter your age in years (nearest whole number):
+>> 22
+Please enter your gender (M / F / Others):
+>> f
+Please enter your activeness (e.g. inactive/light/moderate/active/very):
+>> moderate
+Please enter your weight aim (e.g. lose/maintain/gain):
+>> lose
+Your target calories intake a day should be 1655
+```
 
 &nbsp;
 ### Viewing user details: `view`
@@ -592,9 +658,15 @@ Shows the user profile details.
 Format: `view`
 
 Example of usage:
-
-`view`
-
+```
+>> view
+Name: Alice
+Height: 165.0
+Weight: 50.0
+Age: 22
+Gender: f
+Target calories intake: 1655
+```
 
 
 &nbsp;

@@ -153,9 +153,12 @@ public class Parser {
                 throw new EmptyInputException("valid food name");
             }
             double calories = caloriesUi.promptForCalories();
+            if (calories == 0) {
+                throw new EmptyInputException("valid calories value");
+            }
             Food food = new Food(name, calories);
             foodList.addFood(food);
-            userInfo.consumptionOfCalories(food);
+            userInfo.consumptionOfCalories(foodList.getFoods());
             break;
 
         case VIEW:

@@ -305,8 +305,12 @@ public class GroceryList {
         String [] amtParts = checkDetails(details, "th", "a/");
         Grocery grocery = getGrocery(amtParts[0].strip());
         String thresholdString = amtParts[1].strip();
-        int threshold = checkAmount(thresholdString);
-
+        int threshold;
+        try {
+            threshold = Integer.parseInt(thresholdString);
+        } catch (NumberFormatException e) {
+            throw new InvalidAmountException();
+        }
         grocery.setThreshold(threshold);
         GroceryUi.printThresholdSet(grocery);
         storage.saveGroceryFile(getGroceries());
@@ -494,10 +498,10 @@ public class GroceryList {
         if (size == 0) {
             GroceryUi.printNoGrocery();
         } else {
-            List<Grocery> groceriesByDate = groceries;
-            groceriesByDate.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
-            Collections.reverse(groceriesByDate);
-            GroceryUi.printGroceryList(groceriesByDate);
+            List<Grocery> groceriesByCost = groceries;
+            groceriesByCost.sort((g1, g2) -> Double.compare(g1.getCost(), g2.getCost()));
+            Collections.reverse(groceriesByCost);
+            GroceryUi.printGroceryList(groceriesByCost);
         }
     }
     /**

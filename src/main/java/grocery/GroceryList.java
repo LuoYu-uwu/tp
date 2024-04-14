@@ -34,6 +34,7 @@ public class GroceryList {
     private List<Grocery> groceries;
     private Logger logger;
     private Storage storage;
+
     /**
      * Constructs GroceryList.
      */

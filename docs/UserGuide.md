@@ -12,7 +12,7 @@ It allows users to track and manage their groceries around their home easily.
 - [Quick start](#quick-start)
 - [Features](#features)
   - [Switching between different modes: `switch`](#switching-between-different-modes-switch)
-  - [Grocery management mode](#grocery-management-mode)
+  - [A. Grocery management mode](#a-grocery-management-mode)
     - [Viewing help: `help`](#viewing-help-help)
     - [Add / Edit / Delete Groceries](#add--edit--delete-groceries)
       - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
@@ -40,13 +40,13 @@ It allows users to track and manage their groceries around their home easily.
     - [Manage Storage Locations](#manage-storage-locations)
       - [Adding a storage location: `loc`](#adding-a-storage-location-loc)
       - [Removing a storage location: `delloc`](#removing-a-storage-location-delloc)
-  - [Calories management mode](#calories-management-mode)
+  - [B. Calories management mode](#b-calories-management-mode)
     - [Adding eaten food: `eat`](#adding-eaten-food-eat)
     - [Viewing all food and calories intake: `view`](#viewing-all-food-and-calories-intake-view)
-  - [Profile management mode](#profile-management-mode)
+  - [C. Profile management mode](#c-profile-management-mode)
     - [Updating user information: `update`](#updating-user-information-update)
     - [Viewing user details: `view`](#viewing-user-details-view)  
-  - [Recipe management mode](#recipe-management-mode)
+  - [D. Recipe management mode](#d-recipe-management-mode)
     - [Adding a new recipe: `add`](#adding-a-new-recipe-add)
     - [Listing all recipes: `list`](#listing-all-recipes-list)
     - [Viewing a recipe: `view`](#viewing-a-recipe-view)
@@ -97,7 +97,7 @@ Here are some ways you can maange your groceries!
 
 
 &nbsp;
-## Grocery management mode
+## A. Grocery management mode
 
 > #### Notes about this mode
 > * Features requiring the `GROCERY` or `LOCATION` inputs are case-insensitive.
@@ -633,7 +633,7 @@ Location: freezer has been removed from tracking!
 
 
 &nbsp;
-## Calories management mode
+## B. Calories management mode
 
 ### Adding eaten food: `eat`
 Adds the food eaten and store its calories.
@@ -665,9 +665,8 @@ You have consumed 452.0 calories for today
 ```
 
 
-
 &nbsp;
-## Profile management mode
+## C. Profile management mode
 
 ### Updating user information: `update`
 Stores information needed to calculate and manage calories intake.
@@ -731,7 +730,7 @@ Target calories intake: 1655
 
 
 &nbsp;
-## Recipe management mode
+## D. Recipe management mode
 
 ### Adding a new recipe: `add`
 Adds new recipe, ingredient and steps.

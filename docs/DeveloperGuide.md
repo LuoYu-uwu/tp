@@ -3,7 +3,26 @@
 - [Acknowledgements](#acknowledgements)
 - [Design & Implementation](#design--implementation)
   - [Designs](#_designs_)
+    - [1. Execute different commands based on the modes](#1-execute-different-commands-based-on-the-modes)
+    - [2. Calories Management Mode](#2-calories-management-mode)
+    - [3. Profile Management Mode](#3-profile-management-mode)
+    - [4. Grocery Management Mode](#4-grocery-management-mode)
+      - [4.1 addOrDelGrocery](#41-addordelgrocery)
+      - [4.2 editGrocery](#42-editgrocery)
+      - [4.3 handleLocationCommands](#43-handlelocationcommands)
+      - [4.4 handleListOrHelp](#44-handlelistorhelp)
   - [Implementation](#_implementation_)
+    - [1. View all groceries add](#1-view-all-groceries-added)
+    - [2. List the groceries by price in descending order](#2-list-the-groceries-by-price-in-descending-order)
+    - [3. Input category for each grocery added](#3-input-category-for-each-grocery-added)
+    - [4. Input amount for each grocery added](#4-input-amount-for-each-grocery-added)
+    - [5. Input the location of where each grocery is stored](#5-input-the-location-of-where-each-grocery-is-stored)
+    - [6. Edit grocery amount after using a grocery](#6-edit-grocery-amount-after-using-a-grocery)
+    - [7. Edit the cost of a grocery after adding](#7-edit-the-cost-of-a-grocery-after-adding)
+    - [8. Edit the threshold amount of a grocery after adding](#8-edit-the-threshold-amount-of-a-grocery-after-adding)
+    - [9. View a list of groceries low in stock](#9-view-a-list-of-groceries-low-in-stock)
+    - [10. Input expiration date of each grocery when added](#10-input-expiration-date-of-each-grocery-when-added)
+    - [11. Editing expiration date after it is added](#11-editing-expiration-date-after-it-is-added)
 - [Product Scope](#product-scope)
   - [Target user profile](#target-user-profile)
   - [Target user profile](#value-proposition)
@@ -56,9 +75,10 @@ We would like to thank the developers and contributors of these projects for the
 
 ## Design & Implementation
 
-### _Designs_
+## _Designs_
 ### 1. Execute different commands based on the modes
 ![Execute different commands](./diagrams/executeCommand.png)
+
 * When `executeCommand`  is executed in `Parser`, different methods will be self invoked based on the selected mode.
   * If mode is `grocery`, execute `groceryManagement`.
   * If mode is `calories`, execute `caloriesManagement`.
@@ -71,39 +91,59 @@ The following is a class diagram containing Food, FoodList and UserInfo.
 
 ### 2. Calories Management Mode
 ![Commands for managing calories](./diagrams/caloriesManagement.png)
+
 * When `caloriesManagement` is executed in `Parser`, different actions will be carried out based on the commands.
    * If `eat`, store the name and calories of the input food.
    * If `view`, display all the foods consumed.
 
 ### 3. Profile Management Mode
 ![Commands for managing profile](./diagrams/profileManagement.png)
+
 * When `profileManagement` is executed in `Parser`, different actions will be carried out based on the commands.
   * If `update`, store the user data required for calories calculation.
   * If `view`, display user information.
 
 ### 4. Grocery Management Mode
+
+Below is a class diagram showing the associations between the `Grocery`, `GroceryList`, `Location`, and `LocationList` classes.
+
+![Grocery, GroceryList, Location, LocationList](diagrams/Grocery.png)
+
+When `Parser` gets a user input related to the Grocery Management Mode, it executes `Parser-groceryManagement(commandPanrts)`.
+
 ![Commands for managing grocery](./diagrams/groceryManagement.png)
-* Different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
+
+Different methods in `Parser` will be self invoked based on the index of the command in enum class GroceryCommand.
 
 #### 4.1 addOrDelGrocery
 ![addOrDelGrocery](./diagrams/addOrDelGrocery.png)
-To add a new grocery or delete an existing grocery.
+
+To add groceries or delete an existing grocery.
 
 #### 4.2 editGrocery
 ![editDelGrocery](./diagrams/editGrocery.png)
+
 To edit the information of an existing grocery.
 
-#### 4.3 viewListOrHelp
-![viewListOrHelp](./diagrams/viewListOrHelp.png)
+#### 4.3 handleLocationCommands
+![handleLocationCommands](./diagrams/handleLocationCommands.png)
 
-### _Implementation_
+`LOC` and `DELLOC` adds and deletes storage locations. 
+`LISTLOC [LOCATION]` shows all locations or groceries at a given location, depending on whether a location was passed.
+
+#### 4.4 handleListOrHelp
+![handleListOrHelp](./diagrams/handleListOrHelp.png)
+
+To list groceries according to different parameters, view help, switch modes, or exit from GiT.
+
+&nbsp;
+## _Implementation_
 
 ### 1. View all groceries added
    * When the command entered is `list`, `listGroceries()` in GroceryList will be executed.
    * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
    * Else, execute `printGroceryList(groceries)` in GroceryUi.
 
-&nbsp;
 ### 2. List the groceries by price in descending order
    * When the command entered is `listcost`, `sortByCost()` in GroceryList will be executed.
    * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
@@ -112,21 +152,19 @@ To edit the information of an existing grocery.
    * Execute `sort` in `groceriesByCost` with a lambda function that compares the `getCost()` value of each Grocery in the list.
    * Then execute `Collections.reverse(groceriesByCost)` to reverse the list so that the cost is sorted in descending order.
    * Lastly, execute `printGroceryList(groceriesByCost)` in GroceryUi.
-&nbsp;
+
 ### 3. Input category for each grocery added
    * In Grocery class, modified the Grocery constructor to accept the 'category' parameter.
    * In Parser class executeCommand method, modified the add command to prompt the user for the category of the grocery. Passed the category as a parameter when creating a new Grocery object.
    * In Ui class, added a new method promptForCategory to prompt the user for the category of the grocery.
    * In Grocery class, modified the printGrocery method to include the category information in the output string.
 
-&nbsp;
 ### 4. Input amount for each grocery added
    * In Grocery class, modified the Grocery constructor to accept the 'amount' parameter.
    * In Parser class executeCommand method, modified the add command to prompt the user for the amount of grocery. Passed the amount as a parameter when creating a new Grocery object.
    * In Ui class, added a new method promptForAmount to prompt the user for the amount of grocery.
    * In Grocery class, modified the printGrocery method to print different units of measurement for different categories.
 
-&nbsp;
 ### 5. Input the location of where each grocery is stored
    * In Grocery class, modified the Grocery class to include location (String) as an attribute.
    * In Grocery class, modified the Grocery constructor to accept the 'location' parameter.
@@ -136,11 +174,10 @@ To edit the information of an existing grocery.
    * In Ui class, modified the printGrocery method to print the 'location' of the grocery alongside the grocery name.
    * Alternative considered: Can possibly add location as enumeration however different people might store groceries in different places thus better to set as String so that user is free to input location details however specific they want.
 
-&nbsp;
 ### 6. Edit grocery amount after using a grocery
    * A `Grocery` stores its `amount` as an attribute. All `Grocery` objects are then stored in an ArrayList in `GroceryList`, which entirely handles the editing of the `amount`.
 
-![Grocery (showing amount) and GroceryList class diagram](./diagrams/GroceryAmtGroceryList.png)
+![Grocery (showing amount) and GroceryList class diagram](./diagrams/GroceryAmt.png)
 
    * `GroceryList+editAmount()` is used to either decrease or directly set the `amount` of a `Grocery`. It takes in 2 parameters:
       1. details: String — User input read from `Scanner`.
@@ -153,35 +190,30 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
   * Additional checks specific to `use` ensure that the user only inputs a valid `int`, or that the `amount` must not be 0 beforehand.
   * Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
 
-&nbsp;
-### 7. Edit the cost of a grocery after adding.
+### 7. Edit the cost of a grocery after adding
 * when the command entered is `cost`, `editCost` in GroceryList will be executed.
   ![editCost sequence diagram](./diagrams/editCost.png)
 * Additional checks ensure that the user only inputs a valid `positive numeric` value.
 * Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
 
-&nbsp;
-### 8. Edit the threshold amount of a grocery after adding.
+### 8. Edit the threshold amount of a grocery after adding
 * when the command entered is `th`, `editThreshold` in GroceryList will be executed.
   ![editThreshold sequence diagram](./diagrams/editThreshold.png)
 * Additional checks ensure that the user only inputs a valid `positive integer`.
 * Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
 
-&nbsp;
 ### 9. View a list of groceries low in stock
 * When the command entered is `low`, `listLowStocks` in GroceryList will be executed.
 * This will create a new array list called `lowStockGroceries` with type `Grocery`
 * For each grocery in the current grocery list, `groceries`, execute `grocery.isLow()`. Add the grocery into `lowStockGroceries` if the return value is true.
 * Execute `printLowStocks(lowStockGroceries)` in GroceryUi to print out the list.
 
-&nbsp;
 ### 10. Input expiration date of each grocery when added
    * In Grocery class, the expiration field in the Grocery class was changed from a String to a LocalDate to standardize date handling.
    * In Grocery class, the setExpiration method was updated to accept a String input, convert it to a LocalDate using a specified format ("yyyy-MM-dd"), and then store this date.
-   * In UI class, the UI now includes a multi-step process to prompt the user for the year, month, and day of the grocery item's expiration date. This process ensures that the date is captured in a user-friendly manner and stored accurately.
+   * In UI class, the UI now includes a multistep process to prompt the user for the year, month, and day of the grocery item's expiration date. This process ensures that the date is captured in a user-friendly manner and stored accurately.
    * In GroceryList class, a new method, sortByExpiration, was added to allow sorting the list of groceries by their expiration dates in ascending order. This method utilizes the Collections.sort method with a lambda expression comparing the expiration dates of Grocery items.
 
-&nbsp;
 ### 11. Editing expiration date after it is added
    * In GroceryList class, modified the editExpiration method to parse String into LocalDate.
     * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameter:
@@ -189,6 +221,7 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
    * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`. 
 
 
+&nbsp;
 ## Product Scope
 ### Target user profile
 

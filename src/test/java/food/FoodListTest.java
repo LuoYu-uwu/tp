@@ -12,5 +12,4 @@ class FoodListTest {
         fl.addFood(food);
         assertTrue(fl.getFoods().contains(food), "Food should be added to the list.");
     }
-
 }

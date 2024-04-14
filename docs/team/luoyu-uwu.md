@@ -26,10 +26,11 @@ Given below are my contributions to the project.
     * User Guide:
         * Added documentation for the features `switch`, `cost`, `th`, `low`, `eat`, `view` and `update`.
     * Developer Guide:
-        * Added implementation details of the `list` and `listcost` feature.
-        * Added `Execute Command` sequence diagram.
-        * Added `Calories Management Mode` sequence diagram.
-        * Added `Profile Management Mode` sequence diagram.
+        * Added implementation details of the `list`, `listcost`, `th`, `cost` and `low` feature.
+        * Added `Execute Command`, `Calories Management Mode`, `Profile Management Mode` and `Grocery Management Mode` sequence diagram.
+        * Added `addOrDelGrocery`, `editGrocery`, and `viewListOrHelp` sequence diagram.
+        * Added `editCost` and `editThreshold` sequence diagram.
+        * Added `class diagram` for Calories and Profile Management Mode.
 
 * Review/mentoring contributions:
     * [#18](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/18) ,

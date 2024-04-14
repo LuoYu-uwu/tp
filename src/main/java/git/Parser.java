@@ -370,8 +370,10 @@ public class Parser {
             handleLocationCommands(command, commandParts[1]);
         } else if (index == GroceryCommand.FIND.ordinal()) {
             groceryList.findGroceries(commandParts[1]);
+        } else if (index == GroceryCommand.VIEW.ordinal()) {
+            groceryList.viewGrocery(commandParts[1]);
         } else {
-            viewListOrHelp(command, commandParts);
+            handleListOrHelp(command, commandParts);
         }
     }
 
@@ -429,9 +431,11 @@ public class Parser {
         case EXP:
             groceryList.editExpiration(commandParts[1]);
             break;
+
         case CAT:
             groceryList.editCategory(commandParts[1]);
             break;
+
         case AMT:
         case USE:
             groceryList.editAmount(commandParts[1], commandParts[0].equals("use"));
@@ -495,18 +499,28 @@ public class Parser {
     }
 
     /**
-     * Handles commands related to viewing the grocery list, getting help, or switching modes.
+     * Checks if the user input for `list` commands are valid i.e. no other words.
+     *
+     * @param commandParts User inputs.
+     * @throws InvalidCommandException Thrown when there is another word after `list`.
+     */
+    private void checkListCommand(String[] commandParts) throws InvalidCommandException {
+        if (!commandParts[1].isBlank()) {
+            throw new InvalidCommandException();
+        }
+    }
+
+    /**
+     * Handles commands related to listing the grocery list, getting help, or switching modes.
      *
      * @param command Command keyword of data type Enum.
+     * @param commandParts User inputs.
      * @throws GitException Exception thrown depending on specific error.
      */
-    private void viewListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
+    private void handleListOrHelp(GroceryCommand command, String[] commandParts) throws GitException {
+        checkListCommand(commandParts);
+
         switch (command) {
-
-        case VIEW:
-            groceryList.viewGrocery(commandParts[1]);
-            break;
-
         case LIST:
             groceryList.listGroceries();
             break;
@@ -541,12 +555,8 @@ public class Parser {
             break;
 
         case EXIT:
-            if (commandParts[1].isEmpty()) {
-                System.out.println("bye bye!");
-                isRunning = false;
-            } else {
-                throw new InvalidCommandException();
-            }
+            System.out.println("bye bye!");
+            isRunning = false;
             break;
 
         default:

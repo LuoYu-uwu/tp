@@ -186,7 +186,7 @@ public class Grocery {
             this.unit = "ml";
             break;
         default:
-            this.unit = "units";
+            this.unit = "";
             break;
         }
     }

@@ -126,10 +126,16 @@ public class GroceryList {
             throw new EmptyInputException("grocery");
         }
 
-        // Split the input into the grocery name and the detail part.
-        String[] detailParts = details.split(parameter, 2);
 
-        // Check if the grocery exists
+        // Split the input into the grocery name and the detail part.
+        String[] detailParts;
+        if (command.equals("cost")) {
+            detailParts = details.split("\\$", 2);
+        } else {
+            detailParts = details.split(parameter, 2);
+        }
+
+        // Check iin the grocery exists
         if (!isGroceryExists(detailParts[0].strip())) {
             throw new NoSuchObjectException("grocery (" + detailParts[0].strip() + ")");
         }
@@ -189,7 +195,7 @@ public class GroceryList {
         Grocery grocery = getGrocery(catParts[0].strip());
         String newCategory = catParts[1].strip();
 
-        grocery.setCategory(newCategory);
+        grocery.setCategory(newCategory.toUpperCase());
         GroceryUi.printCategorySet(grocery);
         storage.saveGroceryFile(getGroceries());
     }
@@ -278,7 +284,7 @@ public class GroceryList {
      * @throws GitException If the input new cost is not numeric.
      */
     public void editCost(String details) throws GitException {
-        String[] costParts = checkDetails(details, "cost", "\\$");
+        String[] costParts = checkDetails(details, "cost", "$");
         Grocery grocery = getGrocery(costParts[0].strip());
         String price = costParts[1].strip();
 

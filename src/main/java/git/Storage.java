@@ -106,7 +106,7 @@ public class Storage {
             int threshold = parts[2].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[2].trim());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate expiration = parts[3].equals("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
-            String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim();
+            String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim().toUpperCase();
             double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
             Location location = null;
             String locString = parts[6].strip();

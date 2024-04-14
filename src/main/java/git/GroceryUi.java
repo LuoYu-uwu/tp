@@ -267,7 +267,11 @@ public class GroceryUi {
      */
     public String promptForCategory(){
         System.out.println("Please enter the category (e.g. fruit):");
-        return in.nextLine().trim();
+        String category = in.nextLine().trim();
+        if (category.isBlank()) {
+            System.out.println("No category specified - will be left empty.");
+        }
+        return category;
     }
 
     /**
@@ -457,7 +461,7 @@ public class GroceryUi {
             case '1':
                 System.out.println("Including Category");
                 String category = singleGroceryUi.promptForCategory();
-                grocery.setCategory(category);
+                grocery.setCategory(category.toUpperCase());
                 break;
 
             case '2':

@@ -13,6 +13,7 @@ It allows users to track and manage their groceries around their home easily.
 - [Features](#features)
   - [Switching between different modes: `switch`](#switching-between-different-modes-switch)
   - [Grocery management mode](#grocery-management-mode)
+    - [Viewing help: `help`](#viewing-help-help)
     - [Add / Edit / Delete Groceries](#add--edit--delete-groceries)
       - [Adding a new grocery: `add`](#adding-a-new-grocery-add)
       - [Adding multiple groceries: `addmulti`](#adding-multiple-groceries-addmulti)
@@ -32,6 +33,7 @@ It allows users to track and manage their groceries around their home easily.
       - [Viewing groceries that are low in stock: `low`](#viewing-groceries-that-are-low-in-stock-low)
       - [Viewing groceries expiring in the next 3 days: `expiring`](#viewing-groceries-expiring-in-the-next-3-days-expiring)
       - [Listing all groceries: `list`](#listing-all-groceries-list)
+      - [Listing all groceries by category: `listcat`](#listing-all-groceries-by-category-listcat)
       - [Listing all groceries by price: `listcost`](#listing-all-groceries-by-price-listcost)
       - [Listing all groceries by expiration date: `listexp`](#listing-all-groceries-by-expiration-date-listexp)
       - [Listing storage locations and their groceries: `listloc`](#listing-storage-locations-and-their-groceries-listloc)
@@ -77,7 +79,7 @@ GiT comes in different modes and will prompt the user to choose their desired mo
 
 Format: `switch`
 
-* Enter the desired mode to switch to after inputting `switch`.
+* No other word is to be entered after `switch`. Instead, wait for GiT to prompt you to enter the desired mode to switch to.
 
 Example of usage:
 
@@ -103,6 +105,23 @@ Here are some ways you can maange your groceries!
 > <br> e.g. `store GROCERY l/LOCATION` works the same using `freezer` or `FREEZER`.
 > * The actual output may differ slightly from the examples due to the addition of lines for better user readability.
 
+### Viewing help: `help`
+Prints all commands and a short description of what they do.
+
+Format: `help`
+
+* No other word is to be entered after `help`.
+
+Example of usage:
+
+```
+>> help
+
+Here are some ways you can manage your groceries!
+...
+```
+
+&nbsp;
 ### Add / Edit / Delete Groceries
 
 ### Adding a new grocery: `add`
@@ -122,7 +141,7 @@ Format: `add GROCERY`
 * Any details not included here can be edited using other commands.
   * The only detail can cannot be included here is the rating, which is edited using [rate](#adding-rating-and-review-of-a-grocery-rate).
 
-Example of usage :
+Example of usage:
 ```
 >> add milk
 
@@ -168,7 +187,7 @@ Format: `addmulti`
   2. Additional details to include
      * The interface is the same as the one for [add](#adding-a-new-grocery-add).
 
-Example of usage :
+Example of usage:
 
 ```
 >> addmulti
@@ -197,6 +216,7 @@ Sets the category of a grocery.
 Format: `cat GROCERY c/CATEGORY`
 
 * `CATEGORY` must be a valid String.
+* `CATEGORY` will be stored in uppercase.
 
 Example of usage:
 ```
@@ -297,7 +317,7 @@ Example of usage:
 ### Setting the cost of a grocery: `cost`
 Sets the cost of a grocery.
 
-Format: `cost GROCERY  $PRICE`
+Format: `cost GROCERY $PRICE`
 
 * `PRICE` must be a valid numerical value.
 
@@ -305,6 +325,7 @@ Example of usage:
 
 ```
 >> cost milk $1.20
+
 milk is now $1.20
 ```
 
@@ -322,6 +343,7 @@ Example of usage:
 
 ```
 >> th milk a/1
+
 milk's threshold is now 1
 ```
 
@@ -417,6 +439,8 @@ Shows a list of groceries below the threshold amount.
 
 Format: `low`
 
+* No other word is to be entered after `low`.
+
 Example of usage:
 
 ```
@@ -429,31 +453,28 @@ Time to top up these groceries!
 
 &nbsp;
 ### Viewing groceries expiring in the next 3 days: `expiring`
-Shows a list of groceries that are expiring in the next 3 days.
+Shows a list of groceries that are expiring in the next 3 days. 
+Sends an email notification if needed.
 
 Format: `expiring`
 
-Example of usage:
-
-`expiring`
-
-
-&nbsp;
-### Presenting all expiring groceries: `expiring`
-Show all the expiring groceries and send email notification if needed.
-
-Format: `expiring`
+* No other word is to be entered after `expiring`.
 
 Example of usage:
 
 ```
-expiring
+>> expiring
+
 Checking for groceries nearing expiration...   
 Milk is nearing expiration on 2024-04-10       
 Do you wish to send a notification email? (y/n)
-y
+
+>> y
+
 Please enter your email to receive notifications:
-example@gamil.com
+
+>> example@gamil.com
+
 Sending notification email...
 Email sent successfully to example@gmail.com
 ```
@@ -464,26 +485,55 @@ Shows a list of all groceries you have.
 
 Format: `list`
 
+* No other word is to be entered after `list`.
+
 Example of usage:
 
 ```
 >> list
+
 Here are your groceries!
- - milk, amount: 0 units, cost: $1.20
- - apple, amount: 0 units, cost: $2.00
- - coke, cost: $1.00
+ - coke (SODA), cost: $1.00
+ - milk (DAIRY), amount: 0 units, cost: $1.20
+ - apple (FRUIT), amount: 0 units, cost: $2.00
 ```
+
+
+&nbsp;
+### Listing all groceries by category: `listcat`
+Shows a list of all groceries you have, sorted by category alphabetically.
+
+Format: `listcat`
+
+* No other word is to be entered after `listcat`.
+* Grocery list is sorted, causing the order shown by `list` to change.
+
+Example of usage:
+
+```
+>> listcat
+
+Here are your groceries!
+ - milk (DAIRY), amount: 0 units, cost: $1.20
+ - apple (FRUIT), amount: 0 units, cost: $2.00
+ - coke (SODA), cost: $1.00
+```
+
 
 &nbsp;
 ### Listing all groceries by price: `listcost`
-Shows a list of all groceries you have, sorted by price.
+Shows a list of all groceries you have, sorted by descending price.
 
 Format: `listcost`
+
+* No other word is to be entered after `listcost`.
+* Grocery list is sorted, causing the order shown by `list` to change.
 
 Example of usage:
 
 ```
 >> listcost
+
 Here are your groceries!
  - apple, amount: 0 units, cost: $2.00
  - milk, amount: 0 units, cost: $1.20
@@ -493,13 +543,23 @@ Here are your groceries!
 
 &nbsp;
 ### Listing all groceries by expiration date: `listexp`
-Shows a list of all groceries you have, sorted by expiration date.
+Shows a list of all groceries you have, sorted by expiration date
+i.e. earliest expiring item at the top.
 
 Format: `listexp`
 
+* No other word is to be entered after `listexp`.
+* Grocery list is sorted, causing the order shown by `list` to change.
+
 Example of usage:
 
-`listexp`
+```
+>> listexp
+
+Here are your groceries!
+ - meat (MEAT), expiration: 2024-04-10
+ - cheese (DAIRY), expiration: 2025-12-12
+```
 
 
 &nbsp;
@@ -794,6 +854,8 @@ Exits GiT, regardless of which mode you are in.
 
 Format: `exit`
 
+* No other word is to be entered after `exit`.
+
 Example of usage:
 
 ```
@@ -836,6 +898,7 @@ For instance, grocery data is stored in `groceryList.txt`.
 
 | Command                                                      | Format                          |
 |--------------------------------------------------------------|---------------------------------|
+| View help                                                    | `help`                          |
 | Add grocery                                                  | `add GROCERY`                   |
 | Add multiple groceries                                       | `addmulti`                      |
 | Set grocery category                                         | `cat GROCERY c/CATEGORY`        |
@@ -853,6 +916,7 @@ For instance, grocery data is stored in `groceryList.txt`.
 | View groceries that are low in stock                         | `low`                           |
 | View groceries expiring in the next 3 days                   | `expiring`                      |
 | List groceries                                               | `list`                          |
+| List groceries by category                                   | `listcat`                       |
 | List groceries by price                                      | `listcost`                      |
 | List groceries by expiration date                            | `listexp`                       |
 | List storage locations <br> List groceries in given location | `listloc [LOCATION]`            |

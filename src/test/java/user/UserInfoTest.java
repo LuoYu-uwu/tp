@@ -1,16 +1,16 @@
 package user;
 
 import exceptions.FailToCalculateCalories;
-import exceptions.GitException;
 import exceptions.InsufficientInfoException;
 import food.Food;
-import food.FoodList;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserInfoTest {
 

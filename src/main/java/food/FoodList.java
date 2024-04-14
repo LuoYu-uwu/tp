@@ -1,6 +1,5 @@
 package food;
 
-import exceptions.emptyinput.EmptyInputException;
 import git.GroceryUi;
 import java.util.ArrayList;
 import java.util.List;

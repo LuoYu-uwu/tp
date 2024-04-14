@@ -581,6 +581,17 @@ Stores information needed to calculate and manage calories intake.
 
 Format: `update`
 
+User will be prompt for the following details:
+  * `name`
+  * `weight`: A positive numeric value is expected
+  * `height`: A positive numeric value is expected
+  * `age`: A positive integer is expected
+  * `gender`: F / M / others
+    * Input is not case sensitive
+    * if `other` is entered, 
+  * `activeness`
+  * `aim`
+
 Example of usage:
 
 `update`

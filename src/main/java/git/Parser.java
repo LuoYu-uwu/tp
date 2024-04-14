@@ -88,7 +88,7 @@ public class Parser {
         this.currentMode = selectedMode;
         Mode mode;
         try {
-            mode = Mode.valueOf(currentMode.toUpperCase());;
+            mode = Mode.valueOf(currentMode.toUpperCase());
         } catch (Exception e) {
             throw new InvalidCommandException();
         }
@@ -252,7 +252,7 @@ public class Parser {
      * @param commandParts Fragments of the command entered by the user.
      * @throws GitException Exception thrown depending on specific error.
      */
-    public void recipeManagement(String[] commandParts) throws GitException, EmptyInputException {
+    public void recipeManagement(String[] commandParts) throws GitException {
         RecipeCommand command;
         try {
             command = RecipeCommand.valueOf(commandParts[0].toUpperCase());
@@ -271,10 +271,10 @@ public class Parser {
             }
             String ingredients  = recipeUi.promptForIngredients();
             String[] ingredientsList = ingredients.split("[,]");
-            ArrayList<String> ingredientsArr = new ArrayList<String>(Arrays.asList(ingredientsList));
+            ArrayList<String> ingredientsArr = new ArrayList<>(Arrays.asList(ingredientsList));
             String steps  = recipeUi.promptForSteps();
             String[] stepsList = steps.split("[.]");
-            ArrayList<String> stepsArr = new ArrayList<String>(Arrays.asList(stepsList));
+            ArrayList<String> stepsArr = new ArrayList<>(Arrays.asList(stepsList));
             recipeList.addRecipe(new Recipe(title, ingredientsArr, stepsArr));
             break;
 

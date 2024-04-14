@@ -1,9 +1,20 @@
 # Developer Guide
 
+- [Acknowledgements](#acknowledgements)
+- [Design & Implementation](#design--implementation)
+  - [Designs](#_designs_)
+  - [Implementation](#_implementation_)
+- [Product Scope](#product-scope)
+  - [Target user profile](#target-user-profile)
+  - [Target user profile](#value-proposition)
+- [User Stories](#user-stories)
+- [Non-functional Requirements](#non-functional-requirements)
+- [Glossary](#glossary)
+- [Instructions for manual testing](#instructions-for-manual-testing)
+
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
-This project makes use of several open-source software and libraries. We acknowledge and are grateful to the community for these contributions:
+Grocery in Time (GiT) makes use of several open-source software and libraries. We acknowledge and are grateful to the community for these contributions:
 
 ### Libraries
 
@@ -43,37 +54,36 @@ This project makes use of several open-source software and libraries. We acknowl
 We would like to thank the developers and contributors of these projects for their efforts in maintaining such useful resources. Their hard work and dedication make software development more efficient and error-free.
 
 
-## Design & implementation
-
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+## Design & Implementation
 
 ### _Designs_
 ### 1. Execute different commands based on the modes
 ![Execute different commands](./diagrams/executeCommand.png)
-* when 'executeCommand'  is executed in Parser, different methods in Parser will be self invoked based on the selected mode.
-* if mode is `grocery`, execute `groceryManagement`
-* if mode is `calories`, execute `caloriesManagement`
-* if mode is `profile`, execute `profileManagement`
-* if mode is `recipe`, execute `recipeManagement`
+* When `executeCommand`  is executed in `Parser`, different methods will be self invoked based on the selected mode.
+  * If mode is `grocery`, execute `groceryManagement`.
+  * If mode is `calories`, execute `caloriesManagement`.
+  * If mode is `profile`, execute `profileManagement`.
+  * If mode is `recipe`, execute `recipeManagement`.
 
-The following is a class diagram containing Food, FoodList and UserInfo
+The following is a class diagram containing Food, FoodList and UserInfo.
+
 ![Food, FoodList, UserInfo](./diagrams/UserInfo.png)
 
 ### 2. Calories Management Mode
 ![Commands for managing calories](./diagrams/caloriesManagement.png)
-   * when `caloriesManagement` is executed in Parser, different actions will be carried out based on the commands.
-   * if `eat`, store the name and calories of the input food
-   * if `view`, display all the foods consumed
+* When `caloriesManagement` is executed in `Parser`, different actions will be carried out based on the commands.
+   * If `eat`, store the name and calories of the input food.
+   * If `view`, display all the foods consumed.
 
 ### 3. Profile Management Mode
 ![Commands for managing profile](./diagrams/profileManagement.png)
-  * when `profileManagement` is executed in Parser, different actions will be carried out based on the commands.
-  * if `update`, store the user data required for calories calculation.
-  * if `view`, display user information
+* When `profileManagement` is executed in `Parser`, different actions will be carried out based on the commands.
+  * If `update`, store the user data required for calories calculation.
+  * If `view`, display user information.
 
 ### 4. Grocery Management Mode
 ![Commands for managing grocery](./diagrams/groceryManagement.png)
-* different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
+* Different methods in Parser will be self invoked based on the index of the command in enum class GroceryCommand.
 
 #### 4.1 addOrDelGrocery
 ![addOrDelGrocery](./diagrams/addOrDelGrocery.png)
@@ -86,6 +96,7 @@ To edit the information of an existing grocery.
 #### 4.3 viewListOrHelp
 ![viewListOrHelp](./diagrams/viewListOrHelp.png)
 
+### _Implementation_
 
 ### 1. View all groceries added
    * When the command entered is `list`, `listGroceries()` in GroceryList will be executed.
@@ -98,7 +109,7 @@ To edit the information of an existing grocery.
    * If the current grocery list, `groceries`, is empty, execute `printNoGrocery()` in GroceryUi.
    * Else, create a new array list name `groceriesByCost` with type `Grocery`.
    * Assign all the values in current grocery list `groceries` to `groceriesByCost`.
-   * Execute `sort` in `groceriesByCost` with a lambba function that compares the `getCost()` value of each Grocery in the list.
+   * Execute `sort` in `groceriesByCost` with a lambda function that compares the `getCost()` value of each Grocery in the list.
    * Then execute `Collections.reverse(groceriesByCost)` to reverse the list so that the cost is sorted in descending order.
    * Lastly, execute `printGroceryList(groceriesByCost)` in GroceryUi.
 &nbsp;
@@ -172,17 +183,16 @@ Our app then executes `GroceryList+editAmount()` with parameter `use = true`, as
 
 &nbsp;
 ### 11. Editing expiration date after it is added
-   * In GroceryList class, modified the editExpiration method to parse String into localdate.
+   * In GroceryList class, modified the editExpiration method to parse String into LocalDate.
     * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameter:
       1. details: String — User input read from `Scanner`.
    * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`. 
 
 
-## Product scope
+## Product Scope
 ### Target user profile
 
 Our target user is someone who regularly goes grocery shopping, and would like to track and manage their inventory of groceries.
-
 
 ### Value proposition
 
@@ -193,32 +203,53 @@ Users are able to edit and manage the category, amount, expiration date, and sto
 When groceries are running low, the app can generate a shopping list to remind users of what they need to buy.
 Furthermore, the app can generate a list of items that are expiring soon, reminding users to consume their groceries as soon as possible.
 
+GiT also comes with other modes for recipe management and calorie tracking.
+
 ## User Stories
 
-| Version | As a ...                      | I want to ...                               | So that I can ...                                       |
-|---------|-------------------------------|---------------------------------------------|---------------------------------------------------------|
-| v1.0    | new user                      | see instructions on how to use the app      | refer to them when I forget how to use the application  |
-| v1.0    | user                          | add groceries to the app                    | manage all my groceries                                 |
-| v1.0    | user                          | view all my groceries                       | know what I have bought                                 |
-| v1.0    | user                          | delete groceries from the list              | stop tracking those groceries                           |
-| v1.0    | user                          | add the amount of a grocery                 | keep track of the amount of that item I have            |
-| v1.0    | user                          | add the expiration date of the grocery      | keep track of when my items expire easily               |
-| v2.0    | financially-aware user        | add the cost of the groceries               | know how much I am spending                             |
-| v2.0    | health-conscious user         | categorise my groceries                     | know what types of groceries I have                     |
-| v2.0    | user with many storage spaces | add the location of where an item is stored | see where I keep my groceries                           |
-| v2.0    | user who consumes groceries   | track the usage of my groceries             | know how much I have left                               |
-| v2.0    | user who replenishes groceries| set threshold amount for the groceries      | know what groceries I should top up                     |
-| v2.0    | user who cooks with recipes   | create and keep my own version of recipes   | refer to my own recipes when I cook                     |
-| v2.0    | health-conscious user         | store the calories of the food I consumed   | track my calories intake and know how much I should eat |
+| Version | As a ...                       | I want to ...                                       | So that I can ...                                       |
+|---------|--------------------------------|-----------------------------------------------------|---------------------------------------------------------|
+| v1.0    | new user                       | see instructions on how to use the app              | refer to them when I forget how to use the application  |
+| v1.0    | user                           | add groceries to the app                            | manage all my groceries                                 |
+| v1.0    | user                           | view all my groceries                               | know what I have bought                                 |
+| v1.0    | user                           | delete groceries from the list                      | stop tracking those groceries                           |
+| v1.0    | user                           | add the amount of a grocery                         | keep track of the amount of that item I have            |
+| v1.0    | user                           | add the expiration date of the grocery              | keep track of when my items expire easily               |
+| v2.0    | user who consumes groceries    | track the usage of my groceries                     | know how much I have left                               |
+| v2.0    | financially-aware user         | track and view the cost of my groceries             | know how much I am spending                             |
+| v2.0    | health-conscious user          | categorise my groceries                             | know what types of groceries I have                     |
+| v2.0    | user with many storage spaces  | add the location of where an item is stored         | see where I keep my groceries                           |
+| v2.0    | user with many storage spaces  | find out what groceries are stored in each location | know where to find my groceries                         |
+| v2.0    | forgetful user                 | get a list of groceries that are low in stock       | remind myself to buy them on my next grocery trip       |
+| v2.0    | forgetful user                 | find my groceries by name                           | know if I have tracked that grocery                     |
+| v2.0    | user who replenishes groceries | set threshold amount for the groceries              | know what groceries I should top up                     |
+| v2.0    | user who cooks with recipes    | create and keep my own version of recipes           | refer to my own recipes when I cook                     |
+| v2.0    | health-conscious user          | store the calories of the food I consumed           | track my calories intake and know how much I should eat |
+| v2.0    | environmentally-conscious user | get a list of items that are expiring soon          | prioritise using them to reduce food waste              |
+| v2.0    | reviewer                       | rate and review products                            | know if I like them                                     |
+| v2.0    | meticulous user                | add remarks to my groceries                         | know extra information about my groceries               |
+| v2.1    | user                           | store my past grocery information                   | access information about the groceries I am tracking    |
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+* GiT is able to handle large amounts of data, stored in `/data/groceryList.txt`.
+* GiT should be easy for a new user to grasp, and allow experienced users to use different functionalities quickly.
 
 ## Glossary
 
-* *glossary item* - Definition
+* *Java* - Object-oriented programming language used to create Grocery in Time.
+* *Command Line Interface* - Text-based user interface to allow users to interact with Grocery in Time.
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+First, testers can install GiT by following these instructions:
+
+1. Ensure that you have Java 11 or above installed.
+2. Down the latest version of `Grocery in Time` from [here](https://github.com/AY2324S2-CS2113-T12-2/tp/releases).
+3. Open a command terminal, `cd` into the folder where the JAR file is
+   and use `java -jar Git.jar` to run Grocery in Time.
+
+To get you started, we have provided some sample data [here](https://github.com/AY2324S2-CS2113-T12-2/tp/tree/master/sampleData).
+To load this data into GiT, simply move `groceryList.txt` into the `/data` directory that will be created in the same directory as `Git.jar` after running it at least once.
+
+Do check out our [User Guide](UserGuide.md) to see what functionalities GiT offers. Happy testing!

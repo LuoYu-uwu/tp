@@ -16,7 +16,8 @@ public class StorageTest {
         String groceryString = "Meat | 0 | null | 2024-04-14 | Meat | 0.00 | bottom freezer ";
         Storage storage = new Storage();
         Grocery grocery = storage.parseGrocery(groceryString);
-        String expectedGrocery = "Meat (MEAT), amount: 0 grams, expiration: 2024-04-14, cost: $0.00, location: bottom freezer";
+        String expectedGrocery = "Meat (MEAT), amount: 0 grams, expiration: 2024-04-14, " +
+                "cost: $0.00, location: bottom freezer";
         assertEquals(expectedGrocery, grocery.printGrocery());
     }
 

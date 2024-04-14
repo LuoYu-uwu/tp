@@ -4,7 +4,6 @@ import exceptions.GitException;
 import exceptions.FailToCalculateCalories;
 import exceptions.InsufficientInfoException;
 import food.Food;
-import food.FoodList;
 import git.Storage;
 
 import java.util.List;
@@ -28,6 +27,8 @@ public class UserInfo {
         this.weight = 0;
         this.height = 0;
         this.age = 0;
+        this.BMR = 0;
+        this.AMR = 0;
         this.currentCalories = 0;
         this.storage = new Storage();
     }
@@ -42,6 +43,7 @@ public class UserInfo {
      * @param weight User's weight.
      */
     public void setWeight(double weight) {
+        assert weight >= 0 : "User should not be allowed to input negative weight";
         this.weight = weight;
     }
 
@@ -51,6 +53,7 @@ public class UserInfo {
      * @param height User's height.
      */
     public void setHeight(double height) {
+        assert height >= 0 : "User should not be allowed to input negative height";
         this.height = height;
     }
 
@@ -60,6 +63,7 @@ public class UserInfo {
      * @param age User's age.
      */
     public void setAge(int age) {
+        assert age >= 0: "User should not be allowed to input negative age";
         this.age = age;
     }
 
@@ -116,7 +120,7 @@ public class UserInfo {
      *
      * @throws InsufficientInfoException When there is not enough information for calculation.
      */
-    private void calBMR() throws InsufficientInfoException {
+    public void calBMR() throws InsufficientInfoException {
         if (this.weight == 0 || this.height == 0 || this.age == 0) {
             throw new InsufficientInfoException();
         }
@@ -132,9 +136,9 @@ public class UserInfo {
     /**
      * Calculate's the user's Active Metabolic Rate given the activeness.
      *
-     * @throws GitException When invalid activeness was given.
+     * @throws FailToCalculateCalories When invalid activeness was given.
      */
-    private void calAMR() throws GitException {
+    public void calAMR() throws FailToCalculateCalories {
         switch (this.activeness) {
         case "inactive":
             this.AMR = this.BMR * 1.2;
@@ -159,9 +163,9 @@ public class UserInfo {
     /**
      * Calculate's the user's target calories given the aim.
      *
-     * @throws GitException When invalid aim was given.
+     * @throws FailToCalculateCalories When invalid aim was given.
      */
-    public void setCaloriesCap() throws GitException {
+    public void setCaloriesCap() throws FailToCalculateCalories {
         switch (this.aim) {
         case "lose":
             this.caloriesCap = (int)(this.AMR*0.8);
@@ -182,9 +186,10 @@ public class UserInfo {
      * Only check if it has exceeded the target calories if sufficient information was given.
      *
      * @param foods The list of consumed food.
-     * @throws GitException When insufficient information about the user was given.
+     * @throws InsufficientInfoException When insufficient information about the user was given.
      */
-    public void consumptionOfCalories(List<Food> foods) throws GitException{
+    public void consumptionOfCalories(List<Food> foods) throws InsufficientInfoException{
+        assert !(foods.isEmpty()) : "Food should be added into list before storing consumed calories";
         this.currentCalories = 0;
         for (Food food : foods) {
             this.currentCalories = (int)(food.getCalories() + this.currentCalories);
@@ -214,6 +219,7 @@ public class UserInfo {
         String target = "Target calories intake: " + this.caloriesCap;
         return userName + height + weight + age + gender + target;
     }
+
     /**
      * Stores user details as a string in format for saving.
      *

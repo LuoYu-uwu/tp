@@ -45,6 +45,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads groceries from the file.
      * @return groceryList loaded from the file. If file does not exist, returns an empty groceryList.
@@ -76,12 +77,14 @@ public class Storage {
         }
         return groceryList;
     }
+
     /**
      * Parses a string from the file into a grocery object.
+     *
      * @param line The string to parse.
      * @return The parsed grocery object. Returns null if file is corrupted.
      */
-    private Grocery parseGrocery(String line) {
+    public Grocery parseGrocery(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length != 7) {
             return null;
@@ -92,21 +95,7 @@ public class Storage {
             String expiration = parts[3].equals("null") ? "" : parts[3].trim();
             String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim().toUpperCase();
             double cost = parts[5].equalsIgnoreCase("null") ? -1 : Double.parseDouble(parts[5].trim());
-
-            Location location = null;
-            String locString = parts[6].strip();
-            if (!locString.equalsIgnoreCase("null")) {
-                try {
-                    location = LocationList.findLocation(locString);
-                } catch (NoSuchObjectException e) {
-                    try {
-                        LocationList.addLocation(locString);
-                        location = LocationList.findLocation(locString);
-                    } catch (GitException ignore) {
-                        assert !locString.isBlank() : "No empty strings at this point.";
-                    }
-                }
-            }
+            Location location = parseGroceryLocation(parts[6].strip());
 
             Grocery grocery = new Grocery(name);
             if (amount != -1) {
@@ -129,6 +118,31 @@ public class Storage {
             return grocery;
         }
     }
+
+    /**
+     * Parses the String containing location information into the location, if there is one.
+     *
+     * @param locString String containing information about a location.
+     * @return Location object.
+     */
+    public Location parseGroceryLocation(String locString) {
+        Location location = null;
+        if (!locString.equalsIgnoreCase("null")) {
+            try {
+                location = LocationList.findLocation(locString);
+            } catch (NoSuchObjectException e) {
+                try {
+                    LocationList.addLocation(locString);
+                    location = LocationList.findLocation(locString);
+                } catch (GitException ignore) {
+                    assert !locString.isBlank() : "No empty strings at this point.";
+                }
+            }
+        }
+
+        return location;
+    }
+
     /**
      * Wipes the contents of the specified file.
      *
@@ -144,6 +158,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Saves the current list of recipes to the file.
      * @param recipeArr The list of recipes to save.
@@ -164,6 +179,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads recipes from the file.
      * @return recipeList loaded from the file. If file does not exist, returns an empty recipeList.
@@ -194,6 +210,7 @@ public class Storage {
         }
         return recipeList;
     }
+
     /**
      * Parses a string from the file into a Recipe object.
      *
@@ -213,6 +230,7 @@ public class Storage {
             return new Recipe(title, ingredientsList, stepsList);
         }
     }
+
     /**
      * Saves the current user profile to the file.
      * @param userInfo The user profile to save.
@@ -231,6 +249,7 @@ public class Storage {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads the user profile from the file.
      * @return userInfo loaded from the file. If file does not exist, returns an empty userInfo.
@@ -261,6 +280,7 @@ public class Storage {
         }
         return userInfo;
     }
+
     /**
      * Parses a string from the file into a userInfo object.
      *
@@ -302,6 +322,7 @@ public class Storage {
         }
         return true;
     }
+
     /**
      * Checks if the user's profile file exists.
      *

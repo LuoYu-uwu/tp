@@ -1,6 +1,7 @@
 package grocery;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import grocery.location.Location;
 import org.junit.jupiter.api.Test;
@@ -91,5 +92,35 @@ class GroceryTest {
         String message = "chicken (meat)" + ", amount: 1 grams" + ", expiration: "
                 + LocalDate.now().plusDays(1) + ", cost: $1.20, location: Pantry";
         assertEquals(message, grocery.printGrocery());
+    }
+
+    @Test
+    public void toSaveFormat_success() {
+        Grocery grocery = new Grocery("chicken", 1, 0, LocalDate.now().plusDays(1), "meat",1.20,new Location("Pantry"));
+        String formattedGrocery = grocery.toSaveFormat();
+        String expectedFormat = "chicken | 1 | null | 2024-04-15 | meat | 1.20 | Pantry ";
+        assertEquals(expectedFormat, formattedGrocery);
+    }
+
+
+    @Test
+    public void toSaveFormat_noAmountOrCost_success() {
+        Grocery grocery = new Grocery("burger");
+        String formattedGrocery = grocery.toSaveFormat();
+        String expectedFormat = "burger | null | null | null |  | null | null ";
+        assertEquals(expectedFormat, formattedGrocery);
+    }
+
+    @Test
+    public void setExpirationOnLoad_success() {
+        Grocery grocery = new Grocery("airplane food");
+        String expString = "2024-10-11";
+        grocery.setExpirationOnLoad(expString);
+
+        LocalDate actualDate = grocery.getExpiration();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String actualDateString = actualDate.format(formatter);
+        String expectedDateString = "2024-10-11";
+        assertEquals(expectedDateString, actualDateString);
     }
 }

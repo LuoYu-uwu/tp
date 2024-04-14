@@ -15,17 +15,16 @@ public class FoodList {
         foods = new ArrayList<>();
     }
 
+    public List<Food> getFoods() {
+        return foods;
+    }
+
     /**
      * Adds a new food into the list of food.
      *
      * @param food New consumed food.
-     * @throws EmptyInputException When food name entered is empty.
      */
-    public void addFood(Food food) throws EmptyInputException {
-        if (food.getName() == null) {
-            throw new EmptyInputException("food");
-        }
-
+    public void addFood(Food food) {
         try {
             foods.add(food);
             GroceryUi.printFoodAdded(food);

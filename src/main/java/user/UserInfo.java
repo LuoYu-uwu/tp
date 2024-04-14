@@ -4,7 +4,10 @@ import exceptions.GitException;
 import exceptions.FailToCalculateCalories;
 import exceptions.InsufficientInfoException;
 import food.Food;
+import food.FoodList;
 import git.Storage;
+
+import java.util.List;
 
 public class UserInfo {
     private String name;
@@ -93,9 +96,9 @@ public class UserInfo {
         setWeight(weight);
         setHeight(height);
         setAge(age);
-        setGender(gender);
-        setAim(aim);
-        setActiveness(activeness);
+        setGender(gender.toLowerCase());
+        setAim(aim.toLowerCase());
+        setActiveness(activeness.toLowerCase());
         try {
             calBMR();
             calAMR();
@@ -118,10 +121,10 @@ public class UserInfo {
             throw new InsufficientInfoException();
         }
         double result;
-        if(gender.equals("F")) {
-            result = 655 + (9.56 * this.weight) + (1.85 * this.height) - (4.68 * this.height);
+        if(gender.equalsIgnoreCase("F")) {
+            result = 655 + (9.56 * this.weight) + (1.85 * this.height) - (4.68 * this.age);
         } else {
-            result = 66.47 + (13.75 * this.weight) + (5 * this.height) - (6.76 * this.height);
+            result = 66.47 + (13.75 * this.weight) + (5 * this.height) - (6.76 * this.age);
         }
         this.BMR = result;
     }
@@ -178,11 +181,14 @@ public class UserInfo {
      * Calculates the total calories consumed.
      * Only check if it has exceeded the target calories if sufficient information was given.
      *
-     * @param food Consumed food.
+     * @param foods The list of consumed food.
      * @throws GitException When insufficient information about the user was given.
      */
-    public void consumptionOfCalories(Food food) throws GitException{
-        this.currentCalories = (int)(food.getCalories() + this.currentCalories);
+    public void consumptionOfCalories(List<Food> foods) throws GitException{
+        this.currentCalories = 0;
+        for (Food food : foods) {
+            this.currentCalories = (int)(food.getCalories() + this.currentCalories);
+        }
         if (this.weight == 0 || this.height == 0 || this.age == 0 ||
                 this.gender.isEmpty() || this.aim.isEmpty() || this.activeness.isEmpty()) {
             throw new InsufficientInfoException();

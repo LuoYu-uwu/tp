@@ -155,6 +155,14 @@ public class Grocery {
         this.remark = remark;
     }
 
+    public void setIsSetCost(boolean isSetCost) {
+        this.isSetCost = isSetCost;
+    }
+
+    public void setIsSetAmount(boolean isSetAmount) {
+        this.isSetAmount = isSetAmount;
+    }
+
     /**
      * Checks if the grocery is low in stock.
      *
@@ -213,6 +221,16 @@ public class Grocery {
     }
 
     /**
+     * Sets the expiration date when loading saved data.
+     *
+     * @param expiration The expiration date of the grocery as saved in the data.
+     */
+    public void setExpirationOnLoad(String expiration) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.expiration = LocalDate.parse(expiration, formatter);
+    }
+
+    /**
      * Sets the cost of the grocery.
      *
      * @param cost The cost of the grocery as a double.
@@ -246,10 +264,12 @@ public class Grocery {
         }
 
         String amountString = "";
-        if (amount != 0) {
-            amountString = ", amount: " + amount;
-        } else if (isSetAmount) {
-            amountString = ", amount: 0";
+        if (isSetAmount) {
+            if (amount != 0) {
+                amountString = ", amount: " + amount;
+            } else {
+                amountString = ", amount: 0";
+            }
         }
 
         String unitString = "";
@@ -263,10 +283,12 @@ public class Grocery {
         }
 
         String price = "";
-        if (cost != 0) {
-            price = ", cost: $" + String.format("%.2f", cost);
-        } else if (isSetCost) {
-            price = ", cost: $0.00";
+        if (isSetCost) {
+            if (cost != 0) {
+                price = ", cost: $" + String.format("%.2f", cost);
+            } else {
+                price = ", cost: $0.00";
+            }
         }
 
         String remarkString = "";
@@ -288,7 +310,7 @@ public class Grocery {
         assert !(this.name.isEmpty()) : "Grocery does not exist!!";
 
         String amountString;
-        if (amount != 0) {
+        if (isSetAmount) {
             amountString = "| " + amount + " ";
         } else {
             amountString = "| null ";
@@ -323,7 +345,7 @@ public class Grocery {
         }
 
         String price;
-        if (cost != 0) {
+        if (isSetCost) {
             price = "| " + String.format("%.2f", cost) + " ";
         } else {
             price = "| null ";

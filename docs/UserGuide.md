@@ -250,7 +250,7 @@ Format: `use GROCERY a/AMOUNT`
 
 * `AMOUNT` must be a valid integer.
 * If `AMOUNT` is greater than what the `GROCERY` has in stock, its amount will be reduced to 0.
-* If the amount of the `GROCERY` is already 0, GiT will let the user know and the amount stays at 0.
+* If the amount of the `GROCERY` is already 0 or is not set, GiT will let the user know it is out of stock.
 
 Example of usage:
 

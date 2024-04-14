@@ -126,7 +126,6 @@ public class GroceryList {
             throw new EmptyInputException("grocery");
         }
 
-
         // Split the input into the grocery name and the detail part.
         String[] detailParts;
         if (command.equals("cost")) {
@@ -226,12 +225,12 @@ public class GroceryList {
      * Sets the amount of an existing grocery.
      *
      * @param details User input.
-     * @param use True to reduce the amount of a grocery, false to set a new amount.
+     * @param isUse True to reduce the amount of a grocery, false to set a new amount.
      * @throws GitException Exception thrown depending on error.
      */
-    public void editAmount(String details, boolean use) throws GitException {
+    public void editAmount(String details, boolean isUse) throws GitException {
         String [] amtParts;
-        if (use) {
+        if (isUse) {
             amtParts = checkDetails(details, "use", "a/");
         } else {
             amtParts = checkDetails(details, "amt", "a/");
@@ -240,9 +239,9 @@ public class GroceryList {
         String amountString = amtParts[1].strip();
         int amount = checkAmount(amountString);
 
-        if (use && grocery.getAmount() == 0) {
+        if (isUse && grocery.getAmount() == 0) {
             throw new CannotUseException();
-        } else if (use) {
+        } else if (isUse) {
             amount = Math.max(0, grocery.getAmount() - amount);
         }
 

@@ -1,7 +1,6 @@
 package git;
 
 import exceptions.GitException;
-import exceptions.emptyinput.EmptyInputException;
 import exceptions.nosuch.NoSuchObjectException;
 import grocery.Grocery;
 import grocery.GroceryList;
@@ -14,26 +13,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import grocery.location.Location;
-import java.time.format.DateTimeFormatter;
 
 
 /**
  * Handles loading from and saving tasks to a file.
  */
 public class Storage {
-    private Grocery grocery;
-    private List<Grocery> groceries;
-    private GroceryList groceryList;
-    private Recipe recipe;
-    private RecipeList recipeList;
-    private UserInfo userInfo;
     /**
      * Saves the current list of groceries to the file.
      * @param groceries The list of groceries to save.
@@ -70,15 +61,10 @@ public class Storage {
                 try {
                     Grocery grocery = parseGrocery(line);
                     Location location = grocery.getLocation();
-                    if (grocery != null) { //if not corrupted
-                        if (location != null){
-                            location.addGrocery(grocery);
-                        }
-                        groceryList.addGrocery(grocery);
-                    } else {
-                        wipeFile(file);
-                        return new GroceryList();
+                    if (location != null){
+                        location.addGrocery(grocery);
                     }
+                    groceryList.addGrocery(grocery);
                 } catch (Exception e) {
                     wipeFile(file);
                     return new GroceryList();
@@ -96,18 +82,18 @@ public class Storage {
      * @param line The string to parse.
      * @return The parsed grocery object. Returns null if file is corrupted.
      */
-    private Grocery parseGrocery(String line) throws EmptyInputException {
+    private Grocery parseGrocery(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length != 7) {
             return null;
         } else {
             String name = parts[0].trim();
-            int amount = parts[1].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[1].trim());
-            int threshold = parts[2].equalsIgnoreCase("null") ? 0 : Integer.parseInt(parts[2].trim());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate expiration = parts[3].equals("null") ? null : LocalDate.parse(parts[3].trim(), formatter);
+            int amount = parts[1].equalsIgnoreCase("null") ? -1 : Integer.parseInt(parts[1].trim());
+            int threshold = parts[2].equalsIgnoreCase("null") ? -1 : Integer.parseInt(parts[2].trim());
+            String expiration = parts[3].equals("null") ? "" : parts[3].trim();
             String category = parts[4].equalsIgnoreCase("") ? "" : parts[4].trim().toUpperCase();
-            double cost = parts[5].equalsIgnoreCase("null") ? 0 : Double.parseDouble(parts[5].trim());
+            double cost = parts[5].equalsIgnoreCase("null") ? -1 : Double.parseDouble(parts[5].trim());
+
             Location location = null;
             String locString = parts[6].strip();
             if (!locString.equalsIgnoreCase("null")) {
@@ -122,7 +108,26 @@ public class Storage {
                     }
                 }
             }
-            return new Grocery(name, amount, threshold, expiration, category, cost, location);
+
+            Grocery grocery = new Grocery(name);
+            if (amount != -1) {
+                grocery.setAmount(amount);
+                grocery.setIsSetAmount(true);
+            }
+            if (threshold != -1) {
+                grocery.setThreshold(threshold);
+            }
+            if (cost != -1) {
+                grocery.setCost(cost);
+                grocery.setIsSetCost(true);
+            }
+            if (!expiration.isBlank()) {
+                grocery.setExpirationOnLoad(expiration);
+            }
+            grocery.setCategory(category);
+            grocery.setLocation(location);
+
+            return grocery;
         }
     }
     /**

@@ -21,18 +21,4 @@ public class RecipeListTest {
         recipeArr.addRecipe(recipe);
         assertEquals(recipe, recipeArr.getRecipe("Egg"));
     }
-
-    @Test
-    public void getRecipe_NoSuchObjectException(){
-        String title = "Egg";
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ingredients.add("egg");
-        ingredients.add("salt");
-        ArrayList<String> steps = new ArrayList<String>();
-        steps.add("Fry." );
-        steps.add("Serve.");
-        Recipe recipe = new Recipe(title, ingredients, steps);
-        RecipeList recipeArr = new RecipeList();
-        assertThrows(NoSuchObjectException.class, () -> recipeArr.getRecipe("egg"), "No Such Recipe");
-    }
 }

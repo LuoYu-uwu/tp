@@ -1,11 +1,15 @@
 package grocery;
 
+import exceptions.SameLocationException;
 import exceptions.commands.CommandWrongFormatException;
 import exceptions.CannotUseException;
 import exceptions.GitException;
 
+import exceptions.emptyinput.EmptyInputException;
+import exceptions.invalidinput.InvalidAmountException;
 import exceptions.nosuch.NoSuchObjectException;
 import grocery.location.Location;
+import grocery.location.LocationList;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -52,8 +56,6 @@ public class GroceryListTest {
         assertFalse(gl.isGroceryExists("Bananas"), "Grocery should not exist in the list.");
     }
 
-
-
     @Test
     public void editExpiration_success() {
         GroceryList gl = new GroceryList();
@@ -80,7 +82,6 @@ public class GroceryListTest {
         assertFalse(gl.getGroceries().isEmpty(), "Grocery list should contain items.");
     }
 
-    
     @Test
     public void editExpiration_noSuchGrocery_exceptionThrown() {
         try {
@@ -131,10 +132,35 @@ public class GroceryListTest {
     }
 
     @Test
+    public void editAmount_success() {
+        try {
+            GroceryList gl = new GroceryList();
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, new Location("Freezer")));
+            gl.editAmount("Meat a/5", false);
+            assertEquals(gl.getGrocery("Meat").getAmount(), 5);
+        } catch (GitException e) {
+            fail("Test should not fail.");
+        }
+    }
+
+    @Test
+    public void editAmount_noSuchGrocery_exceptionThrown() {
+        try {
+            GroceryList gl = new GroceryList();
+            gl.editAmount("Meat", false);
+        } catch (NoSuchObjectException e) {
+            String expectedMessage = "The grocery (Meat) does not exist!";
+            assertEquals(expectedMessage.trim(), e.getMessage().trim());
+        } catch (GitException e) {
+            fail("Expected a NoSuchObjectException, but another GitException was thrown");
+        }
+    }
+
+    @Test
     public void editAmount_wrongFormat_exceptionThrown() {
         try {
             GroceryList gl = new GroceryList();
-            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0,new Location("Freezer")));
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, new Location("Freezer")));
             gl.editAmount("Meat", false);
             fail("Expected a WrongFormatException to be thrown");
         } catch (CommandWrongFormatException e) {
@@ -148,10 +174,24 @@ public class GroceryListTest {
     }
 
     @Test
-    public void editAmountUseTrue_amountReaches0_success() {
-        GroceryList gl = new GroceryList();
+    public void editAmount_negativeInteger_exceptionThrown() {
         try {
-            gl.addGrocery(new Grocery("Meat", 5, 0, LocalDate.now(), "Meat", 0,new Location("Freezer")));
+            GroceryList gl = new GroceryList();
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, new Location("Freezer")));
+            gl.editAmount("Meat a/-5", false);
+        } catch (InvalidAmountException e) {
+            String expectedMessage = "Please input a valid integer that is greater than 0!";
+            assertEquals(expectedMessage.trim(), e.getMessage().trim());
+        } catch (GitException e) {
+            fail("Expected a InvalidAmountException, but another GitException was thrown");
+        }
+    }
+
+    @Test
+    public void editAmountUseTrue_amountReaches0_success() {
+        try {
+            GroceryList gl = new GroceryList();
+            gl.addGrocery(new Grocery("Meat", 5, 0, LocalDate.now(), "Meat", 0, new Location("Freezer")));
             gl.editAmount("Meat a/5", true);
         } catch (GitException e) {
             fail("editAmount_useTrue should not throw an exception");
@@ -171,6 +211,37 @@ public class GroceryListTest {
             assertEquals(expectedMessage, e.getMessage());
         } catch (GitException e) {
             fail("Expected a CannotUseException, but another GitException was thrown");
+        }
+    }
+
+    @Test
+    public void editLocation_noSuchLocation_success() {
+        try {
+            GroceryList gl = new GroceryList();
+            LocationList.addLocation("Cold part");
+            Location location = LocationList.findLocation("Cold part");
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, location));
+            gl.editLocation("Meat l/bottom freezer");
+            String finalLocation = gl.getGrocery("Meat").getLocation().getName();
+            assertEquals(finalLocation, "bottom freezer");
+        } catch (GitException ignore) {
+            fail("Location should be automatically created, so no exception thrown.");
+        }
+    }
+
+    @Test
+    public void editLocation_sameLocation_exceptionThrown() {
+        try {
+            GroceryList gl = new GroceryList();
+            LocationList.addLocation("Freezer");
+            Location location = LocationList.findLocation("Freezer");
+            gl.addGrocery(new Grocery("Meat", 0, 0, LocalDate.now(), "Meat", 0, location));
+            gl.editLocation("Meat l/freezer");
+        } catch (SameLocationException e) {
+            String expectedMessage = "Meat is already stored in Freezer.";
+            assertEquals(expectedMessage, e.getMessage());
+        } catch (GitException ignore) {
+            fail("Should throw SameLocationException.");
         }
     }
 
@@ -198,6 +269,12 @@ public class GroceryListTest {
         assertEquals(grocery1, sortedGroceries.get(0), "Milk should be first as it expires first.");
         assertEquals(grocery2, sortedGroceries.get(1), "Bread should be second as it expires next.");
         assertEquals(grocery3, sortedGroceries.get(2), "Eggs should be last as it has no expiration date.");
+    }
+
+    @Test
+    public void findGroceries_emptyInput_exceptionThrown() {
+        GroceryList gl = new GroceryList();
+        assertThrows(EmptyInputException.class, () -> gl.findGroceries(""));
     }
 
     @Test

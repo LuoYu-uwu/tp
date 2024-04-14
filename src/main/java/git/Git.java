@@ -7,14 +7,13 @@ import user.UserInfo;
  * Represents the Grocery in Time (GiT) program, allowing users to store and track their groceries!
  */
 public class Git {
-    // ATTRIBUTES
     private Ui ui;
     private GroceryUi groceryUi;
     private boolean isRunning;
     private Parser parser;
     private Storage storage;
     private UserInfo userInfo;
-    // METHODS
+
     /**
      * Constructs Git.
      */

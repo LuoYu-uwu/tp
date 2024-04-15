@@ -9,10 +9,10 @@ import grocery.location.Location;
  * Represents a grocery.
  */
 public class Grocery {
-    public static final String FRUIT = "fruit";
-    public static final String VEGETABLE = "vegetable";
-    public static final String MEAT = "meat";
-    public static final String BEVERAGE = "beverage";
+    public static final String FRUIT = "FRUIT";
+    public static final String VEGETABLE = "VEGETABLE";
+    public static final String MEAT = "MEAT";
+    public static final String BEVERAGE = "BEVERAGE";
     private String name;
     private int amount;
     private int threshold;
@@ -273,8 +273,10 @@ public class Grocery {
         }
 
         String unitString = "";
-        if (unit != null) {
-            unitString = " " + unit;
+        if (isSetAmount) {
+            if (unit != null) {
+                unitString = " " + unit;
+            }
         }
 
         String exp = "";

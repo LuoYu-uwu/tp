@@ -9,6 +9,10 @@ import grocery.location.Location;
  * Represents a grocery.
  */
 public class Grocery {
+    public static final String FRUIT = "fruit";
+    public static final String VEGETABLE = "vegetable";
+    public static final String MEAT = "meat";
+    public static final String BEVERAGE = "beverage";
     private String name;
     private int amount;
     private int threshold;
@@ -22,12 +26,6 @@ public class Grocery {
     private String remark;
     private boolean isSetCost;
     private boolean isSetAmount;
-
-    // Constants for categories
-    public static final String FRUIT = "fruit";
-    public static final String VEGETABLE = "vegetable";
-    public static final String MEAT = "meat";
-    public static final String BEVERAGE = "beverage";
 
     /**
      * Constructs a Grocery.

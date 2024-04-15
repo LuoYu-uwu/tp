@@ -259,9 +259,8 @@ public class GroceryUi {
         return location;
     }
 
-    //@@author wallywallywally
+    //@@author luozihui2003
 
-    //@@author LuoYu-uwu
     /**
      * Prompts user for category.
      */
@@ -286,7 +285,7 @@ public class GroceryUi {
             return promptForAmount();
         }
     }
-
+    //@@author LuoYu-uwu
     /**
      * Prompts the user to enter the cost of the grocery for at most 5 times.
      * If invalid value is entered for the 6th time, auto set the cost to 0.

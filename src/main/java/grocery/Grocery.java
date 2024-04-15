@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import exceptions.PastExpirationDateException;
 import grocery.location.Location;
 
-
 /**
  * Represents a grocery.
  */
@@ -24,7 +23,11 @@ public class Grocery {
     private boolean isSetCost;
     private boolean isSetAmount;
 
-
+    // Constants for categories
+    public static final String FRUIT = "fruit";
+    public static final String VEGETABLE = "vegetable";
+    public static final String MEAT = "meat";
+    public static final String BEVERAGE = "beverage";
 
     /**
      * Constructs a Grocery.
@@ -85,7 +88,7 @@ public class Grocery {
     }
     
     public String getCategory() {
-        return this.category;
+        return category;
     }
 
     public double getCost() {
@@ -175,22 +178,21 @@ public class Grocery {
             return this.amount < this.threshold;
         }
     }
-
     /**
      * Set unit of the grocery based on its category.
      *
      * @param category Category of the grocery.
      */
     public void setUnit(String category) {
-        switch (category.toLowerCase()){
-        case "fruit":
+        switch (category){
+        case FRUIT:
             this.unit = "pieces";
             break;
-        case "vegetable":
-        case "meat":
+        case VEGETABLE:
+        case MEAT:
             this.unit = "grams";
             break;
-        case "beverage":
+        case BEVERAGE:
             this.unit = "ml";
             break;
         default:

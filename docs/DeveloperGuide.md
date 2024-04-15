@@ -23,6 +23,7 @@
     - [9. View a list of groceries low in stock](#9-view-a-list-of-groceries-low-in-stock)
     - [10. Input expiration date of each grocery when added](#10-input-expiration-date-of-each-grocery-when-added)
     - [11. Editing expiration date after it is added](#11-editing-expiration-date-after-it-is-added)
+    - [12. Storing a grocery in a storage location](#12-storing-a-grocery-in-a-storage-location)
 - [Product Scope](#product-scope)
   - [Target user profile](#target-user-profile)
   - [Target user profile](#value-proposition)
@@ -177,7 +178,7 @@ To list groceries according to different parameters, view help, switch modes, or
 ### 6. Edit grocery amount
    * A `Grocery` stores its `amount` as an attribute. All `Grocery` objects are then stored in an ArrayList in `GroceryList`, which entirely handles the editing of the `amount`.
 
-![Grocery (showing amount) and GroceryList class diagram](./diagrams/GroceryAmt.png)
+![Class diagram for editAmount](./diagrams/GroceryAmt.png)
 
    * `GroceryList+editAmount()` is used to either decrease or directly set the `amount` of a `Grocery`. It takes in 2 parameters:
       1. details: String — User input read from `Scanner`.
@@ -186,7 +187,7 @@ To list groceries according to different parameters, view help, switch modes, or
    * To edit the `amount` after using a `Grocery`, the user inputs `use GROCERY a/AMOUNT`.
    * Our app then executes `GroceryList+editAmount()` with parameter `use = false` or `true` respectively, as illustrated by the following sequence diagram.
 
-![useAmt sequence diagram](./diagrams/useAmt.png)
+![editAmount sequence diagram](./diagrams/useAmt.png)
 
   * Additional checks specific to `use` ensure that the user only inputs a valid `int`, or that the `amount` must not be 0 beforehand.
   * Any exceptions thrown come with a message to help the user remedy their specific issue, as displayed by the `Ui`.
@@ -219,7 +220,24 @@ To list groceries according to different parameters, view help, switch modes, or
    * In GroceryList class, modified the editExpiration method to parse String into LocalDate.
     * `GroceryList+editExpiration()` is used to directly set the `exp` of a `Grocery`. It takes in 1 parameter:
       1. details: String — User input read from `Scanner`.
-   * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`. 
+   * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`.
+
+### 12. Storing a grocery in a storage location
+* A `Grocery` stores its location by referencing a `Location` object. All `Locations` are stored in a `LocationList` class.
+    
+![Class diagram for editLocation](./diagrams/GroceryLocation.png)
+    
+* `GroceryList+editLocation()` handles the editing of a grocery's location.
+  1. If the grocery is not stored anywhere, its `Location` will be set.
+  2. If the grocery is to be stored in a different location, its `Location` will be changed.
+*  This method takes in 1 parameter:
+    1. details: String — User input read from `Scanner`.
+* The user enters `store GROCERY l/LOCATION` to store the grocery in the desired location. Our app then executes `GroceryList+editLocation()`, as illustrated by the following sequence diagram.
+    
+![editLocation sequence diagram](./diagrams/editLocation.png)
+
+* If the target `Location` does not exist, our app automatically creates it and stores the grocery there.
+* If the target `Location` is the same as the current `Location`, our app throws a `SameLocationException()`, informing the user of this error.
 
 
 &nbsp;
@@ -237,7 +255,7 @@ Users are able to edit and manage the category, amount, expiration date, and sto
 When groceries are running low, the app can generate a shopping list to remind users of what they need to buy.
 Furthermore, the app can generate a list of items that are expiring soon, reminding users to consume their groceries as soon as possible.
 
-GiT also comes with other modes for recipe management and calorie tracking.
+GiT also comes with other modes for recipe management and calorie tr acking.
 
 ## User Stories
 

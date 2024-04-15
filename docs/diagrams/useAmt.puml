@@ -1,7 +1,7 @@
 @startuml
 
 participant "groceryList:GroceryList" as gl
-participant ":Grocery" as g
+participant "grocery:Grocery" as g
 participant "ui:Ui" as ui
 
  -> gl : editAmount()
@@ -16,7 +16,7 @@ return amtParts
 
 gl -> gl : getGrocery()
 activate gl
-return Grocery
+return grocery
 
 gl -> gl : checkAmount()
 note right

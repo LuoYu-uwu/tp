@@ -38,9 +38,9 @@ It allows users to track and manage their groceries around their home easily.
 
 2. #### Developer Guide
    - Design and implementation details
-     - For features `amt` and `use`, along with a sequence diagram
+     - For features `amt`/`use` and `store`
      - Class diagram for `Grocery`, `GroceryList`, `Location`, `LocationList`
-     - Sequence diagram for `handleLocationCommands`
+     - Sequence diagram for `handleLocationCommands`, `editAmount`, `editLocation`
    - Product scope
      - Target user profile, Value proposition, User stories
    - General information

@@ -39,7 +39,6 @@ class Grocery {
 
 class Location {
     -name: String
-    -groceries: List<Groceries>
     +addGrocery(grocery: Grocery)
     +removeGrocery(grocery: Grocery)
     +listGroceries()

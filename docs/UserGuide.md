@@ -2,7 +2,6 @@
 
 ![Grocery in Time logo](images/GitStartup.png)
 
-
 ## Introduction
 
 Grocery in Time (GiT) is a **grocery tracker app**, optimised for use via a Command Line Interface (CLI).

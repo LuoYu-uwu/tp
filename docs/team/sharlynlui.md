@@ -28,13 +28,13 @@ The user interacts with it using a CLI. It is written in Java and has about 7 kL
   * Improved defensiveness with test cases and assertions.
 * **Documentation:**
   * User Guide:
-    * Added documentation for Recipe Management: `add`, `list`, `view`, `find`, `edit`, `delete` ([#85](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/85/commits), [#175](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/175))
+    * Added documentation for Recipe Management: `add`, `list`, `view`, `find`, `edit`, `delete`. ([#85](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/85/commits), [#175](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/175))
     * Added documentation for Grocery Management: `view`
     * Categories the commands into 3 main category. ([#179](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/179))
   * Developer Guide:
     * Contributed to the target user profile, value proposition and user stories.
 * **Community:**
-  * PRs reviewed (example [1](https://github.com/nus-cs2113-AY2324S2/tp/pull/24), [2](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/24))
+  * PRs reviewed (example [1](https://github.com/nus-cs2113-AY2324S2/tp/pull/24), [2](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/24)).
   * Reported bugs and suggestions for other teams in the class.
   * Fixed bugs on our team project. ([#142](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/142),[#138](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/138), [#139](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/139), [#117](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/117), [#102](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/102), [#101](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/101), [#100](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/100), [#91](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/91))
   * Identity potential bugs on our team project. ([#158](https://github.com/AY2324S2-CS2113-T12-2/tp/issues/158))

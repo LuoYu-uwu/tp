@@ -32,7 +32,7 @@ public class LocationListTest {
 
     @Test
     public void findLocation_noSuchLocation_exceptionThrown() {
-        assertThrows(NoSuchObjectException.class, () -> LocationList.findLocation("cabinet"));
+        assertThrows(NoSuchObjectException.class, () -> LocationList.findLocation("Nuclear reactor"));
     }
 
     @Test

@@ -98,7 +98,7 @@ class GroceryTest {
     public void toSaveFormat_success() {
         Grocery grocery = new Grocery("chicken", 1, 0, LocalDate.now().plusDays(1), "meat",1.20,new Location("Pantry"));
         String formattedGrocery = grocery.toSaveFormat();
-        String expectedFormat = "chicken | 1 | null | 2024-04-15 | meat | 1.20 | Pantry ";
+        String expectedFormat = "chicken | 1 | null | " + LocalDate.now().plusDays(1) + " | meat | 1.20 | Pantry ";
         assertEquals(expectedFormat, formattedGrocery);
     }
 

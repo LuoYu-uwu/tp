@@ -1,0 +1,29 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class GroceryList {
+    +editLocation(details: String)
+}
+
+class Grocery {
+
+}
+
+class LocationList {
+    +addLocation(name: String)
+    +removeLocation(name: String)
+    +findLocation(name: String)
+}
+
+class Location {
+    -name: String
+    +addGrocery(grocery: Grocery)
+    +removeGrocery(grocery: Grocery)
+}
+
+GroceryList "1" -> "*" Grocery : stores >
+LocationList "1" -> "*" Location : contains >
+Grocery "*" <--> "1" Location : stored in >
+
+@enduml

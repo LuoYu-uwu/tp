@@ -1,0 +1,65 @@
+@startuml
+
+participant "groceryList:GroceryList" as gl
+participant ":LocationList" as ll
+participant "grocery:Grocery" as g
+participant "oldLocation:Location" as ol
+participant "location:Location" as nl
+
+ -> gl : editLocation()
+activate gl
+
+gl -> gl : checkDetails()
+note right
+Ensures user input is valid
+end note
+activate gl
+return locationParts
+
+gl -> gl : getGrocery()
+activate gl
+return grocery
+
+alt Location exists
+    gl -> ll : findLocation()
+    activate ll
+    return location
+else Location does not exist
+    gl -> ll : findLocation()
+    activate ll
+    ll -> ll : addLocation()
+
+    note right
+    Creates new Location
+    end note
+
+    activate ll
+    return Location
+    return location
+end
+
+gl -> g : getLocation()
+activate g
+return oldLocation
+
+opt Target location == Old location
+    <- gl: throw SameLocationException()
+
+else Grocery previously stored
+    gl -> ol : removeGrocery()
+    activate ol
+    return
+end
+
+gl -> g : setLocation()
+activate g
+return
+
+gl -> nl : addGrocery()
+activate nl
+return
+
+deactivate gl
+
+
+@enduml

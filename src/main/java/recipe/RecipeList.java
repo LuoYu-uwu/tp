@@ -24,7 +24,7 @@ public class RecipeList {
 
     /**
      * Adds a recipe to the recipe list.
-     *
+     * Parser will not allow duplicated recipe.
      * @param recipe Recipe to be added.
      */
     public void addRecipe(Recipe recipe) {

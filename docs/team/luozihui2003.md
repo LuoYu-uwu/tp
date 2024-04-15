@@ -1,7 +1,7 @@
 # Zi Hui's Project Portfolio Page
 ## Project: Grocery in Time
 Grocery in Time is a desktop application used for keeping track of groceries.
-The user interacts with it using a CLI. It is written in Java and has about 4 kLoC.
+The user interacts with it using a CLI. It is written in Java and has about 7 kLoC.
 ## Summary of contributions
 * New Feature: Added the "Find Grocery" function.
     *What it does: enables users to find groceries from the list of groceries.

@@ -29,7 +29,7 @@ The user interacts with it using a CLI. It is written in Java and has about 7 kL
 * **Documentation:**
   * User Guide:
     * Added documentation for Recipe Management: `add`, `list`, `view`, `find`, `edit`, `delete`. ([#85](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/85/commits), [#175](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/175))
-    * Added documentation for Grocery Management: `view`
+    * Added documentation for Grocery Management: `view`.
     * Categories the commands into 3 main category. ([#179](https://github.com/AY2324S2-CS2113-T12-2/tp/pull/179))
   * Developer Guide:
     * Contributed to the target user profile, value proposition and user stories.

@@ -20,3 +20,6 @@ GroceryList.log
 GroceryList.log.lck
 
 /data
+
+/.vscode
+/META-INF

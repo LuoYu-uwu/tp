@@ -264,7 +264,7 @@ GiT also comes with other modes for recipe management, profile management and ca
 In recipe management mode, users will be able to create and record their own recipes with details such as title, ingredients and steps.
 User will be able to look for recipes using a keyword, view and edit existing recipes. 
 In profile management mode, users can store information such as weight, height and gender to calculate and manage their calories intake according to their goals.
-Lastly, in calorie tracker, users can add the food they have eaten along with the calories for the GiT to calculate user's total intake.
+Lastly, in calorie tracker, users can add the food they have eaten along with the calories for GiT to calculate user's total intake.
 
 ## User Stories
 

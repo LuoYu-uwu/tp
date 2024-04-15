@@ -23,7 +23,7 @@ The user interacts with it using a CLI. It is written in Java and has about 7 kL
   * Extracted Calories Ui, GroceryUi, ProfileUi, RecipeUi from Ui.
   * Updated recipe feature to only add valid recipes and disallow duplicated recipes.
   * Updated rate grocery feature to only accept valid inputs.
-  * Updated greetings to accept valid input as username.
+  * Updated greetings to only accept valid input as username.
   * Cosmetic improvement made to the display of view recipe feature. 
   * Improved defensiveness with test cases and assertions.
 * **Documentation:**

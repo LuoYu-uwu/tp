@@ -731,6 +731,10 @@ Target calories intake: 1655
 &nbsp;
 ## D. Recipe management mode
 
+> #### Notes about this mode
+> * All keywords passed in are not case-sensitive.
+> * Duplicated recipe title with different capitalization will not be not accepted.
+
 ### Adding a new recipe: `add`
 Adds new recipe, ingredient and steps.
 

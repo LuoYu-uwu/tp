@@ -70,7 +70,8 @@ As shown in the following PRs:
 * Reported bugs for another team's program during the Practical Exam Dry Run: [BinBash](https://github.com/AY2324S2-CS2113T-T09-2/tp)
 
 
-&nbsp;
+<div style="page-break-after: always;"></div>
+
 ## Examples of documentation contributions
 
 ## 1. Extracts from the User Guide
@@ -108,6 +109,8 @@ Here are your groceries!
 - cheese (dairy), amount: 50, location: cubby
 - pasta (carbs), cost: $2.95, location: cubby
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## 2. Extracts from the Developer Guide
 

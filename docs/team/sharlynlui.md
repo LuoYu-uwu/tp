@@ -12,7 +12,7 @@ The user interacts with it using a CLI. It is written in Java and has about 7 kL
   * Justification: allow users to manage recipes in the application.
 * **New Feature:** Added `View` Grocery.
   * What it does: users can view all the details of the specific grocery.
-  * Justification: users might not remember what they have recorded for the recipe and might want to check the details.
+  * Justification: users might not remember what they have recorded for the grocery and might want to check the details.
 * **New Feature:** Added `Remark` and `Edit` Remark.
   * What it does: allow users to add a remark attached to the grocery to be displayed when viewed or listed.
   * Justification: users can remind themselves instructions for these groceries e.g. to keep it for next week.

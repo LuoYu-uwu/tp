@@ -246,7 +246,9 @@ To list groceries according to different parameters, view help, switch modes, or
 ## Product Scope
 ### Target user profile
 
-Our target user is someone who regularly goes grocery shopping, and would like to track and manage their inventory of groceries.
+Our target user is someone who regularly goes grocery shopping, and would like to track and manage their inventory of groceries. 
+Our target user is also health-conscious and interested in keeping track of their calorie consumption. 
+Additionally, other than grocery shopping, our target user will likely be cooking as well, thus they will want to create and management their own recipes.
 
 ### Value proposition
 
@@ -257,7 +259,12 @@ Users are able to edit and manage the category, amount, expiration date, and sto
 When groceries are running low, the app can generate a shopping list to remind users of what they need to buy.
 Furthermore, the app can generate a list of items that are expiring soon, reminding users to consume their groceries as soon as possible.
 
-GiT also comes with other modes for recipe management and calorie tr acking.
+GiT also comes with other modes for recipe management, profile management and calorie tracking.
+
+In recipe management mode, users will be able to create and record their own recipes with details such as title, ingredients and steps.
+User will be able to look for recipes using a keyword, view and edit existing recipes. 
+In profile management mode, users can store information such as weight, height and gender to calculate and manage their calories intake according to their goals.
+Lastly, in calorie tracker, users can add the food they have eaten along with the calories for the GiT to calculate user's total intake.
 
 ## User Stories
 
@@ -278,10 +285,14 @@ GiT also comes with other modes for recipe management and calorie tr acking.
 | v2.0    | forgetful user                 | find my groceries by name                           | know if I have tracked that grocery                     |
 | v2.0    | user who replenishes groceries | set threshold amount for the groceries              | know what groceries I should top up                     |
 | v2.0    | user who cooks with recipes    | create and keep my own version of recipes           | refer to my own recipes when I cook                     |
+| v2.0    | user who cooks with recipes    | list all my recipes                                 | know what recipes I have created                        |
+| v2.0    | user who cooks with recipes    | view all the details of a recipe                    | use the recipe to recreate the dish                     |
+| v2.0    | user who cook with recipes     | delete a recipe                                     | remove recipes I no longer want                         |
 | v2.0    | health-conscious user          | store the calories of the food I consumed           | track my calories intake and know how much I should eat |
 | v2.0    | environmentally-conscious user | get a list of items that are expiring soon          | prioritise using them to reduce food waste              |
 | v2.0    | reviewer                       | rate and review products                            | know if I like them                                     |
 | v2.0    | meticulous user                | add remarks to my groceries                         | know extra information about my groceries               |
+| v2.1    | user who cooks with recipes    | edit my old recipes                                 | update the recipes to new preferences and methods       |
 | v2.1    | user                           | store my past grocery information                   | access information about the groceries I am tracking    |
 
 ## Non-Functional Requirements

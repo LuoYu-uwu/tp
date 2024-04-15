@@ -88,6 +88,8 @@ public class GroceryUi {
                 num = Integer.parseInt(in.nextLine().trim());
                 if (num <= 0) {
                     System.out.println("\nPlease enter a positive number.");
+                } else if (num > 20) {
+                    System.out.println("\nWow, that's too many.");
                 } else {
                     break; // Break loop if input is a positive integer
                 }

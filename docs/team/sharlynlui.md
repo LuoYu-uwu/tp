@@ -16,7 +16,7 @@ The user interacts with it using a CLI. It is written in Java and has about 7 kL
 * **New Feature:** Added `Remark` and `Edit` Remark.
   * What it does: allow users to add a remark attached to the grocery to be displayed when viewed or listed.
   * Justification: users can remind themselves instructions for these groceries e.g. to keep it for next week.
-* **Code Contributed:** [RepoSense link](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2024-02-23&tabOpen=true&tabType=authorship&tabAuthor=SharlynLui&tabRepo=AY2324S2-CS2113-T12-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
+* **Code Contributed:** [RepoSense link](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=sharlynlui&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
 * **Project management:** 
   * Manged releases v1.0-v2.1 on GitHub
 * **Enhancements to existing features:** 

@@ -277,13 +277,22 @@ public class GroceryUi {
      * Prompts user for amount.
      */
     public int promptForAmount(){
-        System.out.println("Please enter the amount (e.g. 3):");
-        try {
-            return Integer.parseInt(in.nextLine().trim());
-        } catch (NumberFormatException e){
-            System.out.println("Please enter a valid integer for the amount (e.g. 3)!");
-            return promptForAmount();
+        System.out.println("Please enter a valid integer for the amount (e.g. 3):");
+        int amount = 0;
+        for (int i = 0; i < 5; i++){
+            try {
+                amount = Integer.parseInt(in.nextLine().trim());
+                break;
+            } catch (NumberFormatException e){
+                System.out.println("Amount entered is invalid!");
+                if (i == 4){
+                    System.out.println("Failed to enter valid amount. Amount will be stored as 0.");
+                } else {
+                    System.out.println("Please enter a valid integer.");
+                }
+            }
         }
+        return amount;
     }
     //@@author LuoYu-uwu
     /**

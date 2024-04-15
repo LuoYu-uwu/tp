@@ -734,6 +734,8 @@ Target calories intake: 1655
 > #### Notes about this mode
 > * All keywords passed in are not case-sensitive.
 > * Duplicated recipe title with different capitalization will not be not accepted.
+> * Commands with command word + something will still be processed so that users can continue to use the feature even if they typed in extra details, as long as they follow the instructions from the prompt.
+>   * e.g. If command word is `add`, `add something` will also be accepted.
 
 ### Adding a new recipe: `add`
 Adds new recipe, ingredient and steps.

@@ -1,0 +1,28 @@
+@startuml
+
+participant ":Parser" as p
+participant ":LocationList" as ll
+participant ":GroceryUi" as gui
+participant "location:Location" as l
+participant ":System.out" as sys
+
+ -> p : handleLocationCommands(command, name)
+
+alt command == LOC
+    p -> ll : addLocation(name)
+    p -> gui : printLocationAdded(name)
+else command == LISTLOC
+    alt LISTLOC
+        p -> ll : listLocations()
+    else LISTLOC LOCATION
+        p -> ll : findLocation(name)
+        ll -> l : Location
+        l -> l : listGroceries()
+    end
+else command == DELLOC
+    p -> ll : removeLocation(name)
+else else
+    p -> sys : println(GitException.getMessage())
+end
+
+@enduml

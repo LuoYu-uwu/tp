@@ -5,7 +5,10 @@ participant "groceryList:GroceryList" as gl
 participant ":System.out" as sys
 participant "ui:Ui" as ui
 
- -> p : viewListOrHelp(command, commandParts)
+ -> p : handleListOrHelp(command, commandParts)
+
+p -> p : checkListCommand(commandParts)
+
 
  alt command == LIST
     p -> gl : listGroceries()
@@ -25,13 +28,10 @@ participant "ui:Ui" as ui
     p -> ui : switchMode()
     ui --> p : currentMode
  else command == EXIT
-    alt commandParts[1].isEmpty()
-        p -> sys : println("bye bye")
-    else else
-         p -> sys : println(GitException.getMessage())
-    end
+    p -> sys : println("bye bye!")
  else else
-    p -> sys : println(GitException.getMessage())
+     p -> sys : println(GitException.getMessage())
  end
+
 
 @enduml

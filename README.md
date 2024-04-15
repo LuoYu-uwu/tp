@@ -13,6 +13,20 @@
 ## Introduction
 Welcome to GiT, Grocery in Time, a Java application designed for efficient grocery management. This tool helps users monitor their groceries, including tracking expiration dates, managing inventory quantities, and setting alerts for low stock or soon-to-expire items.
 
+## Table of Contents
+- [Getting Started](#Getting-started)
+- [Features](#features)
+    - [Common Commands](#common-commands)
+    - [Grocery Management](#grocery-management)
+    - [Calories Management](#calories-management)
+    - [Profile Management](#profile-management)
+    - [Recipe Management](#recipe-management)
+- [Data Management](#data-management)
+- [Command Summary](#command-summary)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Getting Started
 
 ### Prerequisites
@@ -31,18 +45,76 @@ Welcome to GiT, Grocery in Time, a Java application designed for efficient groce
      ```
 
 ## Features
-- **Track Groceries**: Add, edit, and delete grocery items. Record details such as cost, category, expiration date, and quantity.
-- **Alerts and Notifications**: Receive timely alerts for groceries that are about to expire and items that are running low on stock.
-- **Search and Filter**: Use keywords to search through the inventory or filter items based on category or expiration date.
-- **Reporting**: Generate reports on grocery usage, expenditure, and stock levels over time.
+### Inovative Four Mode Application
+- **Groceries Management**: Add, edit, and delete grocery items with detailed commands. Manage your inventory by setting categories, amounts, expiration dates, and storage locations. Examples include `add GROCERY`, `del GROCERY`, and `edit GROCERY`.
+- **Calorie Management**: Track calorie intake by logging food consumption and viewing total calories. Commands like `eat FOOD` and `view` help maintain dietary goals.
+- **Recipe Management**: Add, view, and manage recipes. Store detailed recipes including ingredients and cooking steps, and find recipes using keywords with commands such as `add RECIPE`, `view RECIPE`, and `find KEYWORD`.
+- **Profile Management**: Customize user profiles to support calorie management based on individual dietary needs. Update personal information and view user details with commands like `update` and `view`.
 
 ## How to Use
-Upon launching GiT, you will be greeted with a simple text-based user interface. Here are some commands you can use:
-- `add [item]`: Adds a new item to your inventory.
-- `remove [item]`: Removes an item from the inventory.
-- `update [item]`: Updates the details of an existing item.
-- `list`: Lists all the items in your inventory.
-- `help`: Displays help information about all the commands.
+Upon launching GiT, you will be greeted with a simple text-based user interface. 
+
+### Common Commands
+- **Switch Mode**: `switch`
+    - Switches the application between different modes (grocery, profile, calories, recipe).
+- **Exit**: `exit`
+    - Closes the application.
+
+### Grocery Management
+Manage your grocery items effectively using these commands:
+- **Add Grocery**: `add GROCERY`
+- **Edit Grocery**: Multiple commands to set category, amount, location, etc.
+- **Delete Grocery**: `del GROCERY`
+- **List Groceries**: Multiple listing options based on category, price, expiration, etc.
+- **Find Grocery**: `find KEYWORD`
+- **Grocery Details**: `view GROCERY`
+
+### Calories Management
+Track and manage your daily calorie intake:
+- **Add Food Consumption**: `eat FOOD`
+- **View Calorie Intake**: `view`
+
+
+### Profile Management
+Manage user profile for personalized calorie tracking:
+- **Update Profile**: `update`
+- **View Profile**: `view`
+
+
+### Recipe Management
+Store and manage recipes:
+- **Add Recipe**: `add`
+- **View Recipes**: Multiple commands to view, list, find, and edit recipes.
+- **Delete Recipe**: `delete RECIPE`
+
+
+## Data Management
+GiT automatically saves your data in the `/data` folder located in the same directory as the JAR file. The data includes separate files for groceries, calories, profile, and recipes.
+
+### Caution
+Modifying data files manually can corrupt them. Always back up your data before making manual changes.
+
+## Command Summary
+
+| Command | Description | Format |
+| --- | --- | --- |
+| **Common** | | |
+| Switch | Switch application mode | `switch` |
+| Exit | Close the application | `exit` |
+| **Grocery Management** | | |
+| Add | Add a grocery item | `add GROCERY` |
+| Delete | Delete a grocery item | `del GROCERY` |
+| List | List groceries | Multiple formats |
+| **Calories Management** | | |
+| Eat | Log food consumption | `eat FOOD` |
+| View | View calorie intake | `view` |
+| **Profile Management** | | |
+| Update | Update user profile | `update` |
+| View | View user profile | `view` |
+| **Recipe Management** | | |
+| Add | Add a new recipe | `add RECIPE` |
+| Delete | Delete a recipe | `delete RECIPE` |
+
 
 ## Build automation using Gradle
 

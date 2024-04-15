@@ -1,11 +1,10 @@
 @startuml
 
-actor User as user
 participant "groceryList:GroceryList" as gl
-participant ":Grocery" as g
+participant "grocery:Grocery" as g
 participant "ui:Ui" as ui
 
-user -> gl : editAmount()
+ -> gl : editAmount()
 activate gl
 
 gl -> gl : checkDetails()
@@ -17,24 +16,27 @@ return amtParts
 
 gl -> gl : getGrocery()
 activate gl
-return Grocery
+return grocery
+
+gl -> gl : checkAmount()
+note right
+Ensures integer is valid
+end note
+activate gl
+return amount
 
 gl -> g : setAmount()
 activate g
-deactivate g
+return
 
 alt finalAmount == 0
     gl -> ui : printAmtDepleted()
     activate ui
+    deactivate ui
 else else
     gl -> ui : printAmtSet()
     activate ui
+    deactivate ui
 end
-
-ui --> user : message
-deactivate ui
-deactivate ui
-
-
 
 @enduml

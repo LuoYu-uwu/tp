@@ -1,0 +1,12 @@
+Meat | 0 | null | 2024-04-14 | MEAT | 0.00 | bottom freezer 
+milk | 50 | 6 | 2024-12-10 | DAIRY | 5.00 | fridge 
+mustard | 10 | 2 | 2024-12-10 | SAUCE | 3.75 | fridge
+ketchup | 5 | 2 | 2025-11-10 | SAUCE | 3.75 | fridge
+eggs | 20 | 2 | 2024-05-01 | SAUCE | 15.00 | fridge
+chicken breast | 15 | 10 | 2024-05-01 | MEAT | 6.25 | bottom freezer
+paprika | 100 | 20 | 2026-01-01 | SPICES | 5.49 | cabinet
+star anise | 25 | 20 | 2026-01-01 | SPICES | 5.49 | cabinet
+cinnamon sticks | 100 | 20 | 2026-01-01 | SPICES | 5.49 | cabinet
+pasta | 500 | 200 | 2025-01-01 | CARBS | 3.35 | shelf
+rice | 2000 | 500 | 2025-01-01 | CARBS | 7.57 | shelf
+soup cans | 6 | 2 | 2027-01-01 | SOUP | 3.35 | shelf

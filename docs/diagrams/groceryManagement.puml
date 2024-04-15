@@ -19,6 +19,8 @@ p -> g: LISTLOC.ordinal()
 g --> p : indexOfListloc
 p -> g: FIND.ordinal()
 g --> p : indexOfFind
+p -> g: VIEW.ordinal()
+g --> p : indexOfView
 alt index <= indexOfDel
     p -> p : addOrDelGrocery(command, commandParts)
     ref over p : caloriesManagement
@@ -31,9 +33,12 @@ else index <= indexOfListloc
 else index == indexOfFind
     p -> gl : findGroceries(commandParts[1])
     ref over p, gl : findGroceries
+else index == indexOfView
+    p -> gl : viewGrocery(commandParts[1])
+    ref over p, gl : viewGrocery
 else else
-    p -> p : viewListOrHelp(command)
-    ref over p : viewListOrHelp
+    p -> p : handleListOrHelp(command)
+    ref over p : handleListOrHelp
 end
 
 @enduml

@@ -222,6 +222,8 @@ To list groceries according to different parameters, view help, switch modes, or
       1. details: String — User input read from `Scanner`.
    * To edit the `exp` after using a `Grocery`, the user inputs `use GROCERY d/EXPIRATION_DATE`.
 
+![editExpiration sequence diagram](./diagrams/GroceryList_editExpiration.png)
+
 ### 12. Storing a grocery in a storage location
 * A `Grocery` stores its location by referencing a `Location` object. All `Locations` are stored in a `LocationList` class.
     

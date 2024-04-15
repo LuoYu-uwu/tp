@@ -146,7 +146,7 @@ The project uses [GitHub actions](https://github.com/features/actions) for CI. W
 `/docs` folder contains a skeleton version of the project documentation.
 
 ## Contributing
-Interested in contributing? Great! Please fork the project and submit a pull request with your proposed changes. Detailed instructions on setting up your development environment and the contribution guidelines can be found in the CONTRIBUTING.md file.
+Interested in contributing? Great! Please fork the project and submit a pull request with your proposed changes. Detailed instructions on setting up your development environment and the contribution guidelines can be found in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
